@@ -11,7 +11,7 @@ exec > >(tee -a "$LOG") 2>&1
 
 adb wait-for-device
 adb shell settings put global window_animation_scale 1
-adb install -r -g universal.apk || adb install -r universal.apk
+adb install -r -g universal.apk || adb install -r universal.apk || exit 1
 adb shell pm grant $PKG android.permission.POST_NOTIFICATIONS || true
 adb shell dumpsys deviceidle whitelist +$PKG || true
 
@@ -77,10 +77,10 @@ open_url "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_7
 sleep 8
 dismiss_first_run
 # media document: tap the video to start it
-adb shell input tap 540 1100
-sleep 3
-adb shell input tap 540 1100
-sleep 6
+adb shell screencap -p /sdcard/m0.png && adb pull /sdcard/m0.png out/02a_media_before_tap.png
+tap_text '^(Play|play)$' || adb shell input tap 540 1100
+sleep 8
+adb shell screencap -p /sdcard/m1.png && adb pull /sdcard/m1.png out/02b_media_playing.png
 adb shell input keyevent KEYCODE_HOME
 sleep 4
 adb shell cmd statusbar expand-notifications
