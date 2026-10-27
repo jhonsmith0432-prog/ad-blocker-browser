@@ -61,8 +61,15 @@ object NexVpn {
         refreshServers(context) { }
     }
 
+    /**
+     * Shipped with the app so the VPN works before the list has ever been downloaded.
+     * Filled in at build time from the NEXVPN_BUILTIN secret (never committed); empty = no fallback.
+     */
+    private const val BUILT_IN = "@NEXVPN_BUILTIN@"
+
     fun servers(context: Context): List<Server> {
-        val raw = NexPrefs(context).vpnServersJson
+        // A downloaded list always wins (an empty one hides the VPN); the built-in list is the fallback.
+        val raw = NexPrefs(context).vpnServersJson.ifBlank { BUILT_IN.takeIf { it.startsWith("{") } ?: "" }
         if (raw.isBlank()) return emptyList()
         return try {
             val arr: JSONArray = JSONObject(raw).optJSONArray("servers") ?: return emptyList()
