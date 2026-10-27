@@ -178,25 +178,26 @@ edit(app, "            installBundledContentBlocker()\n",
 # --- Nexcraft look: mint + navy instead of Firefox violet (all Compose UI) ----------------
 colors = SRC / "mobile/android/android-components/components/compose/base/src/main/java/mozilla/components/compose/base/theme/AcornColors.kt"
 NAVY_0, NAVY_1, NAVY_2, NAVY_3 = "Color(0xFF0B0F1E)", "Color(0xFF121830)", "Color(0xFF19213F)", "Color(0xFF222B50)"
+# Accent colours come from NexAccent (Premium accent picker; Mint by default).
 THEMES = {
     "fun acornDarkColorScheme(): ColorScheme": {
-        "primary": "Color(0xFF3DF5B0)", "onPrimary": "Color(0xFF04261A)",
-        "primaryContainer": "Color(0xFF0E5C46)", "onPrimaryContainer": "Color(0xFFD8FFF0)",
-        "inversePrimary": "Color(0xFF00876A)", "tertiary": "Color(0xFF3DF5B0)",
+        "primary": "NexAccent.darkPrimary", "onPrimary": "NexAccent.darkOnPrimary",
+        "primaryContainer": "NexAccent.darkContainer", "onPrimaryContainer": "NexAccent.darkOnContainer",
+        "inversePrimary": "NexAccent.lightPrimary", "tertiary": "NexAccent.darkPrimary",
         "secondaryContainer": NAVY_3, "background": NAVY_1, "surface": NAVY_1,
         "surfaceVariant": NAVY_3, "surfaceContainer": NAVY_1, "surfaceContainerHigh": NAVY_2,
         "surfaceContainerHighest": NAVY_3, "surfaceContainerLow": NAVY_0, "surfaceContainerLowest": NAVY_0,
         "surfaceBright": NAVY_3, "surfaceDim": NAVY_0,
     },
     "fun acornLightColorScheme(): ColorScheme": {
-        "primary": "Color(0xFF00876A)", "onPrimary": "Color(0xFFFFFFFF)",
-        "primaryContainer": "Color(0xFFC6F6E4)", "onPrimaryContainer": "Color(0xFF00382B)",
-        "inversePrimary": "Color(0xFF3DF5B0)", "tertiary": "Color(0xFF00876A)",
-        "secondaryContainer": "Color(0xFFE3F5EF)",
+        "primary": "NexAccent.lightPrimary", "onPrimary": "Color(0xFFFFFFFF)",
+        "primaryContainer": "NexAccent.lightContainer", "onPrimaryContainer": "NexAccent.lightOnContainer",
+        "inversePrimary": "NexAccent.darkPrimary", "tertiary": "NexAccent.lightPrimary",
+        "secondaryContainer": "NexAccent.lightSecondaryContainer",
     },
     "fun acornPrivateColorScheme(): ColorScheme": {
         "primary": "Color(0xFF9C86FF)", "primaryContainer": "Color(0xFF3B2C8C)",
-        "secondaryContainer": "Color(0xFF3B2C8C)", "tertiary": "Color(0xFF3DF5B0)",
+        "secondaryContainer": "Color(0xFF3B2C8C)", "tertiary": "NexAccent.darkPrimary",
     },
 }
 cs = colors.read_text(encoding="utf-8")
@@ -212,5 +213,23 @@ for header, values in THEMES.items():
             sys.exit(f"nex_fixups: {key} missing in {header}")
     cs = cs[:start] + body + cs[end:]
 colors.write_text(cs, encoding="utf-8")
+
+# Pure-black (OLED) theme: our accent instead of Firefox violet, and offered to everyone.
+edit(colors, "            primaryContainer = NovaColors.Violet70,\n",
+     "            primaryContainer = NexAccent.darkContainer,\n")
+edit(colors, "            secondaryContainer = NovaColors.VioletDesaturated80,\n",
+     "            secondaryContainer = Color(0xFF1C1C1C),\n")
+edit(settings, "default = { FxNimbus.features.oledTheme.value().enabled },", "default = { true },")
+
+# --- Premium app icons: the picker opens the paywall for free users ------------------------
+edit(MAIN / "java/org/mozilla/fenix/iconpicker/ui/AppIconPreference.kt",
+     "                CustomizationSettings.appIconSelectionTapped.record()\n",
+     "                if (!org.mozilla.fenix.nex.NexPrefs(context).isPremium) {\n"
+     "                    context.startActivity(\n"
+     "                        android.content.Intent(context, org.mozilla.fenix.nex.PremiumActivity::class.java),\n"
+     "                    )\n"
+     "                    return@SelectAppIcon\n"
+     "                }\n"
+     "                CustomizationSettings.appIconSelectionTapped.record()\n")
 
 print("nex_fixups: done")

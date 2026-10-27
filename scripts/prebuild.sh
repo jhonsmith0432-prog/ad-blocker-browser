@@ -39,6 +39,8 @@ fi
 
 # 3b. Trademark clean-up: Firefox/Kit artwork -> our shield; "Firefox" in UI text -> our name.
 python3 "$ROOT/branding/replace_logos.py" "$FENIX/src/main/res"
+# Premium app icons: our shield in every icon-picker design (replaces the fox artwork).
+python3 "$ROOT/branding/icon_themes.py" "$FENIX/src/main"
 find "$FENIX/src/main/res" -name strings.xml -path '*values*' \
   -exec sed -i "s/\bFirefox\b/${APP_NAME}/g" {} +
 
