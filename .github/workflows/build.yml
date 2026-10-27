@@ -1,0 +1,65 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      variant:
+        description: "release (AAB for Play) or debug (APK for testing)"
+        default: debug
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    env:
+      HAS_KEYSTORE: ${{ secrets.KEYSTORE_BASE64 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Free runners have ~14 GB disk; clear preinstalled toolchains we don't use.
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          sudo docker image prune --all --force || true
+          df -h /
+
+      - name: Branding tools and assets
+        run: |
+          pip install --break-system-packages cairosvg pillow
+          python3 branding/build_assets.py
+
+      - name: Fetch Firefox source
+        run: bash scripts/get-source.sh
+
+      - name: Apply patches and assets
+        run: bash scripts/prebuild.sh
+
+      - name: Build
+        run: bash scripts/build.sh "${{ github.event.inputs.variant || 'debug' }}"
+
+      # Release signing: add these repo secrets when ready to ship.
+      #   KEYSTORE_BASE64, KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD
+      - name: Sign release bundle
+        if: ${{ (github.event.inputs.variant || 'debug') == 'release' && env.HAS_KEYSTORE == 'true' }}
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 -d > upload.jks
+          for f in $(find src -name '*.aab'); do
+            jarsigner -keystore upload.jks -storepass "$KEYSTORE_PASSWORD" \
+              -keypass "$KEY_PASSWORD" "$f" "$KEY_ALIAS"
+          done
+          rm upload.jks
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nex-browser-${{ github.event.inputs.variant || 'debug' }}
+          path: |
+            src/**/outputs/**/*.aab
+            src/**/outputs/**/*.apk
+          if-no-files-found: error
