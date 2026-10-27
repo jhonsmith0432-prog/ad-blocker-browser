@@ -149,6 +149,26 @@ edit(MAIN / "java/org/mozilla/fenix/HomeActivity.kt",
      "hasUserBeenOnboarded = true,")
 edit(settings, "default = { FxNimbus.features.termsOfUsePrompt.value().enabled },", "default = { false },")
 
+# --- No cloud page summaries (sends page text to Mozilla) and no "shake to summarize" tip -
+edit(settings, "default = { FxNimbus.features.shakeToSummarize.value().enabled },", "default = { false },")
+
+# --- uBlock Origin: built-in extensions must be an unpacked folder, not an .xpi ------------
+# (prebuild unpacks the XPI to assets/extensions/ublock/ via nex_ubo_defaults.py)
+edit(MAIN / "java/org/mozilla/fenix/FenixApplication.kt",
+     'url = "resource://android/assets/extensions/ublock_origin.xpi",',
+     'url = "resource://android/assets/extensions/ublock/",')
+
+# --- Home background: our navy (dark) and a cool mint-white (light), not Firefox's pink ---
+for colors_xml, start, end in [("values/colors.xml", "#FFE9F7F1", "#FFF5F8FC"),
+                               ("values-night/colors.xml", "#FF0B0F1E", "#FF19213F")]:
+    f = MAIN / "res" / colors_xml
+    t = f.read_text(encoding="utf-8")
+    t, n1 = re.subn(r'(<color name="homepage_edge_to_edge_gradient_start">)[^<]+', rf"\g<1>{start}", t)
+    t, n2 = re.subn(r'(<color name="homepage_edge_to_edge_gradient_end">)[^<]+', rf"\g<1>{end}", t)
+    if n1 != 1 or n2 != 1:
+        sys.exit(f"nex_fixups: homepage gradient colours missing in {colors_xml}")
+    f.write_text(t, encoding="utf-8")
+
 # --- Built-in Browser VPN extension (Premium) ---------------------------------------------
 app = MAIN / "java/org/mozilla/fenix/FenixApplication.kt"
 edit(app, "            installBundledContentBlocker()\n",

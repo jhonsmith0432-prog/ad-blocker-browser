@@ -19,13 +19,15 @@ echo "== our activities =="; grep -o 'android:name="org.mozilla.fenix.nex[^"]*"'
 echo "== native lib ABIs =="; unzip -l "$AAB" | grep -o 'base/lib/[^/]*/' | sort -u
 echo "== signers (should be only the upload key) =="; unzip -l "$AAB" | grep -E 'META-INF/.*\.(SF|RSA|DSA|EC)$'
 jarsigner -verify -verbose -certs "$AAB" 2>/dev/null | grep -o 'CN=[^,]*' | sort | uniq -c | head
-echo "== uBlock Origin bundled defaults =="
-unzip -p "$AAB" base/assets/extensions/ublock_origin.xpi > ubo.xpi 2>/dev/null && unzip -p ubo.xpi assets/assets.json | python3 -c "
+echo "== uBlock Origin bundled (unpacked folder) =="
+unzip -l "$AAB" | grep -c 'base/assets/extensions/ublock/' || true
+unzip -l "$AAB" | grep -E 'extensions/ublock_origin.xpi' && echo "WARNING: packed xpi still present"
+unzip -p "$AAB" base/assets/extensions/ublock/assets/assets.json | python3 -c "
 import json,sys
 d=json.load(sys.stdin)
 for k in ['fanboy-cookiemonster','ublock-cookies-easylist','adguard-mobile-app-banners','easylist','easyprivacy']:
     print(k, 'ON' if not d.get(k,{}).get('off') else 'off')
-" ; unzip -l ubo.xpi | grep -c META-INF || true
+"
 echo "== VPN extension present =="; unzip -l "$AAB" | grep 'extensions/nexvpn' || echo "MISSING"
 echo "== app locales (values-*) in bundle resources =="
 java -jar bundletool.jar dump resources --bundle "$AAB" --resource string/app_name 2>/dev/null | grep -o 'locale: "[^"]*"' | sort -u | tr '\n' ' '; echo
