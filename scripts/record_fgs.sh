@@ -10,6 +10,7 @@ LOG=out/log.txt
 exec > >(tee -a "$LOG") 2>&1
 
 adb wait-for-device
+adb logcat -c || true
 adb shell settings put global window_animation_scale 1
 adb install -r -g universal.apk || adb install -r universal.apk || exit 1
 adb shell pm grant $PKG android.permission.POST_NOTIFICATIONS || true
@@ -91,5 +92,8 @@ wait $REC
 adb pull /sdcard/fgs_media.mp4 out/fgs_media.mp4
 adb shell dumpsys activity services $PKG | grep -iE 'ServiceRecord|foregroundServiceType|isForeground' > out/services_media.txt || true
 
+adb logcat -b crash -d > out/logcat_crash.txt 2>&1 || true
+adb logcat -d -v time > out/logcat_full.txt 2>&1 || true
+grep -nE "FATAL|AndroidRuntime|Exception|GeckoView|MOZ_CRASH|signal 11|SIGSEGV" out/logcat_full.txt | head -80 > out/logcat_errors.txt || true
 ls -l out
 exit 0
