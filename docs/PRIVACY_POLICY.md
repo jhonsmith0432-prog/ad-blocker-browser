@@ -1,8 +1,8 @@
 # Privacy Policy — Ad Blocker & Private Browser
 
-_Last updated: [DATE OF PUBLISHING]_
+_Last updated: 27 October 2026_
 
-Ad Blocker & Private Browser ("the app") is published by [DEVELOPER / COMPANY NAME] ("we").
+Ad Blocker & Private Browser ("the app") is published by Nexcraft ("we").
 This policy explains what happens to your data when you use the app.
 
 ## The short version
@@ -48,7 +48,7 @@ The app is not directed at children under 13 and we do not knowingly collect dat
 ## Open source
 
 The app is built on Mozilla's open-source Firefox for Android (MPL 2.0) and bundles uBlock Origin (GPL 3.0).
-Source code: [PUBLIC REPO URL].
+Source code: https://github.com/jhonsmith0432-prog/ad-blocker-browser.
 
 ## Changes
 
@@ -56,4 +56,4 @@ If this policy changes we will update the date above and the app listing.
 
 ## Contact
 
-[SUPPORT EMAIL]
+mohsindevelop.me@gmail.com
