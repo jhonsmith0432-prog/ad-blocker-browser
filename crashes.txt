@@ -1,0 +1,80 @@
+10-27 18:28:28.969  4442  4442 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 18:28:28.974  4442  4442 I AndroidRuntime: Using default boot image
+10-27 18:28:28.978  4442  4442 I AndroidRuntime: Leaving lock profiling enabled
+10-27 18:28:28.983  4442  4442 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 18:28:28.984  4442  4442 I app_process: Using CollectorTypeCC GC.
+10-27 18:28:29.043  1622  2514 W ModernMediaScanner: Failed to apply ContentProviderOperation(type=insert uri=content://media/internal/file values={instance_id=null, compilation=null, disc_number=null, duration=3000, is_ringtone=1, album_artist=null, resolution=null, orientation=null, artist=<unknown>, author=null, height=null, is_drm=0, is_audiobook=0, date_modified=1720722121, writer=null, composer=null, _modifier=3, is_recording=0, datetaken=null, mime_type=audio/ogg, is_notification=0, bitrate=80000, cd_track_number=null, xmp=[], year=null, _data=/product/media/audio/ringtones/Andromeda.ogg, _size=24973, album=ringtones, genre=null, is_alarm=0, title=Andromeda, track=null, width=null, is_music=0, document_id=null, is_podcast=0, capture_framerate=null, num_tracks=1, original_document_id=null, media_type=2} exceptionAllowed)
+10-27 18:28:29.043  1622  2514 W ModernMediaScanner: android.database.sqlite.SQLiteConstraintException: UNIQUE constraint failed: files._data (code 2067 SQLITE_CONSTRAINT_UNIQUE)
+10-27 18:28:29.043  1622  2514 W ModernMediaScanner: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForLastInsertedRowId(Native Method)
+10-27 18:28:29.043  1622  2514 W ModernMediaScanner: 	at android.database.sqlite.SQLiteConnection.executeForLastInsertedRowId(SQLiteConnection.java:961)
+--
+10-27 18:28:29.339  4442  4442 D AndroidRuntime: Calling main entry com.android.commands.monkey.Monkey
+10-27 18:28:29.343  4442  4442 W Monkey  : args: [-p, com.nexcraft.browser, -c, android.intent.category.LAUNCHER, 1]
+10-27 18:28:29.343  4442  4442 W Monkey  :  arg: "-p"
+10-27 18:28:29.343  4442  4442 W Monkey  :  arg: "com.nexcraft.browser"
+10-27 18:28:29.343  4442  4442 W Monkey  :  arg: "-c"
+10-27 18:28:29.343  4442  4442 W Monkey  :  arg: "android.intent.category.LAUNCHER"
+10-27 18:28:29.344  4442  4442 W Monkey  :  arg: "1"
+--
+10-27 18:28:29.713  4442  4442 I AndroidRuntime: VM exiting with result code 0.
+10-27 18:28:29.719   335   366 I netd    : tetherGetStats() -> {[]} <0.31ms>
+10-27 18:28:29.738   335   366 I netd    : bandwidthSetGlobalAlert(2097152) <0.15ms>
+10-27 18:28:29.758  4489  4489 I ndk_translation: Initialized NDK translation (aarch64), version 0.2.3
+10-27 18:28:29.764  1462  2943 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+10-27 18:28:29.776  1413  3567 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-27 18:28:29.779  1413  1483 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+--
+10-27 18:29:30.298  6046  6046 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 18:29:30.317  6046  6046 I AndroidRuntime: Using default boot image
+10-27 18:29:30.318  6046  6046 I AndroidRuntime: Leaving lock profiling enabled
+10-27 18:29:30.320   522   811 I ActivityManager: Process com.android.dynsystem (pid 3418) has died: cch+99 CEM 
+10-27 18:29:30.321  6046  6046 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 18:29:30.322  6046  6046 I app_process: Using CollectorTypeCC GC.
+10-27 18:29:30.323   522   552 I libprocessgroup: Successfully killed process cgroup uid 1000 pid 3418 in 0ms
+10-27 18:29:30.323   134   134 I lowmemorykiller: Kill 'com.android.camera2' (3369), uid 10145, oom_score_adj 999 to free 32092kB rss, 35120kB swap; reason: low watermark is breached and swap is low (0kB < 190088kB)
+10-27 18:29:30.324   336   336 I Zygote  : Process 3418 exited due to signal 9 (Killed)
+--
+10-27 18:29:30.715  6046  6046 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 18:29:30.733  6046  6046 D UiAutomationConnection: Created on user UserHandle{0}
+10-27 18:29:30.733  6046  6046 I UiAutomation: Initialized for user 0 on display 0
+10-27 18:29:30.733  6046  6046 W UiAutomation: Created with deprecatead constructor, assumes DEFAULT_DISPLAY
+10-27 18:29:30.752   522   591 D AccessibilityManagerService: changeCurrentUserForTestAutomationIfNeededLocked(0): ignoring because device doesn't support visible background users
+10-27 18:29:30.756   522   591 I UiAutomationManager: Registering UiTestAutomationService (id=com.android.server.accessibility/UiAutomation) when called by user 0
+10-27 18:29:30.760  5552  5580 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+--
+10-27 18:29:32.090  6046  6046 D AndroidRuntime: Shutting down VM
+10-27 18:29:32.115   522   522 D BatterySaverPolicy: accessibility changed to false, updating policy.
+10-27 18:29:32.129  1750  2427 I A       : NGA enabled in interactor.
+10-27 18:29:32.129  1750  2427 I A       : Nga state changed to NgaStateDetails{state=ENABLED, isSpecialExperience=false}
+10-27 18:29:32.135  1655  1705 I A       : Initializing all components
+10-27 18:29:32.135  1655  2100 I A       : onIsEnabledChanged, isEnabled: false
+10-27 18:29:32.136  1655  2100 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+--
+10-27 18:29:33.500  6083  6083 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 18:29:33.511  6083  6083 I AndroidRuntime: Using default boot image
+10-27 18:29:33.511  6083  6083 I AndroidRuntime: Leaving lock profiling enabled
+10-27 18:29:33.513  6083  6083 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 18:29:33.514  6083  6083 I app_process: Using CollectorTypeCC GC.
+10-27 18:29:33.530  5552  5828 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.ipa.base.IpaGcmTaskService started execution. cause:9 exec_start_elapsed_seconds: 116 [CONTEXT service_id=218 ]
+10-27 18:29:33.546  5552  5638 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.ipa.base.IpaGcmTaskService finished executing. cause:9 result: 1 elapsed_millis: 57 uptime_millis: 57 exec_start_elapsed_seconds: 116 [CONTEXT service_id=218 ]
+10-27 18:29:33.626  6083  6083 D nativeloader: InitDefaultPublicLibraries for_preload=1: libandroid.so:libaaudio.so:libamidi.so:libbinder_ndk.so:libc.so:libcamera2ndk.so:libdl.so:libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libicu.so:libicui18n.so:libicuuc.so:libjnigraphics.so:liblog.so:libmediandk.so:libm.so:libnativehelper.so:libnativewindow.so:libOpenMAXAL.so:libOpenSLES.so:libRS.so:libstdc++.so:libsync.so:libvulkan.so:libwebviewchromium_plat_support.so:libz.so
+10-27 18:29:33.641  6083  6083 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+--
+10-27 18:29:33.688  6083  6083 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 18:29:33.701  6083  6083 D UiAutomationConnection: Created on user UserHandle{0}
+10-27 18:29:33.702  6083  6083 I UiAutomation: Initialized for user 0 on display 0
+10-27 18:29:33.702  6083  6083 W UiAutomation: Created with deprecatead constructor, assumes DEFAULT_DISPLAY
+10-27 18:29:33.707   522   898 D AccessibilityManagerService: changeCurrentUserForTestAutomationIfNeededLocked(0): ignoring because device doesn't support visible background users
+10-27 18:29:33.708   522   898 I UiAutomationManager: Registering UiTestAutomationService (id=com.android.server.accessibility/UiAutomation) when called by user 0
+10-27 18:29:33.719   522   898 W WindowMagnificationMgr: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+--
+10-27 18:29:34.809  6083  6083 D AndroidRuntime: Shutting down VM
+10-27 18:29:34.813  1750  2359 I A       : Nga state changed to NgaStateDetails{state=ENABLED, isSpecialExperience=false}
+10-27 18:29:34.817  1655  2100 I A       : on opa visibility changed false
+10-27 18:29:34.819  1655  2100 I A       : on opa visibility changed false
+10-27 18:29:34.846  1655  2155 I A       : Initializing all components
+10-27 18:29:34.846  1655  2155 I A       : APA or Classic session decision: SessionDecision(sessionVariance=CLASSIC, platformVariance=CLASSIC, justification=CURRENT_PLATFORM_VARIANCE).
+10-27 18:29:34.847  1655  2155 I A       : [Memory] eligibility: StashEligibility{6}
+--
+10-27 18:29:35.800  6112  6112 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 18:29:35.820  6112  6112 I AndroidRuntime: Using default boot image

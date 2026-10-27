@@ -1,0 +1,344 @@
++ adb wait-for-device
++ adb root
+restarting adbd as root
++ sleep 3
++ adb wait-for-device
++ adb logcat -G 16M
++ adb logcat -c
++ adb install-multiple -r -g --abi arm64-v8a splits/base-arm64_v8a.apk splits/base-master_2.apk splits/base-xxhdpi.apk
+Success
++ adb shell settings put global hide_error_dialogs 1
++ adb shell monkey -p com.nexcraft.browser -c android.intent.category.LAUNCHER 1
+  bash arg: -p
+  bash arg: com.nexcraft.browser
+  bash arg: -c
+  bash arg: android.intent.category.LAUNCHER
+  bash arg: 1
+args: [-p, com.nexcraft.browser, -c, android.intent.category.LAUNCHER, 1]
+ arg: "-p"
+ arg: "com.nexcraft.browser"
+ arg: "-c"
+ arg: "android.intent.category.LAUNCHER"
+ arg: "1"
+data="com.nexcraft.browser"
+data="android.intent.category.LAUNCHER"
+Events injected: 1
+## Network stats: elapsed time=249ms (0ms mobile, 0ms wifi, 249ms not connected)
++ sleep 60
++ wait_anr
++ for i in 1 2 3
++ tap_text '^(Wait)$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^(Wait)$'
++ b=
++ '[' -z '' ']'
++ return 1
++ break
++ shot 01_first_launch
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/01_first_launch.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 54.2 MB/s (288484 bytes in 0.005s)
++ echo 'FIRST LAUNCH:'
+FIRST LAUNCH:
++ screen_text 01
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_01.xml
++ grep -o 'text="[^"]\+"' out/ui_01.xml
++ head -40
++ tr '\n' ' '
+text="Skip" text="Ads gone. Pages faster." text="A full ad blocker is built in. Banners, pop-ups and video ads are blocked on every site, so pages load faster and use less data." text="Next" + echo
+
++ tap_text '^Next$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^Next$'
++ b='540 2072'
++ '[' -z '540 2072' ']'
++ adb shell input tap 540 2072
++ sleep 3
++ shot 02_welcome2
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/02_welcome2.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 75.8 MB/s (284052 bytes in 0.004s)
++ screen_text 02
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_02.xml
++ grep -o 'text="[^"]\+"' out/ui_02.xml
++ head -40
++ tr '\n' ' '
+text="Skip" text="Private by default" text="Strict tracking protection, HTTPS-only and Global Privacy Control are on from the first tap. We don't collect your data." text="Next" + echo
+
++ tap_text '^Next$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^Next$'
++ b='540 2072'
++ '[' -z '540 2072' ']'
++ adb shell input tap 540 2072
++ sleep 3
++ shot 03_welcome3
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/03_welcome3.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 32.4 MB/s (283685 bytes in 0.008s)
++ screen_text 03
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_03.xml
++ grep -o 'text="[^"]\+"' out/ui_03.xml
++ head -40
++ tr '\n' ' '
+text="Skip" text="Go further with Premium" text="Lock the whole app and browse always incognito. Try it free for 3 days." text="See Premium" text="Start browsing" + echo
+
++ tap_text '^Start browsing$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^Start browsing$'
++ b='540 2211'
++ '[' -z '540 2211' ']'
++ adb shell input tap 540 2211
++ sleep 15
++ wait_anr
++ for i in 1 2 3
++ tap_text '^(Wait)$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^(Wait)$'
++ b=
++ '[' -z '' ']'
++ return 1
++ break
++ shot 04_home
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/04_home.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 1.5 MB/s (67875 bytes in 0.042s)
++ echo HOME:
+HOME:
++ screen_text 04
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_04.xml
++ tr '\n' ' '
++ grep -o 'text="[^"]\+"' out/ui_04.xml
++ head -40
+text="You’re protected" + echo
+
++ tap_text '^(Not now|Close|Got it|Maybe later|No thanks)$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^(Not now|Close|Got it|Maybe later|No thanks)$'
++ b=
++ '[' -z '' ']'
++ return 1
++ open_url https://d3ward.github.io/toolz/adblock.html
++ adb shell am start -a android.intent.action.VIEW -d https://d3ward.github.io/toolz/adblock.html -p com.nexcraft.browser
++ sleep 50
++ wait_anr
++ for i in 1 2 3
++ tap_text '^(Wait)$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^(Wait)$'
++ b=
++ '[' -z '' ']'
++ return 1
++ break
++ shot 05_adblock_test
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/05_adblock_test.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 94.5 MB/s (135655 bytes in 0.001s)
++ screen_text 05
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_05.xml
++ grep -o 'text="[^"]\+"' out/ui_05.xml
++ head -40
++ tr '\n' ' '
+text="Test Ad Block - Toolz" text="Nav menu" text="This project is no longer maintained and has been archived." text="Thank you for being part of this journey and for your support. " text="Using " text="Tabler Icons" text=" (" text="MIT" text=")" text=" &amp; " text="simpleicons" text=" (" text="CC0-1.0" text=")" text="Designed and built with ♥ by " text="Ursu Eduard (d3ward) " text="© 2025 " + echo
+
++ open_url https://www.bbc.com/news
++ adb shell am start -a android.intent.action.VIEW -d https://www.bbc.com/news -p com.nexcraft.browser
++ sleep 45
++ wait_anr
++ for i in 1 2 3
++ tap_text '^(Wait)$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^(Wait)$'
++ b=
++ '[' -z '' ']'
++ return 1
++ break
++ shot 06_bbc_cookie
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/06_bbc_cookie.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 158.1 MB/s (918697 bytes in 0.006s)
++ screen_text 06
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_06.xml
++ grep -o 'text="[^"]\+"' out/ui_06.xml
++ head -40
++ tr '\n' ' '
+text="BBC News - Breaking news, video and the latest top stories from the U.S. and around the world" text="Open menu" text="British Broadcasting Corporation" text="News" + echo
+
++ open_url https://www.theguardian.com/international
++ adb shell am start -a android.intent.action.VIEW -d https://www.theguardian.com/international -p com.nexcraft.browser
++ sleep 45
++ wait_anr
++ for i in 1 2 3
++ tap_text '^(Wait)$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^(Wait)$'
++ b=
++ '[' -z '' ']'
++ return 1
++ break
++ shot 07_guardian_cookie
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/07_guardian_cookie.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 150.3 MB/s (546586 bytes in 0.003s)
++ screen_text 07
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_07.xml
++ grep -o 'text="[^"]\+"' out/ui_07.xml
++ head -40
++ tr '\n' ' '
+text="Latest news, sport and opinion from the Guardian" text="Make a year-end gift" text="Highlights" text="Edition" text="​ News" text="News" text="​ Opinion" text="Opinion" text="​ Sport" text="Sport" text="​ Culture" text="Culture" text="​ Lifestyle" text="Lifestyle" text="Toggle main menu" text="US news" text="US news" text="US politics" text="US politics" text="Midterms 2026" text="Midterms 2026" text="World" text="World" text="Climate crisis" text="Climate crisis" text="Middle East" text="Middle East" text="You are viewing the " text="International" text=" homepage " text="View the " text="US" text=" homepage" text="Close banner" text="News" text="Opposition condemns Netanyahu’s bid to extend voting hours in pivotal Israeli election Slideshow LiveOpposition condemns Netanyahu’s bid to extend voting hours in pivotal Israeli election 5m ago VideoIsraeli presidential candidates cast their votes in consequential election ExplainerWhat you need to know about the most consequential election in Israel’s history West BankInternational delegates barred from entering West Bank In picturesIsrael goes to the polls" text="SP Consent Message" text="SP Consent Message" text="SP Consent Message" text="Global Privacy Control Signal Detected; Opt-Out Request Honored" + echo
+
++ adb shell am start -n com.nexcraft.browser/org.mozilla.fenix.nex.PremiumActivity
+Starting: Intent { cmp=com.nexcraft.browser/org.mozilla.fenix.nex.PremiumActivity }
++ sleep 12
++ shot 08_premium
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/08_premium.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 111.8 MB/s (202900 bytes in 0.002s)
++ echo PREMIUM:
+PREMIUM:
++ screen_text 08
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_08.xml
++ grep -o 'text="[^"]\+"' out/ui_08.xml
++ tr '\n' ' '
++ head -40
+text="Not now" text="Premium" text="You're Premium. Thank you!" text="8 ads and trackers blocked on this phone" text="App lock" text="Ask for your fingerprint or PIN every time you open the browser" text="Always incognito" text="Open every session and link in private mode" text="Shield Credits" text="No credits" text="Credit code from support" text="Redeem code" text="Terms" text="Refunds" text="Privacy" + echo
+
++ adb shell input swipe 540 1800 540 600 400
++ sleep 2
++ shot 08b_premium_scrolled
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/08b_premium_scrolled.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 53.0 MB/s (202900 bytes in 0.004s)
++ screen_text 08b
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_08b.xml
++ grep -o 'text="[^"]\+"' out/ui_08b.xml
++ head -40
++ tr '\n' ' '
+text="Not now" text="Premium" text="You're Premium. Thank you!" text="8 ads and trackers blocked on this phone" text="App lock" text="Ask for your fingerprint or PIN every time you open the browser" text="Always incognito" text="Open every session and link in private mode" text="Shield Credits" text="No credits" text="Credit code from support" text="Redeem code" text="Terms" text="Refunds" text="Privacy" + echo
+
++ adb shell input keyevent KEYCODE_BACK
++ sleep 3
++ echo '== process alive? =='
+== process alive? ==
++ adb shell pidof com.nexcraft.browser
+4489
++ echo '== crashes =='
+== crashes ==
++ adb logcat -d
++ head -80
++ grep -E 'FATAL EXCEPTION|AndroidRuntime: |Process: com.nexcraft.browser' -A6
++ cat out/crashes.txt
+10-27 18:28:28.969  4442  4442 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 18:28:28.974  4442  4442 I AndroidRuntime: Using default boot image
+10-27 18:28:28.978  4442  4442 I AndroidRuntime: Leaving lock profiling enabled
+10-27 18:28:28.983  4442  4442 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 18:28:28.984  4442  4442 I app_process: Using CollectorTypeCC GC.
+10-27 18:28:29.043  1622  2514 W ModernMediaScanner: Failed to apply ContentProviderOperation(type=insert uri=content://media/internal/file values={instance_id=null, compilation=null, disc_number=null, duration=3000, is_ringtone=1, album_artist=null, resolution=null, orientation=null, artist=<unknown>, author=null, height=null, is_drm=0, is_audiobook=0, date_modified=1720722121, writer=null, composer=null, _modifier=3, is_recording=0, datetaken=null, mime_type=audio/ogg, is_notification=0, bitrate=80000, cd_track_number=null, xmp=[], year=null, _data=/product/media/audio/ringtones/Andromeda.ogg, _size=24973, album=ringtones, genre=null, is_alarm=0, title=Andromeda, track=null, width=null, is_music=0, document_id=null, is_podcast=0, capture_framerate=null, num_tracks=1, original_document_id=null, media_type=2} exceptionAllowed)
+10-27 18:28:29.043  1622  2514 W ModernMediaScanner: android.database.sqlite.SQLiteConstraintException: UNIQUE constraint failed: files._data (code 2067 SQLITE_CONSTRAINT_UNIQUE)
+10-27 18:28:29.043  1622  2514 W ModernMediaScanner: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForLastInsertedRowId(Native Method)
+10-27 18:28:29.043  1622  2514 W ModernMediaScanner: 	at android.database.sqlite.SQLiteConnection.executeForLastInsertedRowId(SQLiteConnection.java:961)
+--
+10-27 18:28:29.339  4442  4442 D AndroidRuntime: Calling main entry com.android.commands.monkey.Monkey
+10-27 18:28:29.343  4442  4442 W Monkey  : args: [-p, com.nexcraft.browser, -c, android.intent.category.LAUNCHER, 1]
+10-27 18:28:29.343  4442  4442 W Monkey  :  arg: "-p"
+10-27 18:28:29.343  4442  4442 W Monkey  :  arg: "com.nexcraft.browser"
+10-27 18:28:29.343  4442  4442 W Monkey  :  arg: "-c"
+10-27 18:28:29.343  4442  4442 W Monkey  :  arg: "android.intent.category.LAUNCHER"
+10-27 18:28:29.344  4442  4442 W Monkey  :  arg: "1"
+--
+10-27 18:28:29.713  4442  4442 I AndroidRuntime: VM exiting with result code 0.
+10-27 18:28:29.719   335   366 I netd    : tetherGetStats() -> {[]} <0.31ms>
+10-27 18:28:29.738   335   366 I netd    : bandwidthSetGlobalAlert(2097152) <0.15ms>
+10-27 18:28:29.758  4489  4489 I ndk_translation: Initialized NDK translation (aarch64), version 0.2.3
+10-27 18:28:29.764  1462  2943 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+10-27 18:28:29.776  1413  3567 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-27 18:28:29.779  1413  1483 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+--
+10-27 18:29:30.298  6046  6046 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 18:29:30.317  6046  6046 I AndroidRuntime: Using default boot image
+10-27 18:29:30.318  6046  6046 I AndroidRuntime: Leaving lock profiling enabled
+10-27 18:29:30.320   522   811 I ActivityManager: Process com.android.dynsystem (pid 3418) has died: cch+99 CEM 
+10-27 18:29:30.321  6046  6046 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 18:29:30.322  6046  6046 I app_process: Using CollectorTypeCC GC.
+10-27 18:29:30.323   522   552 I libprocessgroup: Successfully killed process cgroup uid 1000 pid 3418 in 0ms
+10-27 18:29:30.323   134   134 I lowmemorykiller: Kill 'com.android.camera2' (3369), uid 10145, oom_score_adj 999 to free 32092kB rss, 35120kB swap; reason: low watermark is breached and swap is low (0kB < 190088kB)
+10-27 18:29:30.324   336   336 I Zygote  : Process 3418 exited due to signal 9 (Killed)
+--
+10-27 18:29:30.715  6046  6046 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 18:29:30.733  6046  6046 D UiAutomationConnection: Created on user UserHandle{0}
+10-27 18:29:30.733  6046  6046 I UiAutomation: Initialized for user 0 on display 0
+10-27 18:29:30.733  6046  6046 W UiAutomation: Created with deprecatead constructor, assumes DEFAULT_DISPLAY
+10-27 18:29:30.752   522   591 D AccessibilityManagerService: changeCurrentUserForTestAutomationIfNeededLocked(0): ignoring because device doesn't support visible background users
+10-27 18:29:30.756   522   591 I UiAutomationManager: Registering UiTestAutomationService (id=com.android.server.accessibility/UiAutomation) when called by user 0
+10-27 18:29:30.760  5552  5580 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+--
+10-27 18:29:32.090  6046  6046 D AndroidRuntime: Shutting down VM
+10-27 18:29:32.115   522   522 D BatterySaverPolicy: accessibility changed to false, updating policy.
+10-27 18:29:32.129  1750  2427 I A       : NGA enabled in interactor.
+10-27 18:29:32.129  1750  2427 I A       : Nga state changed to NgaStateDetails{state=ENABLED, isSpecialExperience=false}
+10-27 18:29:32.135  1655  1705 I A       : Initializing all components
+10-27 18:29:32.135  1655  2100 I A       : onIsEnabledChanged, isEnabled: false
+10-27 18:29:32.136  1655  2100 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+--
+10-27 18:29:33.500  6083  6083 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 18:29:33.511  6083  6083 I AndroidRuntime: Using default boot image
+10-27 18:29:33.511  6083  6083 I AndroidRuntime: Leaving lock profiling enabled
+10-27 18:29:33.513  6083  6083 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 18:29:33.514  6083  6083 I app_process: Using CollectorTypeCC GC.
+10-27 18:29:33.530  5552  5828 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.ipa.base.IpaGcmTaskService started execution. cause:9 exec_start_elapsed_seconds: 116 [CONTEXT service_id=218 ]
+10-27 18:29:33.546  5552  5638 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.ipa.base.IpaGcmTaskService finished executing. cause:9 result: 1 elapsed_millis: 57 uptime_millis: 57 exec_start_elapsed_seconds: 116 [CONTEXT service_id=218 ]
+10-27 18:29:33.626  6083  6083 D nativeloader: InitDefaultPublicLibraries for_preload=1: libandroid.so:libaaudio.so:libamidi.so:libbinder_ndk.so:libc.so:libcamera2ndk.so:libdl.so:libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libicu.so:libicui18n.so:libicuuc.so:libjnigraphics.so:liblog.so:libmediandk.so:libm.so:libnativehelper.so:libnativewindow.so:libOpenMAXAL.so:libOpenSLES.so:libRS.so:libstdc++.so:libsync.so:libvulkan.so:libwebviewchromium_plat_support.so:libz.so
+10-27 18:29:33.641  6083  6083 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+--
+10-27 18:29:33.688  6083  6083 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 18:29:33.701  6083  6083 D UiAutomationConnection: Created on user UserHandle{0}
+10-27 18:29:33.702  6083  6083 I UiAutomation: Initialized for user 0 on display 0
+10-27 18:29:33.702  6083  6083 W UiAutomation: Created with deprecatead constructor, assumes DEFAULT_DISPLAY
+10-27 18:29:33.707   522   898 D AccessibilityManagerService: changeCurrentUserForTestAutomationIfNeededLocked(0): ignoring because device doesn't support visible background users
+10-27 18:29:33.708   522   898 I UiAutomationManager: Registering UiTestAutomationService (id=com.android.server.accessibility/UiAutomation) when called by user 0
+10-27 18:29:33.719   522   898 W WindowMagnificationMgr: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+--
+10-27 18:29:34.809  6083  6083 D AndroidRuntime: Shutting down VM
+10-27 18:29:34.813  1750  2359 I A       : Nga state changed to NgaStateDetails{state=ENABLED, isSpecialExperience=false}
+10-27 18:29:34.817  1655  2100 I A       : on opa visibility changed false
+10-27 18:29:34.819  1655  2100 I A       : on opa visibility changed false
+10-27 18:29:34.846  1655  2155 I A       : Initializing all components
+10-27 18:29:34.846  1655  2155 I A       : APA or Classic session decision: SessionDecision(sessionVariance=CLASSIC, platformVariance=CLASSIC, justification=CURRENT_PLATFORM_VARIANCE).
+10-27 18:29:34.847  1655  2155 I A       : [Memory] eligibility: StashEligibility{6}
+--
+10-27 18:29:35.800  6112  6112 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 18:29:35.820  6112  6112 I AndroidRuntime: Using default boot image
++ echo '== uBlock / extension errors =='
+== uBlock / extension errors ==
++ adb logcat -d
++ head -40
++ grep -iE 'ublock|content blocker|nexvpn|WebExtension.*(fail|error)'
+10-27 18:28:53.794  4489  4489 I WebExtension: releasePendingMessages: extension=nexvpn@nexcraftgames.com nativeApp=nexvpn session=null
++ adb logcat -d
