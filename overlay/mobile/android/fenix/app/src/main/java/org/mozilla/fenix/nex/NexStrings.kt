@@ -17,7 +17,7 @@ object NexStrings {
         "ob2_title" to "Private by default",
         "ob2_body" to "Strict tracking protection, HTTPS-only and Global Privacy Control are on from the first tap. We don't collect your data.",
         "ob3_title" to "Go further with Premium",
-        "ob3_body" to "Browser VPN, always-incognito mode and more. Try it free for 3 days.",
+        "ob3_body" to "Lock the whole app and browse always incognito. Try it free for 3 days.",
         "next" to "Next", "start" to "Start browsing", "skip" to "Skip", "see_premium" to "See Premium",
         "premium" to "Premium", "not_now" to "Not now", "is_premium" to "You're Premium. Thank you!",
         "blocked" to "%1\$s ads and trackers blocked on this phone",
@@ -43,6 +43,7 @@ object NexStrings {
         "vpn_soon" to "VPN locations are launching soon. You'll get them automatically.",
         "vpn_note" to "Covers pages you open in this browser. Other apps are not affected.",
         "terms" to "Terms", "refunds" to "Refunds", "privacy" to "Privacy",
+        "f_applock" to "App lock: your fingerprint or PIN to open the browser", "applock" to "App lock", "applock_sub" to "Ask for your fingerprint or PIN every time you open the browser", "applock_need" to "Set a screen lock on your phone first.", "unlock" to "Unlock", "unlock_title" to "Unlock to continue",
     )
 
     private val ES = mapOf(
@@ -51,7 +52,7 @@ object NexStrings {
         "ob2_title" to "Privado por defecto",
         "ob2_body" to "Protección estricta contra rastreo, solo HTTPS y Global Privacy Control activados desde el primer toque. No recopilamos tus datos.",
         "ob3_title" to "Ve más allá con Premium",
-        "ob3_body" to "VPN del navegador, modo siempre incógnito y más. Pruébalo gratis 3 días.",
+        "ob3_body" to "Bloquea toda la app y navega siempre en modo incógnito. Pruébalo gratis 3 días.",
         "next" to "Siguiente", "start" to "Empezar a navegar", "skip" to "Omitir", "see_premium" to "Ver Premium",
         "premium" to "Premium", "not_now" to "Ahora no", "is_premium" to "Eres Premium. ¡Gracias!",
         "blocked" to "%1\$s anuncios y rastreadores bloqueados en este teléfono",
@@ -77,6 +78,7 @@ object NexStrings {
         "vpn_soon" to "Las ubicaciones de la VPN llegarán pronto. Las recibirás automáticamente.",
         "vpn_note" to "Cubre las páginas que abres en este navegador. No afecta a otras apps.",
         "terms" to "Términos", "refunds" to "Reembolsos", "privacy" to "Privacidad",
+        "f_applock" to "Bloqueo de app: tu huella o PIN para abrir el navegador", "applock" to "Bloqueo de app", "applock_sub" to "Pide tu huella o PIN cada vez que abras el navegador", "applock_need" to "Primero configura un bloqueo de pantalla en tu teléfono.", "unlock" to "Desbloquear", "unlock_title" to "Desbloquea para continuar",
     )
 
     private val PT = mapOf(
@@ -85,7 +87,7 @@ object NexStrings {
         "ob2_title" to "Privado por padrão",
         "ob2_body" to "Proteção rigorosa contra rastreamento, somente HTTPS e Global Privacy Control ativados desde o primeiro toque. Não coletamos seus dados.",
         "ob3_title" to "Vá além com o Premium",
-        "ob3_body" to "VPN do navegador, modo sempre anônimo e mais. Experimente grátis por 3 dias.",
+        "ob3_body" to "Bloqueie o app inteiro e navegue sempre no modo anônimo. Experimente grátis por 3 dias.",
         "next" to "Avançar", "start" to "Começar a navegar", "skip" to "Pular", "see_premium" to "Ver Premium",
         "premium" to "Premium", "not_now" to "Agora não", "is_premium" to "Você é Premium. Obrigado!",
         "blocked" to "%1\$s anúncios e rastreadores bloqueados neste celular",
@@ -111,6 +113,7 @@ object NexStrings {
         "vpn_soon" to "Os locais da VPN chegam em breve. Você os receberá automaticamente.",
         "vpn_note" to "Vale para as páginas abertas neste navegador. Outros apps não são afetados.",
         "terms" to "Termos", "refunds" to "Reembolsos", "privacy" to "Privacidade",
+        "f_applock" to "Bloqueio do app: sua digital ou PIN para abrir o navegador", "applock" to "Bloqueio do app", "applock_sub" to "Peça sua digital ou PIN sempre que abrir o navegador", "applock_need" to "Primeiro configure um bloqueio de tela no seu celular.", "unlock" to "Desbloquear", "unlock_title" to "Desbloqueie para continuar",
     )
 
     private val FR = mapOf(
@@ -119,7 +122,7 @@ object NexStrings {
         "ob2_title" to "Privé par défaut",
         "ob2_body" to "Protection renforcée contre le pistage, HTTPS uniquement et Global Privacy Control activés dès le premier lancement. Nous ne collectons pas vos données.",
         "ob3_title" to "Allez plus loin avec Premium",
-        "ob3_body" to "VPN du navigateur, mode toujours privé et plus encore. Essai gratuit de 3 jours.",
+        "ob3_body" to "Verrouillez toute l'appli et naviguez toujours en privé. Essai gratuit de 3 jours.",
         "next" to "Suivant", "start" to "Commencer à naviguer", "skip" to "Passer", "see_premium" to "Voir Premium",
         "premium" to "Premium", "not_now" to "Plus tard", "is_premium" to "Vous êtes Premium. Merci !",
         "blocked" to "%1\$s publicités et traqueurs bloqués sur ce téléphone",
@@ -145,6 +148,7 @@ object NexStrings {
         "vpn_soon" to "Les emplacements VPN arrivent bientôt. Vous les recevrez automatiquement.",
         "vpn_note" to "Concerne les pages ouvertes dans ce navigateur. Les autres applis ne sont pas concernées.",
         "terms" to "Conditions", "refunds" to "Remboursements", "privacy" to "Confidentialité",
+        "f_applock" to "Verrou de l'appli : empreinte ou code pour ouvrir le navigateur", "applock" to "Verrou de l'appli", "applock_sub" to "Demander votre empreinte ou votre code à chaque ouverture du navigateur", "applock_need" to "Configurez d'abord un verrouillage d'écran sur votre téléphone.", "unlock" to "Déverrouiller", "unlock_title" to "Déverrouillez pour continuer",
     )
 
     private val DE = mapOf(
@@ -153,7 +157,7 @@ object NexStrings {
         "ob2_title" to "Standardmäßig privat",
         "ob2_body" to "Strenger Tracking-Schutz, Nur-HTTPS und Global Privacy Control sind ab dem ersten Start aktiv. Wir sammeln keine Daten von dir.",
         "ob3_title" to "Mehr mit Premium",
-        "ob3_body" to "Browser-VPN, Immer-privat-Modus und mehr. 3 Tage kostenlos testen.",
+        "ob3_body" to "Sperre die ganze App und surfe immer privat. 3 Tage kostenlos testen.",
         "next" to "Weiter", "start" to "Lossurfen", "skip" to "Überspringen", "see_premium" to "Premium ansehen",
         "premium" to "Premium", "not_now" to "Nicht jetzt", "is_premium" to "Du bist Premium. Danke!",
         "blocked" to "%1\$s Werbungen und Tracker auf diesem Handy blockiert",
@@ -179,6 +183,7 @@ object NexStrings {
         "vpn_soon" to "VPN-Standorte kommen bald. Du bekommst sie automatisch.",
         "vpn_note" to "Gilt für Seiten in diesem Browser. Andere Apps sind nicht betroffen.",
         "terms" to "Bedingungen", "refunds" to "Erstattungen", "privacy" to "Datenschutz",
+        "f_applock" to "App-Sperre: Fingerabdruck oder PIN zum Öffnen des Browsers", "applock" to "App-Sperre", "applock_sub" to "Bei jedem Öffnen des Browsers nach Fingerabdruck oder PIN fragen", "applock_need" to "Richte zuerst eine Displaysperre auf deinem Handy ein.", "unlock" to "Entsperren", "unlock_title" to "Zum Fortfahren entsperren",
     )
 
     private val IT = mapOf(
@@ -187,7 +192,7 @@ object NexStrings {
         "ob2_title" to "Privato per impostazione predefinita",
         "ob2_body" to "Protezione antitracciamento rigorosa, solo HTTPS e Global Privacy Control attivi dal primo avvio. Non raccogliamo i tuoi dati.",
         "ob3_title" to "Vai oltre con Premium",
-        "ob3_body" to "VPN del browser, modalità sempre in incognito e altro. Provalo gratis per 3 giorni.",
+        "ob3_body" to "Blocca l'intera app e naviga sempre in incognito. Provalo gratis per 3 giorni.",
         "next" to "Avanti", "start" to "Inizia a navigare", "skip" to "Salta", "see_premium" to "Scopri Premium",
         "premium" to "Premium", "not_now" to "Non ora", "is_premium" to "Sei Premium. Grazie!",
         "blocked" to "%1\$s pubblicità e tracker bloccati su questo telefono",
@@ -213,6 +218,7 @@ object NexStrings {
         "vpn_soon" to "Le posizioni VPN arriveranno presto. Le riceverai in automatico.",
         "vpn_note" to "Vale per le pagine aperte in questo browser. Le altre app non sono interessate.",
         "terms" to "Termini", "refunds" to "Rimborsi", "privacy" to "Privacy",
+        "f_applock" to "Blocco app: impronta o PIN per aprire il browser", "applock" to "Blocco app", "applock_sub" to "Chiedi impronta o PIN ogni volta che apri il browser", "applock_need" to "Imposta prima un blocco schermo sul telefono.", "unlock" to "Sblocca", "unlock_title" to "Sblocca per continuare",
     )
 
     private val RU = mapOf(
@@ -221,7 +227,7 @@ object NexStrings {
         "ob2_title" to "Приватность по умолчанию",
         "ob2_body" to "Строгая защита от отслеживания, только HTTPS и Global Privacy Control включены с первого запуска. Мы не собираем ваши данные.",
         "ob3_title" to "Больше возможностей с Premium",
-        "ob3_body" to "VPN в браузере, режим «всегда инкогнито» и другое. 3 дня бесплатно.",
+        "ob3_body" to "Блокируйте всё приложение и всегда работайте в режиме инкогнито. 3 дня бесплатно.",
         "next" to "Далее", "start" to "Начать", "skip" to "Пропустить", "see_premium" to "Узнать о Premium",
         "premium" to "Premium", "not_now" to "Не сейчас", "is_premium" to "У вас Premium. Спасибо!",
         "blocked" to "Заблокировано рекламы и трекеров на этом телефоне: %1\$s",
@@ -247,6 +253,7 @@ object NexStrings {
         "vpn_soon" to "Серверы VPN скоро появятся. Вы получите их автоматически.",
         "vpn_note" to "Работает для страниц в этом браузере. На другие приложения не влияет.",
         "terms" to "Условия", "refunds" to "Возвраты", "privacy" to "Конфиденциальность",
+        "f_applock" to "Блокировка приложения: отпечаток или PIN для входа", "applock" to "Блокировка приложения", "applock_sub" to "Запрашивать отпечаток или PIN при каждом открытии браузера", "applock_need" to "Сначала включите блокировку экрана на телефоне.", "unlock" to "Разблокировать", "unlock_title" to "Разблокируйте, чтобы продолжить",
     )
 
     private val TR = mapOf(
@@ -255,7 +262,7 @@ object NexStrings {
         "ob2_title" to "Varsayılan olarak gizli",
         "ob2_body" to "Sıkı izleme koruması, yalnızca HTTPS ve Global Privacy Control ilk dokunuştan itibaren açık. Verilerinizi toplamıyoruz.",
         "ob3_title" to "Premium ile daha fazlası",
-        "ob3_body" to "Tarayıcı VPN'i, her zaman gizli mod ve daha fazlası. 3 gün ücretsiz deneyin.",
+        "ob3_body" to "Uygulamanın tamamını kilitleyin ve her zaman gizli gezinin. 3 gün ücretsiz deneyin.",
         "next" to "İleri", "start" to "Gezinmeye başla", "skip" to "Atla", "see_premium" to "Premium'a göz at",
         "premium" to "Premium", "not_now" to "Şimdi değil", "is_premium" to "Premium üyesiniz. Teşekkürler!",
         "blocked" to "Bu telefonda %1\$s reklam ve izleyici engellendi",
@@ -281,6 +288,7 @@ object NexStrings {
         "vpn_soon" to "VPN konumları yakında geliyor. Otomatik olarak alacaksınız.",
         "vpn_note" to "Bu tarayıcıda açtığınız sayfalar için geçerlidir. Diğer uygulamalar etkilenmez.",
         "terms" to "Koşullar", "refunds" to "İadeler", "privacy" to "Gizlilik",
+        "f_applock" to "Uygulama kilidi: tarayıcıyı açmak için parmak izi veya PIN", "applock" to "Uygulama kilidi", "applock_sub" to "Tarayıcıyı her açışınızda parmak izi veya PIN iste", "applock_need" to "Önce telefonunuzda bir ekran kilidi ayarlayın.", "unlock" to "Kilidi aç", "unlock_title" to "Devam etmek için kilidi açın",
     )
 
     private val AR = mapOf(
@@ -289,7 +297,7 @@ object NexStrings {
         "ob2_title" to "خاص افتراضيًا",
         "ob2_body" to "حماية صارمة من التتبع وHTTPS فقط وGlobal Privacy Control مفعّلة من أول استخدام. لا نجمع بياناتك.",
         "ob3_title" to "المزيد مع Premium",
-        "ob3_body" to "VPN للمتصفح ووضع التصفح الخفي الدائم والمزيد. جرّبه مجانًا لمدة 3 أيام.",
+        "ob3_body" to "اقفل التطبيق بالكامل وتصفح دائمًا في الوضع الخفي. جرّبه مجانًا لمدة 3 أيام.",
         "next" to "التالي", "start" to "ابدأ التصفح", "skip" to "تخطٍّ", "see_premium" to "اعرض Premium",
         "premium" to "Premium", "not_now" to "ليس الآن", "is_premium" to "أنت مشترك في Premium. شكرًا لك!",
         "blocked" to "تم حظر %1\$s من الإعلانات وأدوات التتبع على هذا الهاتف",
@@ -315,6 +323,7 @@ object NexStrings {
         "vpn_soon" to "مواقع VPN قادمة قريبًا، وستصلك تلقائيًا.",
         "vpn_note" to "يشمل الصفحات التي تفتحها في هذا المتصفح فقط، ولا يؤثر على التطبيقات الأخرى.",
         "terms" to "الشروط", "refunds" to "الاسترداد", "privacy" to "الخصوصية",
+        "f_applock" to "قفل التطبيق: بصمتك أو رمز PIN لفتح المتصفح", "applock" to "قفل التطبيق", "applock_sub" to "اطلب البصمة أو رمز PIN في كل مرة تفتح فيها المتصفح", "applock_need" to "اضبط قفل الشاشة على هاتفك أولًا.", "unlock" to "فتح القفل", "unlock_title" to "افتح القفل للمتابعة",
     )
 
     private val HI = mapOf(
@@ -323,7 +332,7 @@ object NexStrings {
         "ob2_title" to "शुरू से ही निजी",
         "ob2_body" to "सख़्त ट्रैकिंग सुरक्षा, केवल HTTPS और Global Privacy Control पहली बार से ही चालू हैं। हम आपका डेटा इकट्ठा नहीं करते।",
         "ob3_title" to "Premium के साथ और भी ज़्यादा",
-        "ob3_body" to "ब्राउज़र VPN, हमेशा इनकॉग्निटो मोड और भी बहुत कुछ। 3 दिन मुफ़्त आज़माएँ।",
+        "ob3_body" to "पूरा ऐप लॉक करें और हमेशा इनकॉग्निटो में ब्राउज़ करें। 3 दिन मुफ़्त आज़माएँ।",
         "next" to "आगे", "start" to "ब्राउज़िंग शुरू करें", "skip" to "छोड़ें", "see_premium" to "Premium देखें",
         "premium" to "Premium", "not_now" to "अभी नहीं", "is_premium" to "आप Premium सदस्य हैं। धन्यवाद!",
         "blocked" to "इस फ़ोन पर %1\$s विज्ञापन और ट्रैकर ब्लॉक हुए",
@@ -349,6 +358,7 @@ object NexStrings {
         "vpn_soon" to "VPN लोकेशन जल्द आ रही हैं। ये आपको अपने-आप मिल जाएँगी।",
         "vpn_note" to "यह इस ब्राउज़र में खोले गए पेजों पर लागू होता है। दूसरे ऐप पर असर नहीं पड़ता।",
         "terms" to "शर्तें", "refunds" to "रिफ़ंड", "privacy" to "निजता",
+        "f_applock" to "ऐप लॉक: ब्राउज़र खोलने के लिए फ़िंगरप्रिंट या PIN", "applock" to "ऐप लॉक", "applock_sub" to "हर बार ब्राउज़र खोलने पर फ़िंगरप्रिंट या PIN माँगें", "applock_need" to "पहले अपने फ़ोन पर स्क्रीन लॉक सेट करें।", "unlock" to "अनलॉक करें", "unlock_title" to "जारी रखने के लिए अनलॉक करें",
     )
 
     private val ID = mapOf(
@@ -357,7 +367,7 @@ object NexStrings {
         "ob2_title" to "Privat sejak awal",
         "ob2_body" to "Perlindungan pelacakan ketat, khusus HTTPS, dan Global Privacy Control aktif sejak pertama dibuka. Kami tidak mengumpulkan data Anda.",
         "ob3_title" to "Lebih banyak dengan Premium",
-        "ob3_body" to "VPN browser, mode selalu penyamaran, dan lainnya. Coba gratis 3 hari.",
+        "ob3_body" to "Kunci seluruh aplikasi dan selalu jelajah dalam mode penyamaran. Coba gratis 3 hari.",
         "next" to "Lanjut", "start" to "Mulai menjelajah", "skip" to "Lewati", "see_premium" to "Lihat Premium",
         "premium" to "Premium", "not_now" to "Nanti saja", "is_premium" to "Anda pengguna Premium. Terima kasih!",
         "blocked" to "%1\$s iklan dan pelacak diblokir di ponsel ini",
@@ -383,6 +393,7 @@ object NexStrings {
         "vpn_soon" to "Lokasi VPN segera hadir. Anda akan mendapatkannya otomatis.",
         "vpn_note" to "Berlaku untuk halaman yang dibuka di browser ini. Aplikasi lain tidak terpengaruh.",
         "terms" to "Ketentuan", "refunds" to "Pengembalian dana", "privacy" to "Privasi",
+        "f_applock" to "Kunci aplikasi: sidik jari atau PIN untuk membuka browser", "applock" to "Kunci aplikasi", "applock_sub" to "Minta sidik jari atau PIN setiap kali membuka browser", "applock_need" to "Atur kunci layar di ponsel Anda terlebih dahulu.", "unlock" to "Buka kunci", "unlock_title" to "Buka kunci untuk melanjutkan",
     )
 
     private val JA = mapOf(
@@ -391,7 +402,7 @@ object NexStrings {
         "ob2_title" to "最初からプライベート",
         "ob2_body" to "厳格なトラッキング防止、HTTPS のみ、Global Privacy Control を最初からオン。あなたのデータは収集しません。",
         "ob3_title" to "Premium でもっと便利に",
-        "ob3_body" to "ブラウザ VPN、常時シークレットモードなど。3 日間無料でお試しいただけます。",
+        "ob3_body" to "アプリ全体をロックして、常にシークレットでブラウジング。3 日間無料でお試しください。",
         "next" to "次へ", "start" to "ブラウジングを開始", "skip" to "スキップ", "see_premium" to "Premium を見る",
         "premium" to "Premium", "not_now" to "あとで", "is_premium" to "Premium をご利用中です。ありがとうございます！",
         "blocked" to "この端末でブロックした広告とトラッカー: %1\$s",
@@ -417,6 +428,7 @@ object NexStrings {
         "vpn_soon" to "VPN の接続先はまもなく公開されます。自動的に使えるようになります。",
         "vpn_note" to "このブラウザで開いたページが対象です。ほかのアプリには影響しません。",
         "terms" to "利用規約", "refunds" to "返金", "privacy" to "プライバシー",
+        "f_applock" to "アプリロック：指紋または PIN でブラウザを開く", "applock" to "アプリロック", "applock_sub" to "ブラウザを開くたびに指紋または PIN を要求", "applock_need" to "先にスマートフォンで画面ロックを設定してください。", "unlock" to "ロック解除", "unlock_title" to "続けるにはロックを解除してください",
     )
 
     private val KO = mapOf(
@@ -425,7 +437,7 @@ object NexStrings {
         "ob2_title" to "처음부터 비공개",
         "ob2_body" to "엄격한 추적 방지, HTTPS 전용, Global Privacy Control이 처음부터 켜져 있습니다. 사용자 데이터는 수집하지 않습니다.",
         "ob3_title" to "Premium으로 더 많이",
-        "ob3_body" to "브라우저 VPN, 항상 시크릿 모드 등. 3일 동안 무료로 사용해 보세요.",
+        "ob3_body" to "앱 전체를 잠그고 항상 시크릿 모드로 탐색하세요. 3일 무료 체험.",
         "next" to "다음", "start" to "탐색 시작", "skip" to "건너뛰기", "see_premium" to "Premium 보기",
         "premium" to "Premium", "not_now" to "나중에", "is_premium" to "Premium 사용 중입니다. 감사합니다!",
         "blocked" to "이 휴대폰에서 차단한 광고와 추적기: %1\$s",
@@ -451,6 +463,7 @@ object NexStrings {
         "vpn_soon" to "VPN 위치가 곧 추가됩니다. 자동으로 사용할 수 있게 됩니다.",
         "vpn_note" to "이 브라우저에서 연 페이지에 적용됩니다. 다른 앱에는 영향이 없습니다.",
         "terms" to "약관", "refunds" to "환불", "privacy" to "개인정보",
+        "f_applock" to "앱 잠금: 지문 또는 PIN으로 브라우저 열기", "applock" to "앱 잠금", "applock_sub" to "브라우저를 열 때마다 지문 또는 PIN 요청", "applock_need" to "먼저 휴대폰에 화면 잠금을 설정하세요.", "unlock" to "잠금 해제", "unlock_title" to "계속하려면 잠금을 해제하세요",
     )
 
     private val ZH = mapOf(
@@ -459,7 +472,7 @@ object NexStrings {
         "ob2_title" to "默认保护隐私",
         "ob2_body" to "严格的跟踪保护、仅限 HTTPS 和 Global Privacy Control 从第一次使用起就已开启。我们不收集你的数据。",
         "ob3_title" to "升级 Premium，体验更多",
-        "ob3_body" to "浏览器 VPN、始终无痕模式等更多功能。免费试用 3 天。",
+        "ob3_body" to "锁定整个应用，始终无痕浏览。免费试用 3 天。",
         "next" to "下一步", "start" to "开始浏览", "skip" to "跳过", "see_premium" to "了解 Premium",
         "premium" to "Premium", "not_now" to "以后再说", "is_premium" to "你已是 Premium 用户，感谢支持！",
         "blocked" to "已在此手机上拦截 %1\$s 个广告和跟踪器",
@@ -485,6 +498,7 @@ object NexStrings {
         "vpn_soon" to "VPN 节点即将上线，届时会自动提供给你。",
         "vpn_note" to "仅适用于在此浏览器中打开的网页，不影响其他应用。",
         "terms" to "条款", "refunds" to "退款", "privacy" to "隐私",
+        "f_applock" to "应用锁：用指纹或 PIN 打开浏览器", "applock" to "应用锁", "applock_sub" to "每次打开浏览器时要求验证指纹或 PIN", "applock_need" to "请先在手机上设置屏幕锁。", "unlock" to "解锁", "unlock_title" to "解锁以继续",
     )
 
     private val BY_LANG = mapOf(

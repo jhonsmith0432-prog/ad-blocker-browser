@@ -81,6 +81,13 @@ class NexPrefs(context: Context) {
         get() = prefs.getString(KEY_VPN_SERVERS, "") ?: ""
         set(value) = prefs.edit { putString(KEY_VPN_SERVERS, value) }
 
+    /** Premium App lock: ask for fingerprint / screen-lock PIN whenever the browser is opened. */
+    var appLock: Boolean
+        get() = prefs.getBoolean(KEY_APP_LOCK, false)
+        set(value) = prefs.edit { putBoolean(KEY_APP_LOCK, value) }
+
+    val appLockActive: Boolean get() = isPremium && appLock
+
     companion object {
         /** v1 / testing: Premium unlocked for everyone. Set to false when Play products go live. */
         const val PREMIUM_FREE = false
@@ -97,5 +104,6 @@ class NexPrefs(context: Context) {
         private const val KEY_VPN_ENABLED = "vpn_enabled"
         private const val KEY_VPN_LOCATION = "vpn_location"
         private const val KEY_VPN_SERVERS = "vpn_servers_json"
+        private const val KEY_APP_LOCK = "app_lock"
     }
 }

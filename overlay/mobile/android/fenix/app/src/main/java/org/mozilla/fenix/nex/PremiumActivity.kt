@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -51,7 +52,7 @@ import androidx.compose.ui.unit.sp
 import org.mozilla.fenix.ext.components
 import java.text.NumberFormat
 
-/** Premium paywall: 3-day trial (yearly/monthly) or lifetime, Browser VPN, Always incognito, Shield Credits. */
+/** Premium paywall: 3-day trial (yearly/monthly) or lifetime, App lock, Always incognito, Browser VPN, Shield Credits. */
 class PremiumActivity : ComponentActivity() {
     private lateinit var premium: PremiumManager
     private var version by mutableIntStateOf(0)
@@ -99,6 +100,15 @@ class PremiumActivity : ComponentActivity() {
                     components.settings.openLinksInAPrivateTab = on
                     version++
                 },
+                onAppLock = { on ->
+                    if (on && !NexLock.canAuthenticate(this)) {
+                        Toast.makeText(this, NexStrings.get(this, "applock_need"), Toast.LENGTH_LONG).show()
+                    } else {
+                        prefs.appLock = on
+                        NexLock.unlocked = true
+                    }
+                    version++
+                },
                 onVpn = { on ->
                     NexVpn.setEnabled(this, on)
                     version++
@@ -136,6 +146,7 @@ private fun Paywall(
     onOpen: (String) -> Unit,
     onClose: () -> Unit,
     onAlwaysIncognito: (Boolean) -> Unit,
+    onAppLock: (Boolean) -> Unit,
     onVpn: (Boolean) -> Unit,
     onVpnLocation: (String) -> Unit,
 ) {
@@ -185,15 +196,17 @@ private fun Paywall(
             }
         }
 
+        // Browser VPN only appears once real VPN locations are published.
+        val vpnLive = NexVpn.servers(context).isNotEmpty()
         if (isPremium) {
-            VpnCard(context, prefs, onVpn, onVpnLocation)
+            if (vpnLive) VpnCard(context, prefs, onVpn, onVpnLocation)
+            ToggleCard(t("applock"), t("applock_sub"), prefs.appLock, onAppLock)
             ToggleCard(t("incog"), t("incog_sub"), prefs.alwaysIncognito, onAlwaysIncognito)
         } else {
             Column(Modifier.fillMaxWidth().nexCard().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Feature(ShieldGlyph.Globe, t("f_vpn"))
-                Feature(ShieldGlyph.Lock, t("f_incog"))
-                Feature(ShieldGlyph.Check, t("f_fp"))
-                Feature(ShieldGlyph.Slash, t("f_filters"))
+                if (vpnLive) Feature(ShieldGlyph.Globe, t("f_vpn"))
+                Feature(ShieldGlyph.Lock, t("f_applock"))
+                Feature(ShieldGlyph.Crown, t("f_incog"))
             }
 
             Plan.entries.forEach { plan ->
