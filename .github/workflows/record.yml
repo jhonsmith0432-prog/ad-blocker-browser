@@ -71,4 +71,5 @@ jobs:
             out/*.mp4
             out/*.png
             out/*.txt
+            out/*.xml
             manifest.xml
