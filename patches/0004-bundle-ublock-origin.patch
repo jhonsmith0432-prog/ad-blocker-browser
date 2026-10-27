@@ -1,0 +1,31 @@
+diff --git a/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/FenixApplication.kt b/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/FenixApplication.kt
+index 93d8d6d7..2a32ac1d 100644
+--- a/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/FenixApplication.kt
++++ b/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/FenixApplication.kt
+@@ -876,11 +876,26 @@ open class FenixApplication : Application(), Provider, ThemeProvider {
+                 },
+                 onUpdatePermissionRequest = components.addonUpdater::onUpdatePermissionRequest,
+             )
++            installBundledContentBlocker()
+         } catch (e: UnsupportedOperationException) {
+             logger.error("Failed to initialize web extension support", e)
+         }
+     }
+ 
++    /**
++     * Installs the bundled content blocker (uBlock Origin, GPLv3) shipped in the APK assets.
++     * Installing an already-installed built-in extension is a no-op/update in GeckoView.
++     */
++    private fun installBundledContentBlocker() {
++        components.core.engine.installBuiltInWebExtension(
++            id = "uBlock0@raymondhill.net",
++            url = "resource://android/assets/extensions/ublock_origin.xpi",
++            onError = { throwable ->
++                logger.error("Failed to install bundled content blocker", throwable)
++            },
++        )
++    }
++
+     @VisibleForTesting
+     internal fun subscribeForNewAddonsIfNeeded(
+         checker: DefaultSupportedAddonsChecker,

@@ -1,0 +1,74 @@
+diff --git a/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/utils/Settings.kt b/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/utils/Settings.kt
+index 2cda5731..ceebbf6d 100644
+--- a/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/utils/Settings.kt
++++ b/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/utils/Settings.kt
+@@ -718,7 +718,7 @@ class Settings(
+     var isTelemetryEnabled by
+         booleanPreference(
+             appContext.getPreferenceKey(R.string.pref_key_telemetry),
+-            default = true,
++            default = false,
+         )
+ 
+     var isMarketingTelemetryEnabled by
+@@ -1289,7 +1289,7 @@ class Settings(
+     var shouldUseHttpsOnly by
+         booleanPreference(
+             appContext.getPreferenceKey(R.string.pref_key_https_only),
+-            default = false,
++            default = true,
+         )
+ 
+     var shouldUseHttpsOnlyInAllTabs by
+@@ -1313,7 +1313,7 @@ class Settings(
+     var shouldEnableGlobalPrivacyControl by
+         booleanPreference(
+             appContext.getPreferenceKey(R.string.pref_key_privacy_enable_global_privacy_control),
+-            false,
++            true,
+         )
+ 
+     /**
+@@ -1344,13 +1344,13 @@ class Settings(
+     val useStandardTrackingProtection by
+         booleanPreference(
+             appContext.getPreferenceKey(R.string.pref_key_tracking_protection_standard_option),
+-            true,
++            false,
+         )
+ 
+     val useStrictTrackingProtection by
+         booleanPreference(
+             appContext.getPreferenceKey(R.string.pref_key_tracking_protection_strict_default),
+-            false,
++            true,
+         )
+ 
+     val useCustomTrackingProtection by
+@@ -1620,7 +1620,7 @@ class Settings(
+     var shouldUseBottomToolbar by
+         booleanPreference(
+             key = appContext.getPreferenceKey(R.string.pref_key_toolbar_bottom),
+-            default = { FxNimbus.features.defaultBottomToolbar.value().enabled },
++            default = true,
+             persistDefaultIfNotExists = true,
+         )
+ 
+@@ -1762,7 +1762,7 @@ class Settings(
+     val shouldShowSearchSuggestions by
+         booleanPreference(
+             appContext.getPreferenceKey(R.string.pref_key_show_search_suggestions),
+-            default = true,
++            default = false,
+         )
+ 
+     val shouldAutocompleteInAwesomebar by
+@@ -2341,7 +2341,7 @@ class Settings(
+     var showContileFeature by
+         booleanPreference(
+             key = appContext.getPreferenceKey(R.string.pref_key_enable_contile),
+-            default = true,
++            default = false,
+         )
+ 
+     /** Blocklist used to filter items from the home screen that have previously been removed. */

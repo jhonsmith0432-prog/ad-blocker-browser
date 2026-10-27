@@ -1,0 +1,54 @@
+diff --git a/mobile/android/fenix/app/build.gradle b/mobile/android/fenix/app/build.gradle
+index fd141eca..29bd5d4b 100644
+--- a/mobile/android/fenix/app/build.gradle
++++ b/mobile/android/fenix/app/build.gradle
+@@ -557,6 +557,8 @@ dependencies {
+     implementation libs.accompanist.drawablepainter
+     implementation libs.adjust
+     implementation libs.androidx.activity
++    implementation libs.androidx.activity.compose
++    implementation "com.android.billingclient:billing:9.1.0"
+     implementation libs.androidx.annotation
+     implementation libs.androidx.appcompat
+     implementation libs.androidx.biometric
+diff --git a/mobile/android/fenix/app/src/main/AndroidManifest.xml b/mobile/android/fenix/app/src/main/AndroidManifest.xml
+index d226b42d..a7b01198 100644
+--- a/mobile/android/fenix/app/src/main/AndroidManifest.xml
++++ b/mobile/android/fenix/app/src/main/AndroidManifest.xml
+@@ -921,6 +921,10 @@
+             <action android:name="org.mozilla.fenix.NIMBUS_TOOLING" />
+           </intent-filter>
+         </receiver>
++        <activity
++            android:name=".nex.PremiumActivity"
++            android:exported="false"
++            android:theme="@android:style/Theme.Material.NoActionBar" />
+     </application>
+ 
+ </manifest>
+diff --git a/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/FenixApplication.kt b/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/FenixApplication.kt
+index 93d8d6d7..e7d6c4f7 100644
+--- a/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/FenixApplication.kt
++++ b/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/FenixApplication.kt
+@@ -195,6 +195,9 @@ open class FenixApplication : Application(), Provider, ThemeProvider {
+     override fun onCreate() {
+         super.onCreate()
+         initializeFenixProcess()
++        if (isMainProcess()) {
++            org.mozilla.fenix.nex.NexLaunchTracker.register(this)
++        }
+     }
+ 
+     override fun attachBaseContext(base: Context) {
+diff --git a/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/components/Core.kt b/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/components/Core.kt
+index 13f9f616..01daadad 100644
+--- a/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/components/Core.kt
++++ b/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/components/Core.kt
+@@ -337,6 +337,7 @@ class Core(
+ 
+         val middlewareList =
+             listOf(
++                org.mozilla.fenix.nex.BlockedCounterMiddleware(context),
+                 ProfileMarkerMiddleware(markerName = "BrowserStore", profiler = engine.profiler),
+                 LogMiddleware(tag = "BrowserStore", shouldIncludeDetailedData = { Config.channel.isDebug }),
+                 LastAccessMiddleware(),
