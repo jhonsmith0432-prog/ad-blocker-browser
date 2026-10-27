@@ -98,12 +98,7 @@ object NexVpn {
     private fun config(): JSONObject {
         val ctx = appContext ?: return JSONObject().put("enabled", false)
         val server = selected(ctx)
-        val on = isActive(ctx) && server != null
-        val json = JSONObject().put("enabled", on)
-        if (on && server != null) {
-            json.put("host", server.host).put("port", server.port).put("auth", server.auth)
-        }
-        return json
+        if (server == null || !isActive(ctx)) return JSONObject().put("enabled", false); return JSONObject().put("enabled", true).put("host", server.host).put("port", server.port).put("auth", server.auth)
     }
 
     /** Sends the current state to the extension (call after any change to Premium or VPN prefs). */
