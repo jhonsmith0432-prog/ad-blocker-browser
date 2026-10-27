@@ -136,7 +136,18 @@ edit(manifest, "    </application>",
      "            android:name=\".nex.NexOnboardingActivity\"\n"
      "            android:exported=\"false\"\n"
      "            android:theme=\"@android:style/Theme.Material.NoActionBar\" />\n"
+     "        <activity\n"
+     "            android:name=\".nex.NexLockActivity\"\n"
+     "            android:exported=\"false\"\n"
+     "            android:launchMode=\"singleTop\"\n"
+     "            android:theme=\"@style/Theme.AppCompat.NoActionBar\" />\n"
      "    </application>")
+
+# --- Only our welcome screens: skip Firefox's onboarding and its Terms of Use sheet -------
+edit(MAIN / "java/org/mozilla/fenix/HomeActivity.kt",
+     "hasUserBeenOnboarded = fenixOnboarding.userHasBeenOnboarded(),",
+     "hasUserBeenOnboarded = true,")
+edit(settings, "default = { FxNimbus.features.termsOfUsePrompt.value().enabled },", "default = { false },")
 
 # --- Built-in Browser VPN extension (Premium) ---------------------------------------------
 app = MAIN / "java/org/mozilla/fenix/FenixApplication.kt"

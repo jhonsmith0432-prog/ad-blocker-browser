@@ -52,6 +52,8 @@ XPI="$FENIX/src/main/assets/extensions/ublock_origin.xpi"
 curl -fL --retry 3 -o "$XPI" \
   "https://github.com/gorhill/uBlock/releases/download/${UBO_VERSION}/uBlock0_${UBO_VERSION}.firefox.signed.xpi"
 unzip -tq "$XPI" >/dev/null || { echo "Downloaded uBlock Origin XPI is not a valid archive." >&2; exit 1; }
+# Cookie-notice and app-banner lists on by default.
+python3 "$ROOT/scripts/nex_ubo_defaults.py" "$XPI"
 
 # 5. Build config.
 cp "$ROOT/scripts/mozconfig" "$SRC/mozconfig"
