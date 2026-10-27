@@ -89,8 +89,11 @@ class NexPrefs(context: Context) {
     val appLockActive: Boolean get() = isPremium && appLock
 
     companion object {
-        /** v1 / testing: Premium unlocked for everyone. Set to false when Play products go live. */
-        const val PREMIUM_FREE = false
+        /**
+         * Closed testing: every tester gets all of Premium (App lock, Always incognito, Browser VPN).
+         * MUST be false in the production build, or nobody is ever asked to pay.
+         */
+        const val PREMIUM_FREE = true
         private const val FILE = "nex_prefs"
         private const val KEY_BLOCKED_TOTAL = "blocked_total"
         private const val KEY_PREMIUM = "premium_active"
