@@ -38,9 +38,11 @@ jobs:
           grep -n -B2 -A8 'foregroundServiceType' manifest.xml || true
           grep -n -A3 'PROPERTY_SPECIAL_USE_FGS_SUBTYPE' manifest.xml || true
           keytool -genkeypair -keystore rec.jks -storepass recpass -keypass recpass -alias rec -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=rec" -noprompt
-          java -jar bundletool.jar build-apks --bundle "$AAB" --output app.apks --mode=universal --ks rec.jks --ks-pass pass:recpass --ks-key-alias rec --key-pass pass:recpass
-          unzip -o -q app.apks universal.apk
-          ls -l universal.apk
+          # Gecko is only packaged for arm64-v8a, so build the arm64 splits (the x86_64 emulator runs them via ARM translation)
+          java -jar bundletool.jar build-apks --bundle "$AAB" --output app.apks --ks rec.jks --ks-pass pass:recpass --ks-key-alias rec --key-pass pass:recpass
+          echo '{"supportedAbis":["arm64-v8a"],"supportedLocales":["en-US"],"screenDensity":420,"sdkVersion":34}' > spec.json
+          java -jar bundletool.jar extract-apks --apks app.apks --output-dir splits --device-spec spec.json
+          ls -l splits
           rm -rf art
 
       - name: Enable KVM
