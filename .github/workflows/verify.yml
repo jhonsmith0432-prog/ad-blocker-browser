@@ -1,0 +1,60 @@
+name: Verify release
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "Build run id that produced nex-browser-release"
+        required: true
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download release bundle from build run
+        uses: actions/download-artifact@v4
+        with:
+          name: nex-browser-release
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: art
+
+      - name: Check the bundle
+        run: bash scripts/verify_bundle.sh
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Run the app in an emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: bash scripts/verify_app.sh
+
+      - name: Publish results to branch verify-${{ inputs.run_id }}
+        if: always()
+        run: |
+          mkdir -p pub && cp -r out/* pub/ 2>/dev/null || true
+          cd pub
+          git init -q
+          git config user.name "verify-bot"
+          git config user.email "verify-bot@users.noreply.github.com"
+          git checkout -q -b "verify-${{ inputs.run_id }}"
+          git add -A
+          git commit -qm "Verification results for build run ${{ inputs.run_id }} [skip ci]"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "verify-${{ inputs.run_id }}"
