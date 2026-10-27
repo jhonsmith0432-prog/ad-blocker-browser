@@ -22,10 +22,24 @@ class NexPrefs(context: Context) {
         prefs.edit { putLong(KEY_BLOCKED_TOTAL, blockedTotal + count) }
     }
 
-    /** While [PREMIUM_FREE] is true every user gets Premium; no paywall is shown. */
+    /**
+     * Premium if [PREMIUM_FREE], a Google Play purchase is active, or Shield Credits still cover today.
+     * The setter only stores the Google Play state; credits are tracked in [creditPremiumUntil].
+     */
     var isPremium: Boolean
-        get() = PREMIUM_FREE || prefs.getBoolean(KEY_PREMIUM, false)
+        get() = PREMIUM_FREE || prefs.getBoolean(KEY_PREMIUM, false) ||
+            System.currentTimeMillis() < creditPremiumUntil
         set(value) = prefs.edit { putBoolean(KEY_PREMIUM, value) }
+
+    /** Shield Credits: Premium is covered until this time (epoch ms). Only refund codes add to it. */
+    var creditPremiumUntil: Long
+        get() = prefs.getLong(KEY_CREDIT_UNTIL, 0L)
+        set(value) = prefs.edit { putLong(KEY_CREDIT_UNTIL, value) }
+
+    /** Nonces of Shield Credits codes already redeemed on this phone (a code works once). */
+    var redeemedCredits: Set<String>
+        get() = prefs.getStringSet(KEY_CREDIT_USED, emptySet()) ?: emptySet()
+        set(value) = prefs.edit { putStringSet(KEY_CREDIT_USED, value.toSet()) }
 
     var launchCount: Int
         get() = prefs.getInt(KEY_LAUNCHES, 0)
@@ -49,7 +63,7 @@ class NexPrefs(context: Context) {
 
     companion object {
         /** v1 / testing: Premium unlocked for everyone. Set to false when Play products go live. */
-        const val PREMIUM_FREE = true
+        const val PREMIUM_FREE = false
         private const val FILE = "nex_prefs"
         private const val KEY_BLOCKED_TOTAL = "blocked_total"
         private const val KEY_PREMIUM = "premium_active"
@@ -57,5 +71,7 @@ class NexPrefs(context: Context) {
         private const val KEY_PAYWALL_SHOWN = "paywall_shown"
         private const val KEY_ALWAYS_INCOGNITO = "always_incognito"
         private const val KEY_SEARCH_DEFAULT = "search_default_applied"
+        private const val KEY_CREDIT_UNTIL = "credit_premium_until"
+        private const val KEY_CREDIT_USED = "credit_codes_used"
     }
 }

@@ -20,7 +20,7 @@ import com.android.billingclient.api.QueryPurchasesParams
 
 /**
  * Google Play Billing for Premium. Products to create in Play Console:
- *  - Subscription  [SUB_ID] with base plans [PLAN_MONTHLY] and [PLAN_YEARLY], each with a 7-day free-trial offer.
+ *  - Subscription  [SUB_ID] with base plans [PLAN_MONTHLY] and [PLAN_YEARLY], each with a 3-day free-trial offer.
  *  - One-time product [LIFETIME_ID].
  * Entitlement is cached locally in [NexPrefs]; Play is the source of truth and is re-checked on every start.
  */

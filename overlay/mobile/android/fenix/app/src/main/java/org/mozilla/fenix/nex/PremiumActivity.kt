@@ -4,6 +4,8 @@
 
 package org.mozilla.fenix.nex
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,6 +25,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -49,7 +53,7 @@ private val Violet = Color(0xFF7C5CFF)
 private val TextMain = Color(0xFFF4F6FF)
 private val TextMuted = Color(0xFFA3A9C7)
 
-/** Premium paywall with 7-day free trial (yearly/monthly) and lifetime, plus the user's blocked count. */
+/** Premium paywall with 3-day free trial (yearly/monthly) and lifetime, plus the user's blocked count. */
 class PremiumActivity : ComponentActivity() {
     private lateinit var premium: PremiumManager
     private var version by mutableIntStateOf(0)
@@ -75,6 +79,16 @@ class PremiumActivity : ComponentActivity() {
                     }
                 },
                 onRestore = { premium.restore() },
+                creditDays = ShieldCredits.daysLeft(prefs),
+                onRedeem = { code ->
+                    val result = ShieldCredits.redeem(prefs, code)
+                    version++
+                    when (result) {
+                        is ShieldCredits.Result.Added -> "Added ${result.days} days of Premium."
+                        is ShieldCredits.Result.Error -> result.message
+                    }
+                },
+                onOpen = { url -> startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).setPackage(packageName)) },
                 onClose = { finish() },
                 alwaysIncognito = prefs.alwaysIncognito,
                 onAlwaysIncognito = { on ->
@@ -105,6 +119,9 @@ private fun Paywall(
     premium: PremiumManager,
     onBuy: (Plan) -> Unit,
     onRestore: () -> Unit,
+    creditDays: Int,
+    onRedeem: (String) -> String,
+    onOpen: (String) -> Unit,
     onClose: () -> Unit,
     alwaysIncognito: Boolean,
     onAlwaysIncognito: (Boolean) -> Unit,
@@ -153,8 +170,8 @@ private fun Paywall(
         Text("Total protection. Still zero data collected.", color = TextMuted, fontSize = 15.sp)
         listOf(
             "Always incognito: every session private",
-            "Stronger fingerprint protection",
-            "Custom filters and per-site rules",
+            "Stronger fingerprint protection (coming soon)",
+            "Custom filters and per-site rules (coming soon)",
             "Support an independent, no-tracking browser",
         ).forEach { Text("✓  $it", color = TextMain, fontSize = 15.sp) }
 
@@ -164,7 +181,7 @@ private fun Paywall(
                 Plan.LIFETIME -> premium.lifetimePrice()?.let { "One payment of $it" }
                 else -> premium.planPrice(plan.planId)?.let { p ->
                     val per = if (plan == Plan.YEARLY) "year" else "month"
-                    if (premium.hasTrial(plan.planId)) "7 days free, then $p/$per" else "$p/$per"
+                    if (premium.hasTrial(plan.planId)) "3 days free, then $p/$per" else "$p/$per"
                 }
             } ?: "Loading price…"
             PlanRow(plan.title, price, plan == selected) { selected = plan }
@@ -172,7 +189,7 @@ private fun Paywall(
 
         val cta = when {
             selected == Plan.LIFETIME -> "Buy lifetime"
-            premium.hasTrial(selected.planId) -> "Start 7-day free trial"
+            premium.hasTrial(selected.planId) -> "Start 3-day free trial"
             else -> "Subscribe"
         }
         Button(
@@ -186,7 +203,8 @@ private fun Paywall(
             if (selected == Plan.LIFETIME) {
                 "One-time purchase via Google Play."
             } else {
-                "Cancel anytime in Google Play. No charge during the trial."
+                "Renews automatically until cancelled. Cancel anytime in Google Play; " +
+                    "cancel before the trial ends and you won't be charged."
             },
             color = TextMuted,
             fontSize = 12.sp,
@@ -195,8 +213,53 @@ private fun Paywall(
         TextButton(onClick = onRestore, modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Text("Restore purchase", color = TextMuted)
         }
+
+        // Shield Credits: only issued by us as a refund alternative (see the refund policy).
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Surface, RoundedCornerShape(18.dp))
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text("Shield Credits", color = TextMain, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+            Text(
+                if (creditDays > 0) "$creditDays days of Premium left" else "No credits",
+                color = if (creditDays > 0) Mint else TextMuted,
+                fontSize = 13.sp,
+            )
+            var code by remember { mutableStateOf("") }
+            var message by remember { mutableStateOf("") }
+            OutlinedTextField(
+                value = code,
+                onValueChange = { code = it },
+                singleLine = true,
+                placeholder = { Text("Credit code from support", color = TextMuted) },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = TextMain,
+                    unfocusedTextColor = TextMain,
+                    focusedBorderColor = Violet,
+                    unfocusedBorderColor = Line,
+                ),
+                modifier = Modifier.fillMaxWidth(),
+            )
+            TextButton(onClick = { message = onRedeem(code); if (message.startsWith("Added")) code = "" }) {
+                Text("Redeem code", color = Mint)
+            }
+            if (message.isNotEmpty()) Text(message, color = TextMuted, fontSize = 13.sp)
+        }
+
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            TextButton(onClick = { onOpen(TERMS_URL) }) { Text("Terms", color = TextMuted, fontSize = 12.sp) }
+            TextButton(onClick = { onOpen(REFUNDS_URL) }) { Text("Refunds", color = TextMuted, fontSize = 12.sp) }
+            TextButton(onClick = { onOpen(PRIVACY_URL) }) { Text("Privacy", color = TextMuted, fontSize = 12.sp) }
+        }
     }
 }
+
+private const val TERMS_URL = "https://nexcraftgames.com/browser/terms"
+private const val REFUNDS_URL = "https://nexcraftgames.com/browser/refunds"
+private const val PRIVACY_URL = "https://nexcraftgames.com/browser/privacy"
 
 @Composable
 private fun PlanRow(title: String, subtitle: String, isSelected: Boolean, onClick: () -> Unit) {
