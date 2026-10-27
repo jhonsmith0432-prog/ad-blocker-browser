@@ -17,6 +17,8 @@ adb install-multiple -r -g --abi arm64-v8a splits/*.apk || adb install-multiple 
 adb shell getprop ro.product.cpu.abilist
 adb shell pm grant $PKG android.permission.POST_NOTIFICATIONS || true
 adb shell dumpsys deviceidle whitelist +$PKG || true
+adb shell settings put global hide_error_dialogs 1 || true
+adb shell settings put global anr_show_background 0 || true
 
 tap_text() {  # tap the first element whose text/desc matches $1 (regex); returns 1 if not found
   adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1
@@ -39,7 +41,11 @@ EOF
   adb shell input tap $b
 }
 
+dump_ui() { adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1; adb pull /sdcard/ui.xml "out/ui_$1.xml" >/dev/null 2>&1; }
+dismiss_anr() { for i in 1 2 3; do tap_text '^(Wait|Close app)$' || break; sleep 2; done; }
+
 dismiss_first_run() {  # clear onboarding / dialogs if any show up
+  dismiss_anr
   for i in 1 2 3 4 5; do
     tap_text '^(Not now|Skip|Maybe later|Close|Got it|Continue|Start browsing|No thanks|Allow)$' || break
     sleep 2
@@ -50,19 +56,25 @@ open_url() { adb shell am start -a android.intent.action.VIEW -d "$1" -p $PKG >/
 
 # warm-up launch so first-run screens don't land in the videos
 adb shell monkey -p $PKG -c android.intent.category.LAUNCHER 1
-sleep 15
+sleep 45
 dismiss_first_run
+sleep 5
+dismiss_first_run
+dump_ui 00
 adb shell screencap -p /sdcard/s0.png && adb pull /sdcard/s0.png out/00_launch.png
 
 ########## 1) download ##########
-adb shell screenrecord --time-limit 40 /sdcard/fgs_download.mp4 &
+adb shell screenrecord --time-limit 60 /sdcard/fgs_download.mp4 &
 REC=$!
 sleep 2
 open_url "https://speed.cloudflare.com/__down?bytes=300000000"
-sleep 6
+sleep 12
 dismiss_first_run
+dump_ui 01a
 tap_text '^Download$' || tap_text 'Download'
-sleep 6
+sleep 10
+dismiss_anr
+dump_ui 01b
 adb shell cmd statusbar expand-notifications
 sleep 12
 adb shell screencap -p /sdcard/s1.png && adb pull /sdcard/s1.png out/01_download_notification.png
@@ -73,21 +85,25 @@ adb pull /sdcard/fgs_download.mp4 out/fgs_download.mp4
 adb shell dumpsys activity services $PKG | grep -iE 'ServiceRecord|foregroundServiceType|isForeground' > out/services_download.txt || true
 
 ########## 2) media playback ##########
-adb shell screenrecord --time-limit 45 /sdcard/fgs_media.mp4 &
+adb shell screenrecord --time-limit 70 /sdcard/fgs_media.mp4 &
 REC=$!
 sleep 2
 open_url "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
-sleep 8
+sleep 20
 dismiss_first_run
+dump_ui 02a
 # media document: tap the video to start it
 adb shell screencap -p /sdcard/m0.png && adb pull /sdcard/m0.png out/02a_media_before_tap.png
-tap_text '^(Play|play)$' || adb shell input tap 540 1100
-sleep 8
+tap_text '^(Play|play)$' || adb shell input tap 540 1131
+sleep 10
+dismiss_anr
 adb shell screencap -p /sdcard/m1.png && adb pull /sdcard/m1.png out/02b_media_playing.png
 adb shell input keyevent KEYCODE_HOME
-sleep 4
+sleep 6
+dismiss_anr
 adb shell cmd statusbar expand-notifications
 sleep 12
+dump_ui 02c
 adb shell screencap -p /sdcard/s2.png && adb pull /sdcard/s2.png out/02_media_notification.png
 adb shell cmd statusbar collapse
 wait $REC
@@ -96,19 +112,29 @@ adb shell dumpsys activity services $PKG | grep -iE 'ServiceRecord|foregroundSer
 
 
 ########## 3) private tabs notification (special use: PrivateNotificationService) ##########
-adb shell screenrecord --time-limit 40 /sdcard/fgs_private.mp4 &
+adb shell screenrecord --time-limit 60 /sdcard/fgs_private.mp4 &
 REC=$!
 sleep 2
-adb shell am start -n $PKG/org.mozilla.fenix.HomeActivity --ez private_browsing_mode true >/dev/null
-sleep 6
+adb shell am start -a android.intent.action.VIEW -d "https://nexcraftgames.com/browser/privacy" -p $PKG --ez private_browsing_mode true >/dev/null
+sleep 15
 dismiss_first_run
-adb shell am start -n $PKG/org.mozilla.fenix.HomeActivity --ez private_browsing_mode true -a android.intent.action.VIEW -d "https://nexcraftgames.com/browser/privacy" >/dev/null
-sleep 10
+dump_ui 03a
+# fall back to the UI: tab counter -> private tabs -> new tab
+if ! grep -qi 'private' out/ui_03a.xml; then
+  tap_text 'tabs open|Tab counter|Tabs' ; sleep 4; dump_ui 03b
+  tap_text '^Private' ; sleep 3
+  tap_text 'New private tab|Private tab|^Add tab|New tab' ; sleep 4
+  adb shell input text 'nexcraftgames.com' ; adb shell input keyevent 66 ; sleep 12
+fi
+dismiss_anr
+dump_ui 03c
 adb shell screencap -p /sdcard/p0.png && adb pull /sdcard/p0.png out/03a_private_tab.png
 adb shell input keyevent KEYCODE_HOME
-sleep 4
+sleep 6
+dismiss_anr
 adb shell cmd statusbar expand-notifications
 sleep 12
+dump_ui 03d
 adb shell screencap -p /sdcard/p1.png && adb pull /sdcard/p1.png out/03_private_notification.png
 adb shell cmd statusbar collapse
 wait $REC
