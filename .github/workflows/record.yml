@@ -1,0 +1,71 @@
+name: Record FGS demo videos
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "Build run id that produced nex-browser-release"
+        required: true
+        default: "40477036773"
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download release bundle from build run
+        uses: actions/download-artifact@v4
+        with:
+          name: nex-browser-release
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: art
+
+      - name: Make universal APK from the AAB
+        run: |
+          set -e
+          AAB=$(find art -name 'fenix-release.aab' | head -1)
+          echo "AAB=$AAB"
+          curl -sSL -o bundletool.jar https://github.com/google/bundletool/releases/download/1.17.2/bundletool-all-1.17.2.jar
+          java -jar bundletool.jar dump manifest --bundle "$AAB" > manifest.xml
+          echo "== foreground services in manifest =="
+          grep -n -B2 -A8 'foregroundServiceType' manifest.xml || true
+          grep -n -A3 'PROPERTY_SPECIAL_USE_FGS_SUBTYPE' manifest.xml || true
+          java -jar bundletool.jar build-apks --bundle "$AAB" --output app.apks --mode=universal
+          unzip -o -q app.apks universal.apk
+          ls -l universal.apk
+          rm -rf art
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Run emulator and record
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: bash scripts/record_fgs.sh
+
+      - name: Upload videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fgs-videos
+          path: |
+            out/*.mp4
+            out/*.png
+            out/*.txt
+            manifest.xml
