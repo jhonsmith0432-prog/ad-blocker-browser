@@ -22,6 +22,19 @@ done
 # 1b. Source fix-ups (Play policy, arm64-only, 14 languages, Nexcraft theme, VPN, onboarding).
 python3 "$ROOT/scripts/nex_fixups.py" "$SRC" "$APP_NAME"
 
+# 1c. Built-in VPN server list (from the NEXVPN_BUILTIN secret; it holds the proxy login, so it never lives in git).
+if [ -n "${NEXVPN_BUILTIN:-}" ]; then
+  python3 - "$FENIX/src/main/java/org/mozilla/fenix/nex/NexVpn.kt" <<'PY'
+import json, os, sys
+p = sys.argv[1]
+val = json.dumps(json.loads(os.environ["NEXVPN_BUILTIN"]), separators=(",", ":"))
+kt = json.dumps(val).replace("$", "\\$")  # a valid Kotlin string literal
+s = open(p, encoding="utf-8").read()
+assert '"@NEXVPN_BUILTIN@"' in s, "NexVpn.kt placeholder missing"
+open(p, "w", encoding="utf-8").write(s.replace('"@NEXVPN_BUILTIN@"', kt))
+PY
+fi
+
 # 2. App name.
 sed -i "s/@APP_NAME@/${APP_NAME}/" "$FENIX/src/release/res/values/static_strings.xml"
 
