@@ -1,0 +1,6 @@
+src/
+__pycache__/
+branding/release/
+branding/main/
+branding/store/
+*.jks
