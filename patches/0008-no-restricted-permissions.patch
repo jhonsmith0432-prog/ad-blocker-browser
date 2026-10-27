@@ -1,0 +1,29 @@
+diff --git a/mobile/android/fenix/app/src/main/AndroidManifest.xml b/mobile/android/fenix/app/src/main/AndroidManifest.xml
+index fa89f6a..9f7b8a5 100644
+--- a/mobile/android/fenix/app/src/main/AndroidManifest.xml
++++ b/mobile/android/fenix/app/src/main/AndroidManifest.xml
+@@ -34,12 +34,9 @@
+     <uses-permission android:name="android.permission.VIBRATE" />
+     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+ 
+-    <!-- Needed to prompt the user to give permission to install a downloaded apk -->
+-    <uses-permission-sdk-23 android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+-
+-    <!-- Needed to interact with all apps installed on a device -->
+-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+-        tools:ignore="QueryAllPackagesPermission" />
++    <!-- Restricted on Google Play and not needed: no APK installs, no full app list. -->
++    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove" />
++    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:node="remove" />
+ 
+     <!-- Needed to post notifications on devices with Android 13 and later-->
+     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+@@ -62,7 +59,7 @@
+ 
+     <!-- Needed to prompt the user directly for app uninstallation as part of an
+     'uninstall survey' experiment. This is ONLY used to uninstall the Firefox application -->
+-    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" tools:node="replace" />
++    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" tools:node="remove" />
+ 
+     <permission
+         android:name="${applicationId}.permission.PROFILER_INTERNAL"
