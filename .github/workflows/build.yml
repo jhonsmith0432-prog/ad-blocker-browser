@@ -35,6 +35,8 @@ jobs:
 
       - name: Apply patches and assets
         run: bash scripts/prebuild.sh
+        env:
+          NEXVPN_BUILTIN: ${{ secrets.NEXVPN_BUILTIN }}
 
       - name: Build
         run: bash scripts/build.sh "${{ github.event.inputs.variant || 'debug' }}"
