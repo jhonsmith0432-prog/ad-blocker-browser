@@ -51,6 +51,8 @@ jobs:
         run: |
           echo "$KEYSTORE_BASE64" | base64 -d > upload.jks
           for f in $(find src -name '*.aab'); do
+            # Gradle already signed the bundle with the debug key; Play rejects two certificate chains.
+            zip -q -d "$f" 'META-INF/*.SF' 'META-INF/*.RSA' 'META-INF/*.DSA' 'META-INF/*.EC' || true
             jarsigner -keystore upload.jks -storepass "$KEYSTORE_PASSWORD" \
               -keypass "$KEY_PASSWORD" "$f" "$KEY_ALIAS"
           done
