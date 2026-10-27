@@ -22,8 +22,9 @@ class NexPrefs(context: Context) {
         prefs.edit { putLong(KEY_BLOCKED_TOTAL, blockedTotal + count) }
     }
 
+    /** While [PREMIUM_FREE] is true every user gets Premium; no paywall is shown. */
     var isPremium: Boolean
-        get() = prefs.getBoolean(KEY_PREMIUM, false)
+        get() = PREMIUM_FREE || prefs.getBoolean(KEY_PREMIUM, false)
         set(value) = prefs.edit { putBoolean(KEY_PREMIUM, value) }
 
     var launchCount: Int
@@ -47,6 +48,8 @@ class NexPrefs(context: Context) {
         set(value) = prefs.edit { putBoolean(KEY_PAYWALL_SHOWN, value) }
 
     companion object {
+        /** v1 / testing: Premium unlocked for everyone. Set to false when Play products go live. */
+        const val PREMIUM_FREE = true
         private const val FILE = "nex_prefs"
         private const val KEY_BLOCKED_TOTAL = "blocked_total"
         private const val KEY_PREMIUM = "premium_active"
