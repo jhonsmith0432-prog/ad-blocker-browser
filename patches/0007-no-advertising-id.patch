@@ -1,0 +1,16 @@
+diff --git a/mobile/android/fenix/app/src/main/AndroidManifest.xml b/mobile/android/fenix/app/src/main/AndroidManifest.xml
+index a7b01198..fa89f6a3 100644
+--- a/mobile/android/fenix/app/src/main/AndroidManifest.xml
++++ b/mobile/android/fenix/app/src/main/AndroidManifest.xml
+@@ -53,7 +53,10 @@
+ 
+     <!-- Needed to get distribution information from partners.
+     This is NOT required for the adjust plugin. -->
+-    <uses-permission android:name="com.adjust.preinstall.READ_PERMISSION"/>
++    <!-- No advertising ID or attribution: strip what Play Services / Adjust would merge in. -->
++    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove" />
++    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID" tools:node="remove" />
++    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION" tools:node="remove" />
+ 
+     <uses-permission android:name="${applicationId}.permission.PROFILER_INTERNAL" />
+ 
