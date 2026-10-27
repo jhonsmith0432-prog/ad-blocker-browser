@@ -1,0 +1,80 @@
+10-27 21:02:51.015  4475  4475 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 21:02:51.017  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.017  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.017  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.017  4102  4194 W IndexDataConverter: Skipping index for null-key item IndexData.Builder {title: Extra dim,package: com.android.settings}
+10-27 21:02:51.017   831   905 D StylusManager: Stylus InputDevice changed: 5 virtio_input_multi_touch_2
+10-27 21:02:51.017  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+--
+10-27 21:02:51.027  4475  4475 I AndroidRuntime: Using default boot image
+10-27 21:02:51.027  4475  4475 I AndroidRuntime: Leaving lock profiling enabled
+10-27 21:02:51.030  4475  4475 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 21:02:51.030  4475  4475 I app_process: Using CollectorTypeCC GC.
+10-27 21:02:51.031  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.031  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.031  4102  4194 W IndexDataConverter: Skipping index for null-key item IndexData.Builder {title: Colors,package: com.android.settings}
+10-27 21:02:51.031  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+--
+10-27 21:02:51.377  4475  4475 D AndroidRuntime: Calling main entry com.android.commands.monkey.Monkey
+10-27 21:02:51.379  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.379  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.379  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.384  4475  4475 W Monkey  : args: [-p, com.nexcraft.browser, -c, android.intent.category.LAUNCHER, 1]
+10-27 21:02:51.384  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.384  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+--
+10-27 21:02:51.733  4475  4475 I AndroidRuntime: VM exiting with result code 0.
+10-27 21:02:51.736   517   540 W system_server: Long monitor contention with owner binder:517_13 (2250) at int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int)(ActivityManagerService.java:13404) waiters=7 in void com.android.server.am.ActivityManagerService.trimApplications(boolean, int) for 125ms
+10-27 21:02:51.747  3300  3300 I ProvidersCache: Updating roots due to change on user 0at content://com.android.externalstorage.documents/
+10-27 21:02:51.755   517   606 D ActivityManager: freezing 1576 com.google.android.ext.services
+10-27 21:02:51.759   831   881 W Looper  : Drained
+10-27 21:02:51.772  4507  4507 I ndk_translation: Initialized NDK translation (aarch64), version 0.2.3
+10-27 21:02:51.785   517   599 D CompatibilityChangeReporter: Compat change id reported: 265195908; UID 10192; state: ENABLED
+--
+10-27 21:03:52.569  5700  5700 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 21:03:52.601  1459  3562 W ChimeraConfigurator: Error syncing flags: zgv: COMMIT_TIMEOUT
+10-27 21:03:52.601  1459  3562 I GmsDebugLogger: [79] COMMIT_TIMEOUT
+10-27 21:03:52.613  5700  5700 I AndroidRuntime: Using default boot image
+10-27 21:03:52.613  5700  5700 I AndroidRuntime: Leaving lock profiling enabled
+10-27 21:03:52.616  1459  3680 I Icing   : Indexing done com.google.android.gms-internal.3p:MobileApplication
+10-27 21:03:52.616  1459  3680 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-27 21:03:52.617  1459  3680 I Icing   : Indexing done com.google.android.gms-apps
+10-27 21:03:52.623  5700  5700 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 21:03:52.624  5700  5700 I app_process: Using CollectorTypeCC GC.
+10-27 21:03:52.628  1915  5637 D DownloadManager: [13] Finished with status SUCCESS
+--
+10-27 21:03:53.025  5700  5700 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 21:03:53.029  1406  3078 I SemanticLocation: [MDD] ModelBundleMetadata: File not found [CONTEXT service_id=173 ]
+10-27 21:03:53.029  1406  3078 I SemanticLocation: java.io.FileNotFoundException: /data/user/0/com.google.android.gms/files/model_bundle_metadata.pb: open failed: ENOENT (No such file or directory)
+10-27 21:03:53.029  1406  3078 I SemanticLocation: 	at libcore.io.IoBridge.open(IoBridge.java:574)
+10-27 21:03:53.029  1406  3078 I SemanticLocation: 	at java.io.FileInputStream.<init>(FileInputStream.java:160)
+10-27 21:03:53.029  1406  3078 I SemanticLocation: 	at android.app.ContextImpl.openFileInput(ContextImpl.java:745)
+10-27 21:03:53.029  1406  3078 I SemanticLocation: 	at android.content.ContextWrapper.openFileInput(ContextWrapper.java:249)
+--
+10-27 21:03:54.405  5700  5700 D AndroidRuntime: Shutting down VM
+10-27 21:03:54.414  1848  2212 I A       : NGA enabled in interactor.
+10-27 21:03:54.414  1848  2212 I A       : Nga state changed to NgaStateDetails{state=ENABLED, isSpecialExperience=false}
+10-27 21:03:54.421  1656  5124 I A       : Initializing all components
+10-27 21:03:54.422  1656  2077 I A       : onIsEnabledChanged, isEnabled: false
+10-27 21:03:54.423  1656  2077 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+10-27 21:03:54.423  1656  2077 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+--
+10-27 21:03:56.307  5833  5833 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 21:03:56.312  5756  5837 D CompatibilityChangeReporter: Compat change id reported: 160794467; UID 10131; state: ENABLED
+10-27 21:03:56.313  5833  5833 I AndroidRuntime: Using default boot image
+10-27 21:03:56.313  5833  5833 I AndroidRuntime: Leaving lock profiling enabled
+10-27 21:03:56.315  5833  5833 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 21:03:56.315  5833  5833 I app_process: Using CollectorTypeCC GC.
+10-27 21:03:56.343  5755  5755 W ActivityThread: getPackageInfo() called with an older ApplicationInfo than the cached version for package com.google.android.gms
+10-27 21:03:56.362  5755  5842 D CompatibilityChangeReporter: Compat change id reported: 160794467; UID 10131; state: ENABLED
+10-27 21:03:56.370  5755  5829 I GmsReceiverSupport: Registered Receiver for 15+1 IntentFilters
+10-27 21:03:56.448  5833  5833 D nativeloader: InitDefaultPublicLibraries for_preload=1: libandroid.so:libaaudio.so:libamidi.so:libbinder_ndk.so:libc.so:libcamera2ndk.so:libdl.so:libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libicu.so:libicui18n.so:libicuuc.so:libjnigraphics.so:liblog.so:libmediandk.so:libm.so:libnativehelper.so:libnativewindow.so:libOpenMAXAL.so:libOpenSLES.so:libRS.so:libstdc++.so:libsync.so:libvulkan.so:libwebviewchromium_plat_support.so:libz.so
+--
+10-27 21:03:56.520  5833  5833 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 21:03:56.531  1638  2092 W MediaProvider: isAppCloneUserPair for user 0: false
+10-27 21:03:56.532  1638  1644 I FuseDaemon: Background concurrent copying GC freed 43845(2340KB) AllocSpace objects, 5(120KB) LOS objects, 49% free, 3153KB/6306KB, paused 36us,5us total 175.849ms
+10-27 21:03:56.535  5833  5833 D UiAutomationConnection: Created on user UserHandle{0}
+10-27 21:03:56.535  5833  5833 I UiAutomation: Initialized for user 0 on display 0
+10-27 21:03:56.535  5833  5833 W UiAutomation: Created with deprecatead constructor, assumes DEFAULT_DISPLAY
+10-27 21:03:56.547   517  2387 D AccessibilityManagerService: changeCurrentUserForTestAutomationIfNeededLocked(0): ignoring because device doesn't support visible background users
+--

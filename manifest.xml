@@ -1,0 +1,1481 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="37" android:compileSdkVersionCodename="17" android:versionCode="2016192863" android:versionName="158.0.1-default" package="com.nexcraft.browser" platformBuildVersionCode="37" platformBuildVersionName="17">
+      
+  <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="37"/>
+      
+  <uses-permission android:name="android.permission.INTERNET"/>
+      
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+   
+    
+  <uses-permission android:maxSdkVersion="32" android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+      
+  <uses-permission android:maxSdkVersion="28" android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+      
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+      
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+      
+  <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK"/>
+      
+  <uses-permission android:name="android.permission.CAMERA"/>
+      
+    
+  <uses-feature android:name="android.hardware.camera" android:required="false"/>
+      
+  <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
+      
+  <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+      
+  <uses-permission android:maxSdkVersion="26" android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+      
+  <uses-permission android:name="android.permission.VIBRATE"/>
+      
+  <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
+   
+    
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+   
+    
+  <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
+   
+    
+  <uses-permission android:name="android.permission.CREDENTIAL_MANAGER_SET_ORIGIN"/>
+      
+  <uses-permission android:name="android.permission.CREDENTIAL_MANAGER_QUERY_CANDIDATE_CREDENTIALS"/>
+      
+  <uses-permission android:name="com.nexcraft.browser.permission.PROFILER_INTERNAL"/>
+      
+  <permission android:name="com.nexcraft.browser.permission.PROFILER_INTERNAL" android:protectionLevel="0x00000002"/>
+   
+    
+  <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED"/>
+      
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
+      
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+      
+  <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
+   
+    
+  <uses-permission android:name="com.nexcraft.browser.permission.RECEIVE_DOWNLOAD_BROADCAST"/>
+      
+  <permission android:name="com.nexcraft.browser.permission.RECEIVE_DOWNLOAD_BROADCAST" android:protectionLevel="0x00000002"/>
+      
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+      
+    
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+      
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
+      
+  <queries>
+            
+    <intent>
+                  
+      <action android:name="android.intent.action.SEND"/>
+                  
+      <data android:mimeType="text/plain"/>
+              
+    </intent>
+            
+    <intent>
+                  
+      <action android:name="com.android.vending.billing.InAppBillingService.BIND"/>
+              
+    </intent>
+            
+    <intent>
+                  
+      <action android:name="com.google.android.apps.play.billingtestcompanion.BillingOverrideService.BIND"/>
+              
+    </intent>
+            
+    <intent>
+                  
+      <action android:name="android.intent.action.VIEW"/>
+                  
+      <category android:name="android.intent.category.DEFAULT"/>
+                  
+      <data android:mimeType="*/*"/>
+              
+    </intent>
+        
+  </queries>
+   
+    
+  <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+      
+  <uses-permission android:name="com.android.vending.BILLING"/>
+   
+    
+  <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+      
+  <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+      
+  <uses-feature android:name="android.hardware.location" android:required="false"/>
+      
+  <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
+      
+  <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+      
+  <uses-feature android:name="android.hardware.audio.low_latency" android:required="false"/>
+      
+  <uses-feature android:name="android.hardware.microphone" android:required="false"/>
+      
+  <uses-feature android:name="android.hardware.camera.any" android:required="false"/>
+   
+    
+  <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
+      
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+      
+  <permission android:name="com.nexcraft.browser.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" android:protectionLevel="0x00000002"/>
+      
+  <uses-permission android:name="com.nexcraft.browser.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"/>
+      
+  <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE"/>
+      
+  <application android:allowBackup="false" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:dataExtractionRules="@xml/data_extraction_rules" android:enableOnBackInvokedCallback="@bool/enableOnBackInvokedCallback" android:extractNativeLibs="false" android:fullBackupContent="false" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:name="org.mozilla.fenix.FenixApplication" android:networkSecurityConfig="@xml/network_security_config" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/NormalTheme" android:usesCleartextTraffic="true" android:zygotePreloadName="org.mozilla.gecko.process.ZygotePreload">
+            
+    <profileable android:shell="true"/>
+            
+    <activity android:exported="false" android:name="org.mozilla.fenix.startupCrash.StartupCrashActivity" android:process=":StartupCrashActivityProcess">
+        </activity>
+            
+    <activity android:configChanges="0x00002db3" android:exported="true" android:launchMode="2" android:name="org.mozilla.fenix.HomeActivity" android:resizeableActivity="true" android:supportsPictureInPicture="true" android:theme="@style/SplashScreenThemeBase" android:windowSoftInputMode="0x00000010">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.VIEW"/>
+                        
+        <category android:name="android.intent.category.BROWSABLE"/>
+                        
+        <category android:name="android.intent.category.DEFAULT"/>
+                        
+        <data android:scheme="nexbrowser"/>
+                        
+        <data android:host="enable_private_browsing"/>
+                        
+        <data android:host="home"/>
+                        
+        <data android:host="home_collections"/>
+                        
+        <data android:host="install_search_widget"/>
+                        
+        <data android:host="make_default_browser"/>
+                        
+        <data android:host="open"/>
+                        
+        <data android:host="privacy_report"/>
+                        
+        <data android:host="settings"/>
+                        
+        <data android:host="settings_accessibility"/>
+                        
+        <data android:host="settings_addon_manager"/>
+                        
+        <data android:host="settings_ai_controls"/>
+                        
+        <data android:host="settings_delete_browsing_data"/>
+                        
+        <data android:host="settings_ip_protection"/>
+                        
+        <data android:host="settings_logins"/>
+                        
+        <data android:host="settings_notifications"/>
+                        
+        <data android:host="settings_marketing_notifications"/>
+                        
+        <data android:host="settings_privacy"/>
+                        
+        <data android:host="settings_search_engine"/>
+                        
+        <data android:host="settings_tracking_protection"/>
+                        
+        <data android:host="settings_app_icon"/>
+                        
+        <data android:host="share_sheet"/>
+                        
+        <data android:host="turn_on_sync"/>
+                        
+        <data android:host="urls_bookmarks"/>
+                        
+        <data android:host="urls_history"/>
+                        
+        <data android:host="settings_private_browsing"/>
+                        
+        <data android:host="protections_dashboard"/>
+                    
+      </intent-filter>
+              
+    </activity>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_cool" android:name="com.nexcraft.browser.AppCool" android:roundIcon="@mipmap/ic_launcher_cool" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_momo" android:name="com.nexcraft.browser.AppMomo" android:roundIcon="@mipmap/ic_launcher_momo" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_minimal" android:name="com.nexcraft.browser.AppMinimal" android:roundIcon="@mipmap/ic_launcher_minimal" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_flaming" android:name="com.nexcraft.browser.AppFlaming" android:roundIcon="@mipmap/ic_launcher_flaming" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_pride" android:name="com.nexcraft.browser.AppPride" android:roundIcon="@mipmap/ic_launcher_pride" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_cuddling" android:name="com.nexcraft.browser.AppCuddling" android:roundIcon="@mipmap/ic_launcher_cuddling" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_pixelated" android:name="com.nexcraft.browser.AppPixelated" android:roundIcon="@mipmap/ic_launcher_pixelated" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+     
+        
+        
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_retro_2004" android:name="com.nexcraft.browser.AppRetro2004" android:roundIcon="@mipmap/ic_launcher_retro_2004" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_gradient_northern_lights" android:name="com.nexcraft.browser.AppGradientNorthernLights" android:roundIcon="@mipmap/ic_launcher_gradient_northern_lights" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_gradient_midnight" android:name="com.nexcraft.browser.AppGradientMidnight" android:roundIcon="@mipmap/ic_launcher_gradient_midnight" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_gradient_twilight" android:name="com.nexcraft.browser.AppGradientTwilight" android:roundIcon="@mipmap/ic_launcher_gradient_twilight" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_gradient_blue_hour" android:name="com.nexcraft.browser.AppGradientBlueHour" android:roundIcon="@mipmap/ic_launcher_gradient_blue_hour" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_gradient_sunset" android:name="com.nexcraft.browser.AppGradientSunset" android:roundIcon="@mipmap/ic_launcher_gradient_sunset" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_gradient_golden_hour" android:name="com.nexcraft.browser.AppGradientGoldenHour" android:roundIcon="@mipmap/ic_launcher_gradient_golden_hour" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+     
+        
+        
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_gradient_sunrise" android:name="com.nexcraft.browser.AppGradientSunrise" android:roundIcon="@mipmap/ic_launcher_gradient_sunrise" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_solid_purple_dark" android:name="com.nexcraft.browser.AppSolidPurpleDark" android:roundIcon="@mipmap/ic_launcher_solid_purple_dark" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_solid_purple" android:name="com.nexcraft.browser.AppSolidPurple" android:roundIcon="@mipmap/ic_launcher_solid_purple" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_solid_blue" android:name="com.nexcraft.browser.AppSolidBlue" android:roundIcon="@mipmap/ic_launcher_solid_blue" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_solid_green" android:name="com.nexcraft.browser.AppSolidGreen" android:roundIcon="@mipmap/ic_launcher_solid_green" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_solid_red" android:name="com.nexcraft.browser.AppSolidRed" android:roundIcon="@mipmap/ic_launcher_solid_red" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_solid_dark" android:name="com.nexcraft.browser.AppSolidDark" android:roundIcon="@mipmap/ic_launcher_solid_dark" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+        
+        
+        
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_solid_light" android:name="com.nexcraft.browser.AppSolidLight" android:roundIcon="@mipmap/ic_launcher_solid_light" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity-alias android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_alternative" android:name="com.nexcraft.browser.AlternativeApp" android:roundIcon="@mipmap/ic_launcher_round_alternative" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+        
+    <activity-alias android:exported="true" android:name="com.nexcraft.browser.App" android:targetActivity="org.mozilla.fenix.HomeActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.LAUNCHER"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+              
+    </activity-alias>
+            
+    <activity android:autoRemoveFromRecents="false" android:configChanges="0x00002db3" android:exported="false" android:name="org.mozilla.fenix.customtabs.ExternalAppBrowserActivity" android:persistableMode="1" android:resizeableActivity="true" android:supportsPictureInPicture="true" android:taskAffinity="" android:windowSoftInputMode="0x00000013"/>
+            
+    <activity android:excludeFromRecents="true" android:exported="true" android:name="org.mozilla.fenix.IntentReceiverActivity" android:relinquishTaskIdentity="true" android:taskAffinity="" android:theme="@style/Theme.Transparent">
+                  
+            
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.MAIN"/>
+                        
+        <category android:name="android.intent.category.APP_BROWSER"/>
+                        
+        <category android:name="android.intent.category.DEFAULT"/>
+                    
+      </intent-filter>
+                  
+            
+      <intent-filter android:autoVerify="true">
+                        
+        <action android:name="android.intent.action.VIEW"/>
+                        
+        <category android:name="android.intent.category.DEFAULT"/>
+                        
+        <category android:name="android.intent.category.BROWSABLE"/>
+                        
+        <data android:scheme="https"/>
+                        
+        <data android:host="accounts.firefox.com"/>
+                        
+        <data android:pathPrefix="/pair"/>
+                    
+      </intent-filter>
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.VIEW"/>
+                        
+        <category android:name="android.intent.category.DEFAULT"/>
+                        
+        <category android:name="android.intent.category.BROWSABLE"/>
+                        
+        <category android:name="mozilla.components.pwa.category.SHORTCUT"/>
+                        
+        <data android:scheme="http"/>
+                        
+        <data android:scheme="https"/>
+                    
+      </intent-filter>
+                  
+            
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.VIEW"/>
+                        
+        <category android:name="android.intent.category.BROWSABLE"/>
+                        
+        <category android:name="android.intent.category.DEFAULT"/>
+                        
+        <data android:host="settings_wallpapers" android:scheme="nexbrowser"/>
+                    
+      </intent-filter>
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.VIEW"/>
+                        
+        <category android:name="android.intent.category.BROWSABLE"/>
+                        
+        <category android:name="android.intent.category.DEFAULT"/>
+                        
+        <data android:scheme="http"/>
+                        
+        <data android:scheme="https"/>
+                        
+        <data android:mimeType="text/html"/>
+                        
+        <data android:mimeType="text/plain"/>
+                        
+        <data android:mimeType="application/xhtml+xml"/>
+                    
+      </intent-filter>
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.SEND"/>
+                        
+        <category android:name="android.intent.category.DEFAULT"/>
+                        
+        <data android:mimeType="text/plain"/>
+                    
+      </intent-filter>
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.SEARCH"/>
+                        
+        <category android:name="android.intent.category.DEFAULT"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.WEB_SEARCH"/>
+                        
+        <category android:name="android.intent.category.DEFAULT"/>
+                    
+      </intent-filter>
+                  
+      <intent-filter>
+                        
+        <action android:name="mozilla.components.feature.pwa.VIEW_PWA"/>
+                        
+        <category android:name="android.intent.category.DEFAULT"/>
+                        
+        <data android:scheme="https"/>
+                    
+      </intent-filter>
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.ASSIST"/>
+                        
+        <category android:name="android.intent.category.DEFAULT"/>
+                    
+      </intent-filter>
+                  
+      <intent-filter>
+                        
+        <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+                        
+        <category android:name="android.intent.category.DEFAULT"/>
+                        
+        <data android:scheme="http"/>
+                        
+        <data android:scheme="https"/>
+                    
+      </intent-filter>
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.VIEW"/>
+                        
+        <category android:name="android.intent.category.BROWSABLE"/>
+                        
+        <category android:name="android.intent.category.DEFAULT"/>
+                        
+        <data android:mimeType="application/pdf"/>
+                        
+        <data android:scheme="content"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="com.android.systemui.action_assist_icon" android:resource="@mipmap/ic_launcher"/>
+              
+    </activity>
+     
+        
+    <activity-alias android:exported="true" android:name="org.mozilla.gecko.LauncherActivity" android:targetActivity="org.mozilla.fenix.IntentReceiverActivity">
+                  
+      <intent-filter>
+                        
+        <action android:name="org.mozilla.gecko.WEBAPP"/>
+                    
+      </intent-filter>
+              
+    </activity-alias>
+            
+        
+    <activity-alias android:exported="true" android:name="org.mozilla.gecko.BrowserApp" android:targetActivity="org.mozilla.fenix.IntentReceiverActivity">
+        </activity-alias>
+            
+    <activity android:excludeFromRecents="true" android:name="org.mozilla.fenix.widget.VoiceSearchActivity" android:taskAffinity="" android:theme="@style/Theme.AppCompat.Translucent"/>
+            
+    <activity android:excludeFromRecents="true" android:exported="false" android:name="org.mozilla.fenix.widget.LensSearchActivity" android:taskAffinity="" android:theme="@style/Theme.LensCamera"/>
+            
+    <activity android:exported="false" android:name="mozilla.components.feature.qr.QrScanActivity" android:taskAffinity="" android:theme="@style/Theme.AppCompat.Translucent"/>
+            
+    <activity android:exported="false" android:name="org.mozilla.fenix.components.lens.LensCameraActivity" android:taskAffinity="" android:theme="@style/Theme.LensCamera"/>
+            
+    <activity android:autoRemoveFromRecents="false" android:configChanges="0x00002db3" android:exported="false" android:name="org.mozilla.fenix.settings.account.AuthCustomTabActivity" android:taskAffinity="" android:windowSoftInputMode="0x00000013"/>
+            
+    <activity android:exported="false" android:name="org.mozilla.fenix.settings.account.AuthIntentReceiverActivity"/>
+            
+    <activity android:exported="false" android:name="org.mozilla.fenix.autofill.AutofillUnlockActivity" android:theme="@style/Theme.AppCompat.Translucent"/>
+            
+    <activity android:exported="false" android:name="org.mozilla.fenix.autofill.AutofillConfirmActivity" android:theme="@style/Theme.AppCompat.Translucent"/>
+            
+    <activity android:exported="false" android:name="org.mozilla.fenix.autofill.AutofillSearchActivity" android:theme="@style/DialogActivityTheme"/>
+            
+    <activity android:exported="false" android:name="org.mozilla.fenix.messaging.NotificationClickedReceiverActivity"/>
+            
+    <activity android:excludeFromRecents="true" android:exported="false" android:launchMode="2" android:name="org.mozilla.fenix.perf.StopProfilerActivity" android:taskAffinity="" android:theme="@style/StopProfilerTransparentTheme"/>
+            
+    <service android:exported="true" android:label="@string/app_name" android:name="org.mozilla.fenix.autofill.AutofillService" android:permission="android.permission.BIND_AUTOFILL_SERVICE">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.service.autofill.AutofillService"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.autofill" android:resource="@xml/autofill_configuration"/>
+              
+    </service>
+            
+    <service android:exported="false" android:foregroundServiceType="0x00000002" android:name="org.mozilla.fenix.media.MediaSessionService"/>
+            
+    <service android:exported="true" android:name="org.mozilla.fenix.customtabs.CustomTabsService">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.support.customtabs.action.CustomTabsService"/>
+                    
+      </intent-filter>
+              
+    </service>
+            
+    <service android:exported="false" android:foregroundServiceType="0x00000001" android:name="org.mozilla.fenix.downloads.DownloadService"/>
+            
+    <receiver android:exported="true" android:name="org.mozilla.gecko.search.SearchWidgetProvider">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="android.appwidget.provider" android:resource="@xml/search_widget_info"/>
+              
+    </receiver>
+            
+    <receiver android:exported="false" android:name="org.mozilla.fenix.onboarding.WidgetPinnedReceiver"/>
+            
+    <receiver android:exported="false" android:name="org.mozilla.fenix.privacyreport.PrivacyReportNotificationReceiver"/>
+            
+    <service android:exported="false" android:foregroundServiceType="0x40000000" android:name="org.mozilla.fenix.session.PrivateNotificationService">
+                  
+      <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="This foreground service allows users to easily remove private tabs from the notification"/>
+              
+    </service>
+            
+    <service android:exported="false" android:name="org.mozilla.fenix.messaging.NotificationDismissedService"/>
+            
+    <service android:exported="false" android:name="org.mozilla.fenix.push.FirebasePushService">
+                  
+      <intent-filter>
+                        
+        <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                    
+      </intent-filter>
+              
+    </service>
+            
+    <service android:exported="false" android:foregroundServiceType="0x40000000" android:name="org.mozilla.fenix.perf.ProfilerService">
+                  
+      <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="Developer tool: Shows notification during performance profiling"/>
+              
+    </service>
+            
+    <provider android:authorities="com.nexcraft.browser.lens.fileprovider" android:exported="false" android:grantUriPermissions="true" android:name="org.mozilla.fenix.components.LensFileProvider">
+                  
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_provider_paths"/>
+              
+    </provider>
+            
+    <provider android:authorities="com.nexcraft.browser.profiler" android:enabled="false" android:exported="false" android:grantUriPermissions="false" android:name="org.mozilla.fenix.perf.ProfilerProvider" android:readPermission="android.permission.DUMP"/>
+            
+    <meta-data android:name="firebase_messaging_auto_init_enabled" android:value="true"/>
+            
+    <meta-data android:name="firebase_analytics_collection_enabled" android:value="false"/>
+            
+    <meta-data android:name="firebase_analytics_collection_deactivated" android:value="true"/>
+            
+        
+    <provider android:authorities="com.nexcraft.browser.androidx-startup" android:exported="false" android:name="androidx.startup.InitializationProvider">
+                  
+      <meta-data android:name="androidx.emoji2.text.EmojiCompatInitializer" android:value="androidx.startup"/>
+                  
+      <meta-data android:name="androidx.lifecycle.ProcessLifecycleInitializer" android:value="androidx.startup"/>
+                  
+      <meta-data android:name="androidx.profileinstaller.ProfileInstallerInitializer" android:value="androidx.startup"/>
+              
+    </provider>
+            
+    <provider android:authorities="com.nexcraft.browser.fileprovider" android:exported="false" android:grantUriPermissions="true" android:name="androidx.core.content.FileProvider">
+                  
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"/>
+              
+    </provider>
+            
+    <provider android:authorities="com.nexcraft.browser.androidx-startup" android:exported="false" android:name="androidx.startup.InitializationProvider">
+        </provider>
+            
+        
+        
+    <receiver android:exported="true" android:name="com.adjust.sdk.AdjustPreinstallReferrerReceiver">
+                  
+      <intent-filter>
+                        
+        <action android:name="com.attribution.SYSTEM_INSTALLER_REFERRER"/>
+                    
+      </intent-filter>
+              
+    </receiver>
+            
+    <receiver android:exported="false" android:name="org.mozilla.fenix.components.share.SaveToPdfReceiver">
+                  
+      <intent-filter>
+                        
+        <action android:name="org.mozilla.fenix.ACTION_SAVE_TO_PDF"/>
+                    
+      </intent-filter>
+              
+    </receiver>
+            
+    <receiver android:exported="false" android:name="org.mozilla.fenix.components.share.PrintReceiver">
+                  
+      <intent-filter>
+                        
+        <action android:name="org.mozilla.fenix.ACTION_PRINT"/>
+                    
+      </intent-filter>
+              
+    </receiver>
+            
+    <receiver android:enabled="true" android:exported="true" android:name="org.mozilla.fenix.messaging.QAMessageNotificationWorkerReceiver" android:permission="android.permission.DUMP">
+                  
+      <intent-filter>
+                        
+        <action android:name="org.mozilla.fenix.TRIGGER_MESSAGE_WORKER"/>
+                    
+      </intent-filter>
+              
+    </receiver>
+            
+    <receiver android:enabled="true" android:exported="true" android:name="org.mozilla.fenix.experiments.QANimbusToolingReceiver" android:permission="android.permission.DUMP">
+                  
+      <intent-filter>
+                        
+        <action android:name="org.mozilla.fenix.NIMBUS_TOOLING"/>
+                    
+      </intent-filter>
+              
+    </receiver>
+            
+    <activity android:exported="false" android:name="org.mozilla.fenix.nex.PremiumActivity" android:theme="@android:style/Theme.Material.NoActionBar"/>
+            
+    <activity android:exported="false" android:name="org.mozilla.fenix.nex.NexOnboardingActivity" android:theme="@android:style/Theme.Material.NoActionBar"/>
+            
+    <activity android:exported="false" android:launchMode="1" android:name="org.mozilla.fenix.nex.NexLockActivity" android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            
+    <activity android:exported="true" android:name="mozilla.components.feature.pwa.WebAppLauncherActivity" android:theme="@style/Theme.AppCompat.Translucent">
+                  
+      <intent-filter>
+                        
+        <action android:name="mozilla.components.feature.pwa.PWA_LAUNCHER"/>
+                    
+      </intent-filter>
+              
+    </activity>
+            
+    <provider android:authorities="com.nexcraft.browser.feature.prompts.fileprovider" android:exported="false" android:grantUriPermissions="true" android:name="mozilla.components.feature.prompts.provider.FileProvider">
+                  
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/feature_prompts_file_paths"/>
+              
+    </provider>
+            
+    <service android:exported="false" android:name="mozilla.components.feature.addons.update.DefaultAddonUpdater$NotificationHandlerService"/>
+            
+    <service android:exported="false" android:foregroundServiceType="0x00000002" android:name="mozilla.components.feature.listentopage.playback.ListenMediaSessionService">
+                  
+      <intent-filter>
+                        
+        <action android:name="androidx.media3.session.MediaSessionService"/>
+                    
+      </intent-filter>
+              
+    </service>
+            
+    <uses-library android:name="android.car" android:required="false"/>
+     
+        
+    <meta-data android:name="io.sentry.enabled" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.auto-init" android:value="false"/>
+     
+        
+        
+        
+    <meta-data android:name="io.sentry.send-client-reports" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.uncaught-exception-handler.enable" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.anr.enable" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.ndk.enable" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.auto-session-tracking.enable" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.performance-v2.enable" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.traces.frames-tracking" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.metrics.enabled" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.profiling.enable-legacy-profiling" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.tombstone.enable" android:value="false"/>
+            
+    <meta-data android:name="io.sentry.logs.enabled" android:value="false"/>
+            
+    <meta-data android:name="io.sentry.ndk.app-hang.enable" android:value="false"/>
+            
+    <meta-data android:name="io.sentry.standalone-app-start-tracing.enable" android:value="false"/>
+            
+    <meta-data android:name="io.sentry.profiling.enable-app-start" android:value="false"/>
+            
+    <meta-data android:name="io.sentry.traces.profiling.start-on-app-start" android:value="false"/>
+            
+    <meta-data android:name="io.sentry.feedback.use-shake-gesture" android:value="false"/>
+            
+        
+    <meta-data android:name="io.sentry.additional-context" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.send-modules" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.enable-root-check" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.enable-scope-persistence" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.send-default-pii" android:value="false"/>
+            
+    <meta-data android:name="io.sentry.attach-screenshot" android:value="false"/>
+            
+    <meta-data android:name="io.sentry.attach-view-hierarchy" android:value="false"/>
+            
+    <meta-data android:name="io.sentry.attach-threads" android:value="false"/>
+            
+    <meta-data android:name="io.sentry.external-storage-context" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.breadcrumbs.activity-lifecycle" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.breadcrumbs.app-lifecycle" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.breadcrumbs.app-components" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.breadcrumbs.system-events" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.breadcrumbs.network-events" android:value="false"/>
+     
+        
+    <meta-data android:name="io.sentry.breadcrumbs.user-interaction" android:value="false"/>
+            
+    <activity android:excludeFromRecents="true" android:exported="false" android:name="mozilla.components.lib.crash.prompt.CrashReporterActivity" android:process=":mozilla.components.lib.crash.CrashReporter" android:theme="@style/Theme.Mozac.CrashReporter"/>
+            
+    <service android:exported="false" android:foregroundServiceType="0x40000000" android:name="mozilla.components.lib.crash.handler.CrashHandlerService" android:process=":mozilla.components.lib.crash.CrashHandler">
+                  
+      <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="This foreground service allows users to report crashes"/>
+              
+    </service>
+     
+        
+    <service android:exported="false" android:foregroundServiceType="0x40000000" android:name="mozilla.components.lib.crash.service.SendCrashReportService" android:process=":crashReportingProcess">
+                  
+      <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="This foreground service allows users to report crashes"/>
+              
+    </service>
+     
+        
+    <service android:exported="false" android:foregroundServiceType="0x40000000" android:name="mozilla.components.lib.crash.service.SendCrashTelemetryService" android:process=":crashReportingProcess">
+                  
+      <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="This foreground service allows users to report crashes"/>
+              
+    </service>
+            
+    <provider android:authorities="com.nexcraft.browser.feature.downloads.fileprovider" android:exported="false" android:grantUriPermissions="true" android:name="mozilla.components.support.utils.provider.FileProvider">
+                  
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/feature_downloads_file_paths"/>
+              
+    </provider>
+            
+    <meta-data android:name="com.google.android.play.billingclient.version" android:value="9.1.0"/>
+            
+    <activity android:configChanges="0x000005b0" android:exported="false" android:name="com.android.billingclient.api.ProxyBillingActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            
+    <activity android:configChanges="0x000005b0" android:exported="false" android:name="com.android.billingclient.api.ProxyBillingActivityV2" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            
+    <receiver android:exported="true" android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+                  
+      <intent-filter>
+                        
+        <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                    
+      </intent-filter>
+                  
+      <meta-data android:name="com.google.android.gms.cloudmessaging.FINISHED_AFTER_HANDLED" android:value="true"/>
+              
+    </receiver>
+            
+        
+    <service android:directBootAware="true" android:exported="false" android:name="com.google.firebase.messaging.FirebaseMessagingService">
+                  
+      <intent-filter android:priority="-500">
+                        
+        <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                    
+      </intent-filter>
+              
+    </service>
+            
+    <service android:directBootAware="true" android:exported="false" android:name="com.google.firebase.components.ComponentDiscoveryService">
+                  
+      <meta-data android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingKtxRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+                  
+      <meta-data android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+                  
+      <meta-data android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+                  
+      <meta-data android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+                  
+      <meta-data android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+                  
+      <meta-data android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+              
+    </service>
+            
+    <activity android:exported="true" android:launchMode="3" android:name="mozilla.telemetry.glean.debug.GleanDebugActivity"/>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.crashhelper.CrashHelper" android:process=":crashhelper_disable_art_image_" android:stopWithTask="true">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.media.MediaManager" android:process=":media">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$gmplugin" android:process=":gmplugin_disable_art_image_">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$socket" android:process=":socket_disable_art_image_">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$gpu" android:process=":gpu_disable_art_image_">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$rdd" android:process=":rdd_disable_art_image_">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$utility" android:process=":utility_disable_art_image_">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$ipdlunittest" android:process=":ipdlunittest_disable_art_image_">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab0" android:process=":tab_disable_art_image_0">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab0" android:process=":isolatedTab_disable_art_image_0">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab1" android:process=":tab_disable_art_image_1">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab1" android:process=":isolatedTab_disable_art_image_1">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab2" android:process=":tab_disable_art_image_2">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab2" android:process=":isolatedTab_disable_art_image_2">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab3" android:process=":tab_disable_art_image_3">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab3" android:process=":isolatedTab_disable_art_image_3">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab4" android:process=":tab_disable_art_image_4">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab4" android:process=":isolatedTab_disable_art_image_4">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab5" android:process=":tab_disable_art_image_5">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab5" android:process=":isolatedTab_disable_art_image_5">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab6" android:process=":tab_disable_art_image_6">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab6" android:process=":isolatedTab_disable_art_image_6">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab7" android:process=":tab_disable_art_image_7">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab7" android:process=":isolatedTab_disable_art_image_7">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab8" android:process=":tab_disable_art_image_8">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab8" android:process=":isolatedTab_disable_art_image_8">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab9" android:process=":tab_disable_art_image_9">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab9" android:process=":isolatedTab_disable_art_image_9">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab10" android:process=":tab_disable_art_image_10">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab10" android:process=":isolatedTab_disable_art_image_10">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab11" android:process=":tab_disable_art_image_11">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab11" android:process=":isolatedTab_disable_art_image_11">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab12" android:process=":tab_disable_art_image_12">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab12" android:process=":isolatedTab_disable_art_image_12">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab13" android:process=":tab_disable_art_image_13">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab13" android:process=":isolatedTab_disable_art_image_13">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab14" android:process=":tab_disable_art_image_14">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab14" android:process=":isolatedTab_disable_art_image_14">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab15" android:process=":tab_disable_art_image_15">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab15" android:process=":isolatedTab_disable_art_image_15">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab16" android:process=":tab_disable_art_image_16">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab16" android:process=":isolatedTab_disable_art_image_16">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab17" android:process=":tab_disable_art_image_17">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab17" android:process=":isolatedTab_disable_art_image_17">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab18" android:process=":tab_disable_art_image_18">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab18" android:process=":isolatedTab_disable_art_image_18">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab19" android:process=":tab_disable_art_image_19">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab19" android:process=":isolatedTab_disable_art_image_19">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab20" android:process=":tab_disable_art_image_20">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab20" android:process=":isolatedTab_disable_art_image_20">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab21" android:process=":tab_disable_art_image_21">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab21" android:process=":isolatedTab_disable_art_image_21">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab22" android:process=":tab_disable_art_image_22">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab22" android:process=":isolatedTab_disable_art_image_22">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab23" android:process=":tab_disable_art_image_23">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab23" android:process=":isolatedTab_disable_art_image_23">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab24" android:process=":tab_disable_art_image_24">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab24" android:process=":isolatedTab_disable_art_image_24">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab25" android:process=":tab_disable_art_image_25">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab25" android:process=":isolatedTab_disable_art_image_25">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab26" android:process=":tab_disable_art_image_26">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab26" android:process=":isolatedTab_disable_art_image_26">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab27" android:process=":tab_disable_art_image_27">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab27" android:process=":isolatedTab_disable_art_image_27">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab28" android:process=":tab_disable_art_image_28">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab28" android:process=":isolatedTab_disable_art_image_28">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab29" android:process=":tab_disable_art_image_29">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab29" android:process=":isolatedTab_disable_art_image_29">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab30" android:process=":tab_disable_art_image_30">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab30" android:process=":isolatedTab_disable_art_image_30">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab31" android:process=":tab_disable_art_image_31">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab31" android:process=":isolatedTab_disable_art_image_31">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab32" android:process=":tab_disable_art_image_32">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab32" android:process=":isolatedTab_disable_art_image_32">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab33" android:process=":tab_disable_art_image_33">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab33" android:process=":isolatedTab_disable_art_image_33">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab34" android:process=":tab_disable_art_image_34">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab34" android:process=":isolatedTab_disable_art_image_34">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab35" android:process=":tab_disable_art_image_35">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab35" android:process=":isolatedTab_disable_art_image_35">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab36" android:process=":tab_disable_art_image_36">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab36" android:process=":isolatedTab_disable_art_image_36">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab37" android:process=":tab_disable_art_image_37">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab37" android:process=":isolatedTab_disable_art_image_37">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab38" android:process=":tab_disable_art_image_38">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab38" android:process=":isolatedTab_disable_art_image_38">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$tab39" android:process=":tab_disable_art_image_39">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$isolatedTab39" android:process=":isolatedTab_disable_art_image_39">
+        </service>
+            
+    <service android:enabled="true" android:exported="false" android:isolatedProcess="true" android:name="org.mozilla.gecko.process.GeckoChildProcessServices$zygoteTab" android:process=":zygoteTab_disable_art_image_" android:useAppZygote="true">
+        </service>
+            
+        
+    <provider android:authorities="com.nexcraft.browser.clipboard" android:exported="false" android:grantUriPermissions="true" android:name="org.mozilla.gecko.GeckoClipboardContentProvider">
+        </provider>
+            
+    <activity android:exported="false" android:name="com.google.android.gms.common.api.GoogleApiActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            
+    <provider android:authorities="com.nexcraft.browser.firebaseinitprovider" android:directBootAware="true" android:exported="false" android:initOrder="100" android:name="com.google.firebase.provider.FirebaseInitProvider"/>
+            
+    <service android:directBootAware="false" android:enabled="@bool/enable_system_job_service_default" android:exported="true" android:name="androidx.work.impl.background.systemjob.SystemJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+            
+    <service android:directBootAware="false" android:enabled="@bool/enable_system_foreground_service_default" android:exported="false" android:name="androidx.work.impl.foreground.SystemForegroundService"/>
+            
+    <receiver android:directBootAware="false" android:enabled="true" android:exported="false" android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"/>
+            
+    <receiver android:directBootAware="false" android:enabled="false" android:exported="false" android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver">
+                  
+      <intent-filter>
+                        
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                    
+      </intent-filter>
+              
+    </receiver>
+            
+    <receiver android:directBootAware="false" android:enabled="true" android:exported="true" android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver" android:permission="android.permission.DUMP">
+                  
+      <intent-filter>
+                        
+        <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS"/>
+                    
+      </intent-filter>
+              
+    </receiver>
+            
+    <service android:directBootAware="true" android:exported="false" android:name="androidx.room.MultiInstanceInvalidationService"/>
+     
+        
+    <activity android:excludeFromRecents="true" android:exported="true" android:name="androidx.media3.session.BluetoothValidationActivity" android:noHistory="true" android:permission="android.permission.BLUETOOTH_PRIVILEGED" android:theme="@android:style/Theme.NoDisplay">
+                  
+      <intent-filter>
+                        
+                
+        <action android:name="android.intent.action.VIEW"/>
+                        
+        <data android:scheme="content"/>
+                        
+        <data android:host="media"/>
+                        
+                
+        <data android:pathPrefix="/internal/audio/media/"/>
+                        
+        <data android:mimeType="audio/*"/>
+                    
+      </intent-filter>
+              
+    </activity>
+            
+    <uses-library android:name="androidx.window.extensions" android:required="false"/>
+            
+    <uses-library android:name="androidx.window.sidecar" android:required="false"/>
+            
+    <receiver android:directBootAware="false" android:enabled="true" android:exported="true" android:name="androidx.profileinstaller.ProfileInstallReceiver" android:permission="android.permission.DUMP">
+                  
+      <intent-filter>
+                        
+        <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE"/>
+                    
+      </intent-filter>
+                  
+      <intent-filter>
+                        
+        <action android:name="androidx.profileinstaller.action.SKIP_FILE"/>
+                    
+      </intent-filter>
+                  
+      <intent-filter>
+                        
+        <action android:name="androidx.profileinstaller.action.SAVE_PROFILE"/>
+                    
+      </intent-filter>
+                  
+      <intent-filter>
+                        
+        <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION"/>
+                    
+      </intent-filter>
+              
+    </receiver>
+            
+    <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+            
+    <service android:exported="false" android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery">
+                  
+      <meta-data android:name="backend:com.google.android.datatransport.cct.CctBackendFactory" android:value="cct"/>
+              
+    </service>
+            
+    <service android:exported="false" android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService" android:permission="android.permission.BIND_JOB_SERVICE">
+        </service>
+            
+    <receiver android:exported="false" android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"/>
+            
+    <provider android:authorities="com.nexcraft.browser.adjust-lifecycle-provider" android:exported="false" android:name="com.adjust.sdk.SystemLifecycleContentProvider"/>
+     
+        
+    <activity android:exported="false" android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity" android:stateNotNeeded="true" android:theme="@style/Theme.PlayCore.Transparent"/>
+        
+  </application>
+  
+</manifest>

@@ -1,0 +1,344 @@
++ adb wait-for-device
++ adb root
+restarting adbd as root
++ sleep 3
++ adb wait-for-device
++ adb logcat -G 16M
++ adb logcat -c
++ adb install-multiple -r -g --abi arm64-v8a splits/base-arm64_v8a.apk splits/base-master_2.apk splits/base-xxhdpi.apk
+Success
++ adb shell settings put global hide_error_dialogs 1
++ adb shell monkey -p com.nexcraft.browser -c android.intent.category.LAUNCHER 1
+  bash arg: -p
+  bash arg: com.nexcraft.browser
+  bash arg: -c
+  bash arg: android.intent.category.LAUNCHER
+  bash arg: 1
+args: [-p, com.nexcraft.browser, -c, android.intent.category.LAUNCHER, 1]
+ arg: "-p"
+ arg: "com.nexcraft.browser"
+ arg: "-c"
+ arg: "android.intent.category.LAUNCHER"
+ arg: "1"
+data="com.nexcraft.browser"
+data="android.intent.category.LAUNCHER"
+Events injected: 1
+## Network stats: elapsed time=166ms (0ms mobile, 0ms wifi, 166ms not connected)
++ sleep 60
++ wait_anr
++ for i in 1 2 3
++ tap_text '^(Wait)$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^(Wait)$'
++ b=
++ '[' -z '' ']'
++ return 1
++ break
++ shot 01_first_launch
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/01_first_launch.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 91.6 MB/s (288514 bytes in 0.003s)
++ echo 'FIRST LAUNCH:'
+FIRST LAUNCH:
++ screen_text 01
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_01.xml
++ grep -o 'text="[^"]\+"' out/ui_01.xml
++ head -40
++ tr '\n' ' '
+text="Skip" text="Ads gone. Pages faster." text="A full ad blocker is built in. Banners, pop-ups and video ads are blocked on every site, so pages load faster and use less data." text="Next" + echo
+
++ tap_text '^Next$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^Next$'
++ b='540 2072'
++ '[' -z '540 2072' ']'
++ adb shell input tap 540 2072
++ sleep 3
++ shot 02_welcome2
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/02_welcome2.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 106.7 MB/s (283612 bytes in 0.003s)
++ screen_text 02
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_02.xml
++ grep -o 'text="[^"]\+"' out/ui_02.xml
++ head -40
++ tr '\n' ' '
+text="Skip" text="Private by default" text="Strict tracking protection, HTTPS-only and Global Privacy Control are on from the first tap. We don't collect your data." text="Next" + echo
+
++ tap_text '^Next$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^Next$'
++ b='540 2072'
++ '[' -z '540 2072' ']'
++ adb shell input tap 540 2072
++ sleep 3
++ shot 03_welcome3
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/03_welcome3.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 119.4 MB/s (283328 bytes in 0.002s)
++ screen_text 03
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_03.xml
++ grep -o 'text="[^"]\+"' out/ui_03.xml
++ head -40
++ tr '\n' ' '
+text="Skip" text="Go further with Premium" text="Lock the whole app and browse always incognito. Try it free for 3 days." text="See Premium" text="Start browsing" + echo
+
++ tap_text '^Start browsing$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^Start browsing$'
++ b='540 2211'
++ '[' -z '540 2211' ']'
++ adb shell input tap 540 2211
++ sleep 15
++ wait_anr
++ for i in 1 2 3
++ tap_text '^(Wait)$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^(Wait)$'
++ b=
++ '[' -z '' ']'
++ return 1
++ break
++ shot 04_home
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/04_home.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 32.6 MB/s (67590 bytes in 0.002s)
++ echo HOME:
+HOME:
++ screen_text 04
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_04.xml
++ grep -o 'text="[^"]\+"' out/ui_04.xml
++ head -40
++ tr '\n' ' '
+text="You’re protected" + echo
+
++ tap_text '^(Not now|Close|Got it|Maybe later|No thanks)$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^(Not now|Close|Got it|Maybe later|No thanks)$'
++ b=
++ '[' -z '' ']'
++ return 1
++ open_url https://d3ward.github.io/toolz/adblock.html
++ adb shell am start -a android.intent.action.VIEW -d https://d3ward.github.io/toolz/adblock.html -p com.nexcraft.browser
++ sleep 50
++ wait_anr
++ for i in 1 2 3
++ tap_text '^(Wait)$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^(Wait)$'
++ b=
++ '[' -z '' ']'
++ return 1
++ break
++ shot 05_adblock_test
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/05_adblock_test.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 82.3 MB/s (135994 bytes in 0.002s)
++ screen_text 05
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_05.xml
++ grep -o 'text="[^"]\+"' out/ui_05.xml
++ head -40
++ tr '\n' ' '
+text="Test Ad Block - Toolz" text="Nav menu" text="This project is no longer maintained and has been archived." text="Thank you for being part of this journey and for your support. " text="Using " text="Tabler Icons" text=" (" text="MIT" text=")" text=" &amp; " text="simpleicons" text=" (" text="CC0-1.0" text=")" text="Designed and built with ♥ by " text="Ursu Eduard (d3ward) " text="© 2025 " + echo
+
++ open_url https://www.bbc.com/news
++ adb shell am start -a android.intent.action.VIEW -d https://www.bbc.com/news -p com.nexcraft.browser
++ sleep 45
++ wait_anr
++ for i in 1 2 3
++ tap_text '^(Wait)$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^(Wait)$'
++ b=
++ '[' -z '' ']'
++ return 1
++ break
++ shot 06_bbc_cookie
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/06_bbc_cookie.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 30.7 MB/s (207707 bytes in 0.006s)
++ screen_text 06
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_06.xml
++ grep -o 'text="[^"]\+"' out/ui_06.xml
++ head -40
++ tr '\n' ' '
++ echo
+
++ open_url https://www.theguardian.com/international
++ adb shell am start -a android.intent.action.VIEW -d https://www.theguardian.com/international -p com.nexcraft.browser
++ sleep 45
++ wait_anr
++ for i in 1 2 3
++ tap_text '^(Wait)$'
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml ui.xml
++ local b
+++ python3 - '^(Wait)$'
++ b=
++ '[' -z '' ']'
++ return 1
++ break
++ shot 07_guardian_cookie
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/07_guardian_cookie.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 97.7 MB/s (498830 bytes in 0.005s)
++ screen_text 07
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_07.xml
++ grep -o 'text="[^"]\+"' out/ui_07.xml
++ head -40
++ tr '\n' ' '
+text="Latest news, sport and opinion from the Guardian" text="Highlights" text="Edition" text="Edition" text="​ News" text="News" text="​ Opinion" text="Opinion" text="​ Sport" text="Sport" text="​ Culture" text="Culture" text="​ Lifestyle" text="Lifestyle" text="Toggle main menu" text="US news" text="US news" text="US politics" text="US politics" text="Midterms 2026" text="Midterms 2026" text="World" text="World" text="Climate crisis" text="Climate crisis" text="Middle East" text="Middle East" text="You are viewing the " text="International" text=" homepage " text="View the " text="US" text=" homepage" text="Close banner" text="News" text="Israel election: exit polls project no clear winner, as anti-Netanyahu bloc leads but Likud remains biggest party Slideshow LiveIsrael election: exit polls project no clear winner, as anti-Netanyahu bloc leads but Likud remains biggest party 3m ago IsraelIsrael election too close to call as exit polls give Netanyahu bloc slightly fewer seats IsraelLegacy of 7 October looms large as a divided Israel goes to the polls in record numbers VideoIsraeli presidential candidates cast their votes in consequential election In picturesIsrael goes to the polls" + echo
+
++ adb shell am start -n com.nexcraft.browser/org.mozilla.fenix.nex.PremiumActivity
+Starting: Intent { cmp=com.nexcraft.browser/org.mozilla.fenix.nex.PremiumActivity }
++ sleep 12
++ shot 08_premium
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/08_premium.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 39.3 MB/s (265697 bytes in 0.006s)
++ echo PREMIUM:
+PREMIUM:
++ screen_text 08
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_08.xml
++ grep -o 'text="[^"]\+"' out/ui_08.xml
++ head -40
++ tr '\n' ' '
+text="Not now" text="Premium" text="You're Premium. Thank you!" text="Browser VPN" text="Hide your IP address in this browser" text="Covers pages you open in this browser. Other apps are not affected." text="App lock" text="Ask for your fingerprint or PIN every time you open the browser" text="Always incognito" text="Open every session and link in private mode" text="Personalize" text="App icon" text="Pick from 23 icon designs for your home screen" text="›" text="Accent colour" text="Recolour buttons, switches and highlights" text="Shield Credits" + echo
+
++ adb shell input swipe 540 1800 540 600 400
++ sleep 2
++ shot 08b_premium_scrolled
++ adb shell screencap -p /sdcard/s.png
++ adb pull /sdcard/s.png out/08b_premium_scrolled.png
+/sdcard/s.png: 1 file pulled, 0 skipped. 112.4 MB/s (217469 bytes in 0.002s)
++ screen_text 08b
++ adb shell uiautomator dump /sdcard/ui.xml
++ adb pull /sdcard/ui.xml out/ui_08b.xml
++ grep -o 'text="[^"]\+"' out/ui_08b.xml
++ head -40
++ tr '\n' ' '
+text="You're Premium. Thank you!" text="Browser VPN" text="Hide your IP address in this browser" text="Covers pages you open in this browser. Other apps are not affected." text="App lock" text="Ask for your fingerprint or PIN every time you open the browser" text="Always incognito" text="Open every session and link in private mode" text="Personalize" text="App icon" text="Pick from 23 icon designs for your home screen" text="›" text="Accent colour" text="Recolour buttons, switches and highlights" text="Shield Credits" text="No credits" text="Credit code from support" text="Redeem code" text="Terms" text="Refunds" text="Privacy" + echo
+
++ adb shell input keyevent KEYCODE_BACK
++ sleep 3
++ echo '== process alive? =='
+== process alive? ==
++ adb shell pidof com.nexcraft.browser
+4507
++ echo '== crashes =='
+== crashes ==
++ grep -E 'FATAL EXCEPTION|AndroidRuntime: |Process: com.nexcraft.browser' -A6
++ adb logcat -d
++ head -80
++ cat out/crashes.txt
+10-27 21:02:51.015  4475  4475 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 21:02:51.017  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.017  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.017  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.017  4102  4194 W IndexDataConverter: Skipping index for null-key item IndexData.Builder {title: Extra dim,package: com.android.settings}
+10-27 21:02:51.017   831   905 D StylusManager: Stylus InputDevice changed: 5 virtio_input_multi_touch_2
+10-27 21:02:51.017  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+--
+10-27 21:02:51.027  4475  4475 I AndroidRuntime: Using default boot image
+10-27 21:02:51.027  4475  4475 I AndroidRuntime: Leaving lock profiling enabled
+10-27 21:02:51.030  4475  4475 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 21:02:51.030  4475  4475 I app_process: Using CollectorTypeCC GC.
+10-27 21:02:51.031  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.031  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.031  4102  4194 W IndexDataConverter: Skipping index for null-key item IndexData.Builder {title: Colors,package: com.android.settings}
+10-27 21:02:51.031  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+--
+10-27 21:02:51.377  4475  4475 D AndroidRuntime: Calling main entry com.android.commands.monkey.Monkey
+10-27 21:02:51.379  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.379  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.379  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.384  4475  4475 W Monkey  : args: [-p, com.nexcraft.browser, -c, android.intent.category.LAUNCHER, 1]
+10-27 21:02:51.384  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+10-27 21:02:51.384  4102  4194 E gs.intelligence: No package ID ff found for resource ID 0xffffffff.
+--
+10-27 21:02:51.733  4475  4475 I AndroidRuntime: VM exiting with result code 0.
+10-27 21:02:51.736   517   540 W system_server: Long monitor contention with owner binder:517_13 (2250) at int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int)(ActivityManagerService.java:13404) waiters=7 in void com.android.server.am.ActivityManagerService.trimApplications(boolean, int) for 125ms
+10-27 21:02:51.747  3300  3300 I ProvidersCache: Updating roots due to change on user 0at content://com.android.externalstorage.documents/
+10-27 21:02:51.755   517   606 D ActivityManager: freezing 1576 com.google.android.ext.services
+10-27 21:02:51.759   831   881 W Looper  : Drained
+10-27 21:02:51.772  4507  4507 I ndk_translation: Initialized NDK translation (aarch64), version 0.2.3
+10-27 21:02:51.785   517   599 D CompatibilityChangeReporter: Compat change id reported: 265195908; UID 10192; state: ENABLED
+--
+10-27 21:03:52.569  5700  5700 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 21:03:52.601  1459  3562 W ChimeraConfigurator: Error syncing flags: zgv: COMMIT_TIMEOUT
+10-27 21:03:52.601  1459  3562 I GmsDebugLogger: [79] COMMIT_TIMEOUT
+10-27 21:03:52.613  5700  5700 I AndroidRuntime: Using default boot image
+10-27 21:03:52.613  5700  5700 I AndroidRuntime: Leaving lock profiling enabled
+10-27 21:03:52.616  1459  3680 I Icing   : Indexing done com.google.android.gms-internal.3p:MobileApplication
+10-27 21:03:52.616  1459  3680 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-27 21:03:52.617  1459  3680 I Icing   : Indexing done com.google.android.gms-apps
+10-27 21:03:52.623  5700  5700 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 21:03:52.624  5700  5700 I app_process: Using CollectorTypeCC GC.
+10-27 21:03:52.628  1915  5637 D DownloadManager: [13] Finished with status SUCCESS
+--
+10-27 21:03:53.025  5700  5700 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 21:03:53.029  1406  3078 I SemanticLocation: [MDD] ModelBundleMetadata: File not found [CONTEXT service_id=173 ]
+10-27 21:03:53.029  1406  3078 I SemanticLocation: java.io.FileNotFoundException: /data/user/0/com.google.android.gms/files/model_bundle_metadata.pb: open failed: ENOENT (No such file or directory)
+10-27 21:03:53.029  1406  3078 I SemanticLocation: 	at libcore.io.IoBridge.open(IoBridge.java:574)
+10-27 21:03:53.029  1406  3078 I SemanticLocation: 	at java.io.FileInputStream.<init>(FileInputStream.java:160)
+10-27 21:03:53.029  1406  3078 I SemanticLocation: 	at android.app.ContextImpl.openFileInput(ContextImpl.java:745)
+10-27 21:03:53.029  1406  3078 I SemanticLocation: 	at android.content.ContextWrapper.openFileInput(ContextWrapper.java:249)
+--
+10-27 21:03:54.405  5700  5700 D AndroidRuntime: Shutting down VM
+10-27 21:03:54.414  1848  2212 I A       : NGA enabled in interactor.
+10-27 21:03:54.414  1848  2212 I A       : Nga state changed to NgaStateDetails{state=ENABLED, isSpecialExperience=false}
+10-27 21:03:54.421  1656  5124 I A       : Initializing all components
+10-27 21:03:54.422  1656  2077 I A       : onIsEnabledChanged, isEnabled: false
+10-27 21:03:54.423  1656  2077 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+10-27 21:03:54.423  1656  2077 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+--
+10-27 21:03:56.307  5833  5833 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 21:03:56.312  5756  5837 D CompatibilityChangeReporter: Compat change id reported: 160794467; UID 10131; state: ENABLED
+10-27 21:03:56.313  5833  5833 I AndroidRuntime: Using default boot image
+10-27 21:03:56.313  5833  5833 I AndroidRuntime: Leaving lock profiling enabled
+10-27 21:03:56.315  5833  5833 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 21:03:56.315  5833  5833 I app_process: Using CollectorTypeCC GC.
+10-27 21:03:56.343  5755  5755 W ActivityThread: getPackageInfo() called with an older ApplicationInfo than the cached version for package com.google.android.gms
+10-27 21:03:56.362  5755  5842 D CompatibilityChangeReporter: Compat change id reported: 160794467; UID 10131; state: ENABLED
+10-27 21:03:56.370  5755  5829 I GmsReceiverSupport: Registered Receiver for 15+1 IntentFilters
+10-27 21:03:56.448  5833  5833 D nativeloader: InitDefaultPublicLibraries for_preload=1: libandroid.so:libaaudio.so:libamidi.so:libbinder_ndk.so:libc.so:libcamera2ndk.so:libdl.so:libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libicu.so:libicui18n.so:libicuuc.so:libjnigraphics.so:liblog.so:libmediandk.so:libm.so:libnativehelper.so:libnativewindow.so:libOpenMAXAL.so:libOpenSLES.so:libRS.so:libstdc++.so:libsync.so:libvulkan.so:libwebviewchromium_plat_support.so:libz.so
+--
+10-27 21:03:56.520  5833  5833 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 21:03:56.531  1638  2092 W MediaProvider: isAppCloneUserPair for user 0: false
+10-27 21:03:56.532  1638  1644 I FuseDaemon: Background concurrent copying GC freed 43845(2340KB) AllocSpace objects, 5(120KB) LOS objects, 49% free, 3153KB/6306KB, paused 36us,5us total 175.849ms
+10-27 21:03:56.535  5833  5833 D UiAutomationConnection: Created on user UserHandle{0}
+10-27 21:03:56.535  5833  5833 I UiAutomation: Initialized for user 0 on display 0
+10-27 21:03:56.535  5833  5833 W UiAutomation: Created with deprecatead constructor, assumes DEFAULT_DISPLAY
+10-27 21:03:56.547   517  2387 D AccessibilityManagerService: changeCurrentUserForTestAutomationIfNeededLocked(0): ignoring because device doesn't support visible background users
+--
++ echo '== uBlock / extension errors =='
+== uBlock / extension errors ==
++ adb logcat -d
++ grep -iE 'ublock|content blocker|nexvpn|WebExtension.*(fail|error)'
++ head -40
+10-27 21:03:11.362  4507  4507 I WebExtension: releasePendingMessages: extension=nexvpn@nexcraftgames.com nativeApp=nexvpn session=null
++ adb logcat -d
