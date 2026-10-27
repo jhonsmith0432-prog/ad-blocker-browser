@@ -10,9 +10,11 @@ LOG=out/log.txt
 exec > >(tee -a "$LOG") 2>&1
 
 adb wait-for-device
+adb logcat -G 16M || true
 adb logcat -c || true
 adb shell settings put global window_animation_scale 1
-adb install -r -g universal.apk || adb install -r universal.apk || exit 1
+adb install-multiple -r -g --abi arm64-v8a splits/*.apk || adb install-multiple -r --abi arm64-v8a splits/*.apk || exit 1
+adb shell getprop ro.product.cpu.abilist
 adb shell pm grant $PKG android.permission.POST_NOTIFICATIONS || true
 adb shell dumpsys deviceidle whitelist +$PKG || true
 
@@ -91,6 +93,27 @@ adb shell cmd statusbar collapse
 wait $REC
 adb pull /sdcard/fgs_media.mp4 out/fgs_media.mp4
 adb shell dumpsys activity services $PKG | grep -iE 'ServiceRecord|foregroundServiceType|isForeground' > out/services_media.txt || true
+
+
+########## 3) private tabs notification (special use: PrivateNotificationService) ##########
+adb shell screenrecord --time-limit 40 /sdcard/fgs_private.mp4 &
+REC=$!
+sleep 2
+adb shell am start -n $PKG/org.mozilla.fenix.HomeActivity --ez private_browsing_mode true >/dev/null
+sleep 6
+dismiss_first_run
+adb shell am start -n $PKG/org.mozilla.fenix.HomeActivity --ez private_browsing_mode true -a android.intent.action.VIEW -d "https://nexcraftgames.com/browser/privacy" >/dev/null
+sleep 10
+adb shell screencap -p /sdcard/p0.png && adb pull /sdcard/p0.png out/03a_private_tab.png
+adb shell input keyevent KEYCODE_HOME
+sleep 4
+adb shell cmd statusbar expand-notifications
+sleep 12
+adb shell screencap -p /sdcard/p1.png && adb pull /sdcard/p1.png out/03_private_notification.png
+adb shell cmd statusbar collapse
+wait $REC
+adb pull /sdcard/fgs_private.mp4 out/fgs_private.mp4
+adb shell dumpsys activity services $PKG | grep -iE 'ServiceRecord|isForeground' > out/services_private.txt || true
 
 adb logcat -b crash -d > out/logcat_crash.txt 2>&1 || true
 adb logcat -d -v time > out/logcat_full.txt 2>&1 || true
