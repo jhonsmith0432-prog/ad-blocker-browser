@@ -162,7 +162,7 @@ THEMES = {
     "fun acornDarkColorScheme(): ColorScheme": {
         "primary": "Color(0xFF3DF5B0)", "onPrimary": "Color(0xFF04261A)",
         "primaryContainer": "Color(0xFF0E5C46)", "onPrimaryContainer": "Color(0xFFD8FFF0)",
-        "inversePrimary": "Color(0xFF00876A)", "tertiary": "Color(0xFF9C86FF)",
+        "inversePrimary": "Color(0xFF00876A)", "tertiary": "Color(0xFF3DF5B0)",
         "secondaryContainer": NAVY_3, "background": NAVY_1, "surface": NAVY_1,
         "surfaceVariant": NAVY_3, "surfaceContainer": NAVY_1, "surfaceContainerHigh": NAVY_2,
         "surfaceContainerHighest": NAVY_3, "surfaceContainerLow": NAVY_0, "surfaceContainerLowest": NAVY_0,
@@ -171,7 +171,7 @@ THEMES = {
     "fun acornLightColorScheme(): ColorScheme": {
         "primary": "Color(0xFF00876A)", "onPrimary": "Color(0xFFFFFFFF)",
         "primaryContainer": "Color(0xFFC6F6E4)", "onPrimaryContainer": "Color(0xFF00382B)",
-        "inversePrimary": "Color(0xFF3DF5B0)", "tertiary": "Color(0xFF5B3DF5)",
+        "inversePrimary": "Color(0xFF3DF5B0)", "tertiary": "Color(0xFF00876A)",
         "secondaryContainer": "Color(0xFFE3F5EF)",
     },
     "fun acornPrivateColorScheme(): ColorScheme": {
