@@ -1,0 +1,80 @@
+10-27 15:55:07.658  4504  4504 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 15:55:07.666  4504  4504 I AndroidRuntime: Using default boot image
+10-27 15:55:07.666  4504  4504 I AndroidRuntime: Leaving lock profiling enabled
+10-27 15:55:07.669  4504  4504 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 15:55:07.670  4504  4504 I app_process: Using CollectorTypeCC GC.
+10-27 15:55:07.671  1470  3223 I Icing   : Indexing com.google.android.gms-internal.3p:MobileApplication from com.google.android.gms
+10-27 15:55:07.674  1470  3223 I Icing   : Indexing done com.google.android.gms-internal.3p:MobileApplication
+10-27 15:55:07.675  1470  3223 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-27 15:55:07.683   333  4513 I resolv  : GetAddrInfoHandler::run: {100 786532 100 983140 10131 0}
+--
+10-27 15:55:07.983  4504  4504 D AndroidRuntime: Calling main entry com.android.commands.monkey.Monkey
+10-27 15:55:07.983  4504  4504 W Monkey  : args: [-p, com.nexcraft.browser, -c, android.intent.category.LAUNCHER, 1]
+10-27 15:55:07.984  4504  4504 W Monkey  :  arg: "-p"
+10-27 15:55:07.984  4504  4504 W Monkey  :  arg: "com.nexcraft.browser"
+10-27 15:55:07.984  4504  4504 W Monkey  :  arg: "-c"
+10-27 15:55:07.984  4504  4504 W Monkey  :  arg: "android.intent.category.LAUNCHER"
+10-27 15:55:07.984  4504  4504 W Monkey  :  arg: "1"
+--
+10-27 15:55:08.901  4504  4504 I AndroidRuntime: VM exiting with result code 0.
+10-27 15:55:08.911  1640  1640 I GsaVoiceInteractionSrv: O received Intent { act=android.intent.action.PACKAGE_ADDED dat=package: flg=0x4000010 (has extras) }
+10-27 15:55:08.921  1423  3676 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x45000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+10-27 15:55:08.934  2907  2959 I adbd    : jdwp connection from 4557
+10-27 15:55:08.940  4366  4446 I ShortcutBadger: Checking if platform supports badge counters, attempt 1/3.
+10-27 15:55:08.942  4366  4446 I ShortcutBadger: Checking if platform supports badge counters, attempt 2/3.
+10-27 15:55:08.943  4366  4446 I ShortcutBadger: Checking if platform supports badge counters, attempt 3/3.
+--
+10-27 15:56:09.173  6075  6075 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 15:56:09.188  6075  6075 I AndroidRuntime: Using default boot image
+10-27 15:56:09.188  6075  6075 I AndroidRuntime: Leaving lock profiling enabled
+10-27 15:56:09.191  6075  6075 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 15:56:09.192  6075  6075 I app_process: Using CollectorTypeCC GC.
+10-27 15:56:09.265  5574  5605 E bwfc    : Phenotype API error. Event # edax@bed39b89, EventCode: 5 [CONTEXT service_id=51 ]
+10-27 15:56:09.265  5574  5605 E bwfc    : bwdx: 29501: Stale snapshot for com.google.android.gms.accountsettings(change count changed - expected 2  but was 1)
+10-27 15:56:09.265  5574  5605 E bwfc    : 	at bwfg.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):16)
+10-27 15:56:09.265  5574  5605 E bwfc    : 	at bwff.g(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+--
+10-27 15:56:09.398  6075  6075 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 15:56:09.405  6075  6075 D UiAutomationConnection: Created on user UserHandle{0}
+10-27 15:56:09.405  6075  6075 I UiAutomation: Initialized for user 0 on display 0
+10-27 15:56:09.406  6075  6075 W UiAutomation: Created with deprecatead constructor, assumes DEFAULT_DISPLAY
+10-27 15:56:09.412   514  1895 D AccessibilityManagerService: changeCurrentUserForTestAutomationIfNeededLocked(0): ignoring because device doesn't support visible background users
+10-27 15:56:09.413   514  1895 I UiAutomationManager: Registering UiTestAutomationService (id=com.android.server.accessibility/UiAutomation) when called by user 0
+10-27 15:56:09.442   514  1895 W WindowMagnificationMgr: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+--
+10-27 15:56:10.609  6075  6075 D AndroidRuntime: Shutting down VM
+10-27 15:56:10.613  5574  5928 E NanoAppLogging: Failed to begin contexthub communication
+10-27 15:56:10.615  5574  5580 I .gms.persistent: Background concurrent copying GC freed 459609(17MB) AllocSpace objects, 11(388KB) LOS objects, 49% free, 13MB/27MB, paused 2.485ms,35us total 393.997ms
+10-27 15:56:10.624  5648  6046 W ModuleInitIntentOp: Dropping unexpected action com.google.android.gms.phenotype.COMMITTED
+10-27 15:56:10.624  5648  6046 V Backup  : [PhenotypeConfigIO] Phenotype broadcast received for different package
+10-27 15:56:10.625  5648  6046 I SyncIntentOperation: Handling the intent: Intent { act=com.google.android.gms.phenotype.COMMITTED flg=0x10 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }. [CONTEXT service_id=80 ]
+10-27 15:56:10.625  5648  6098 W ModuleInitIntentOp: Dropping unexpected action com.google.android.gms.phenotype.COMMITTED
+--
+10-27 15:56:12.102  6145  6145 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 15:56:12.103  5648  5791 W Icing   : No valid account for uploading user actions
+10-27 15:56:12.110  6145  6145 I AndroidRuntime: Using default boot image
+10-27 15:56:12.110  6145  6145 I AndroidRuntime: Leaving lock profiling enabled
+10-27 15:56:12.111  5648  5791 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
+10-27 15:56:12.112  6145  6145 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 15:56:12.113  6145  6145 I app_process: Using CollectorTypeCC GC.
+10-27 15:56:12.124  5574  6101 I NamespaceManager: Package com.android.refreshratecontrol name not found! Using module version.
+10-27 15:56:12.128  5648  6107 W ModuleInitIntentOp: Dropping unexpected action com.google.android.gms.phenotype.COMMITTED
+10-27 15:56:12.129  5648  6107 V Backup  : [PhenotypeConfigIO] Phenotype broadcast received for different package
+--
+10-27 15:56:12.320  6145  6145 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 15:56:12.327  6145  6145 D UiAutomationConnection: Created on user UserHandle{0}
+10-27 15:56:12.327  6145  6145 I UiAutomation: Initialized for user 0 on display 0
+10-27 15:56:12.327  6145  6145 W UiAutomation: Created with deprecatead constructor, assumes DEFAULT_DISPLAY
+10-27 15:56:12.330   514  2193 D AccessibilityManagerService: changeCurrentUserForTestAutomationIfNeededLocked(0): ignoring because device doesn't support visible background users
+10-27 15:56:12.330   514  2193 I UiAutomationManager: Registering UiTestAutomationService (id=com.android.server.accessibility/UiAutomation) when called by user 0
+10-27 15:56:12.337   514  2193 W WindowMagnificationMgr: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+--
+10-27 15:56:13.370  6145  6145 D AndroidRuntime: Shutting down VM
+10-27 15:56:13.371   514   514 D BatterySaverPolicy: accessibility changed to false, updating policy.
+10-27 15:56:13.376  1644  1924 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface lockscreen with targets# 0 (types=[])
+10-27 15:56:13.378   827   827 W PageIndicator: Total number of pages invalid: 0. Assuming 1 page.
+10-27 15:56:13.378  1724  2429 I A       : NGA enabled in interactor.
+10-27 15:56:13.378  1724  2429 I A       : Nga state changed to NgaStateDetails{state=ENABLED, isSpecialExperience=false}
+10-27 15:56:13.380  1640  1665 I A       : Initializing all components
+--
+10-27 15:56:14.412  6196  6196 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<

@@ -1,0 +1,84 @@
+AAB: art/objdir-frontend/gradle/build/mobile/android/fenix/app/outputs/bundle/release/fenix-release.aab
+art:
+total 12
+drwxr-xr-x  3 runner runner 4096 Oct 27 15:51 .
+drwxr-xr-x 12 runner runner 4096 Oct 27 15:52 ..
+drwxr-xr-x  3 runner runner 4096 Oct 27 15:51 objdir-frontend
+
+art/objdir-frontend:
+total 12
+drwxr-xr-x 3 runner runner 4096 Oct 27 15:51 .
+drwxr-xr-x 3 runner runner 4096 Oct 27 15:51 ..
+drwxr-xr-x 3 runner runner 4096 Oct 27 15:51 gradle
+== AAB size (bytes) ==
+131690341
+== versionCode / versionName ==
+android:versionCode="2016192823"
+android:versionName="158.0.1-default"
+== permissions ==
+android.permission.ACCESS_COARSE_LOCATION
+android.permission.ACCESS_FINE_LOCATION
+android.permission.ACCESS_LOCAL_NETWORK
+android.permission.ACCESS_NETWORK_STATE
+android.permission.CAMERA
+android.permission.CREDENTIAL_MANAGER_QUERY_CANDIDATE_CREDENTIALS
+android.permission.CREDENTIAL_MANAGER_SET_ORIGIN
+android.permission.DOWNLOAD_WITHOUT_NOTIFICATION
+android.permission.FOREGROUND_SERVICE
+android.permission.FOREGROUND_SERVICE_DATA_SYNC
+android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK
+android.permission.FOREGROUND_SERVICE_SPECIAL_USE
+android.permission.INTERNET
+android.permission.MODIFY_AUDIO_SETTINGS
+android.permission.POST_NOTIFICATIONS
+android.permission.READ_EXTERNAL_STORAGE
+android.permission.READ_MEDIA_AUDIO
+android.permission.READ_MEDIA_VISUAL_USER_SELECTED
+android.permission.RECEIVE_BOOT_COMPLETED
+android.permission.RECORD_AUDIO
+android.permission.USE_BIOMETRIC
+android.permission.USE_FINGERPRINT
+android.permission.VIBRATE
+android.permission.WAKE_LOCK
+android.permission.WRITE_EXTERNAL_STORAGE
+com.android.launcher.permission.INSTALL_SHORTCUT
+com.android.vending.BILLING
+com.google.android.c2dm.permission.RECEIVE
+com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE
+com.nexcraft.browser.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+com.nexcraft.browser.permission.PROFILER_INTERNAL
+com.nexcraft.browser.permission.RECEIVE_DOWNLOAD_BROADCAST
+== restricted permissions present? (should be empty) ==
+none
+== our activities ==
+android:name="org.mozilla.fenix.nex.NexLockActivity"
+android:name="org.mozilla.fenix.nex.NexOnboardingActivity"
+android:name="org.mozilla.fenix.nex.PremiumActivity"
+== native lib ABIs ==
+base/lib/arm64-v8a/
+== signers (should be only the upload key) ==
+   394341  2026-10-27 15:20   META-INF/UPLOAD.SF
+     2150  2026-10-27 15:20   META-INF/UPLOAD.RSA
+   3135 CN=Nexcraft
+== uBlock Origin bundled defaults ==
+fanboy-cookiemonster ON
+ublock-cookies-easylist ON
+adguard-mobile-app-banners ON
+easylist ON
+easyprivacy ON
+0
+== VPN extension present ==
+     1771  1981-01-01 01:01   base/assets/extensions/nexvpn/background.js
+      447  1981-01-01 01:01   base/assets/extensions/nexvpn/manifest.json
+== app locales (values-*) in bundle resources ==
+
+== estimated Play download size for a typical arm64 phone (bytes) ==
+MIN,MAX
+114678640,114678640
+Oct 27, 2026 3:53:07 PM com.android.tools.build.bundletool.commands.ExtractApksCommand lambda$extractMatchedApksFromApksArchive$5
+INFO: Output directory 'splits' does not exist, creating it.
+The APKs have been extracted in the directory: splits
+total 243380
+-rw-r--r-- 1 runner runner 200402550 Oct 27 15:53 base-arm64_v8a.apk
+-rw-r--r-- 1 runner runner  48697205 Oct 27 15:53 base-master_2.apk
+-rw-r--r-- 1 runner runner    116312 Oct 27 15:53 base-xxhdpi.apk
