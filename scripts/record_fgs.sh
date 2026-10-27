@@ -47,7 +47,7 @@ dismiss_anr() { for i in 1 2 3; do tap_text '^(Wait|Close app)$' || break; sleep
 dismiss_first_run() {  # clear onboarding / dialogs if any show up
   dismiss_anr
   for i in 1 2 3 4 5; do
-    tap_text '^(Not now|Skip|Maybe later|Close|Got it|Continue|Start browsing|No thanks|Allow)$' || break
+    tap_text '^(Not now|Skip|Maybe later|Close|Got it|Continue|Start browsing|No thanks|Allow|Cancel)$' || break
     sleep 2
   done
 }
@@ -67,7 +67,7 @@ adb shell screencap -p /sdcard/s0.png && adb pull /sdcard/s0.png out/00_launch.p
 adb shell screenrecord --time-limit 60 /sdcard/fgs_download.mp4 &
 REC=$!
 sleep 2
-open_url "https://speed.cloudflare.com/__down?bytes=300000000"
+open_url "https://github.com/google/bundletool/releases/download/1.17.2/bundletool-all-1.17.2.jar"
 sleep 12
 dismiss_first_run
 dump_ui 01a
