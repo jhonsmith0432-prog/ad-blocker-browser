@@ -2,6 +2,8 @@
 
 _Last updated: 27 October 2026_
 
+[Terms of Use](/browser/terms) · [Refund Policy](/browser/refunds)
+
 Ad Blocker & Private Browser ("the app") is published by Nexcraft ("we").
 This policy explains what happens to your data when you use the app.
 
@@ -40,6 +42,14 @@ Usage data ("telemetry") built into the Firefox engine is **switched off** in th
 ## Crash reports
 
 If the app crashes it may ask whether to send a crash report to Mozilla. Nothing is sent unless you choose to.
+
+## Premium purchases and Shield Credits
+
+Premium is bought through Google Play. Google processes the payment under its own privacy policy; we never receive your card or payment details. The app asks Google Play on your phone whether you own Premium. Shield Credits codes (only issued for refund requests) are checked on your phone against our public key, with no server and no account.
+
+## If you contact us
+
+If you email us (for example about a refund), we receive your email address, your message and any order number you include. We use them only to answer you and keep them for up to 12 months. We do not share them.
 
 ## Children
 
