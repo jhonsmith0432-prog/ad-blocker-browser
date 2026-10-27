@@ -1,0 +1,6 @@
+# Firefox for Android, artifact mode: Mozilla's prebuilt engine (C++/Rust) is
+# downloaded; only Java/Kotlin, resources, JS and prefs are built locally.
+ac_add_options --enable-project=mobile/android
+ac_add_options --target=@TARGET@
+ac_add_options --enable-artifact-builds
+mk_add_options MOZ_OBJDIR=./objdir-frontend
