@@ -19,7 +19,20 @@ STORE = os.path.join(HERE, "store")
 
 MINT = "#3DF5B0"
 INK = "#0A0D1C"
-APP_LABEL = "Ad Blocker"
+def _app_name():
+    """Launcher label from config.env (single source of truth)."""
+    import re
+    cfg = open(os.path.join(HERE, "..", "config.env"), encoding="utf-8").read()
+    m = re.search(r'^APP_NAME="([^"]+)"', cfg, flags=re.M)
+    return m.group(1) if m else "Ad Blocker"
+
+
+APP_LABEL = _app_name()
+FONT_CANDIDATES = [
+    "/usr/share/fonts/opentype/inter/Inter-Bold.otf",
+    "/usr/share/fonts/truetype/inter/Inter-Bold.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+]
 
 SHIELD = "M256 92l140 56v92c0 88-58 156-140 182C174 396 116 328 116 240v-92z"
 EYE = "M172 250c26-40 54-60 84-60s58 20 84 60c-26 40-54 60-84 60s-58-20-84-60z"
@@ -44,26 +57,57 @@ def mark(size_px, rounded=None, circle=False):
 </g></svg>"""
 
 
-def wordmark(w, h, dark_text):
-    """Shield mark + app label, transparent background."""
-    s = h / 512.0
-    text_color = "#F4F6FF" if dark_text is False else INK
-    font_px = int(h * 0.42)
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">
-<g transform="scale({s})">
+def _font(px):
+    from PIL import ImageFont
+    for path in FONT_CANDIDATES:
+        if os.path.exists(path):
+            return ImageFont.truetype(path, px)
+    return ImageFont.load_default()
+
+
+def _text_image(h, color, scale=0.62):
+    """The app label rendered at height h, as wide as the text needs (never clipped)."""
+    from PIL import ImageDraw
+    font = _font(int(h * scale))
+    left, top, right, bottom = font.getbbox(APP_LABEL)
+    w = right - left + int(h * 0.12)
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    ImageDraw.Draw(img).text((-left + int(h * 0.04), (h - (bottom + top)) / 2), APP_LABEL, font=font, fill=color)
+    return img
+
+
+def shield_only(size_px):
+    """Mint shield with the crossed eye, transparent background (no tile behind it)."""
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{size_px}" height="{size_px}" viewBox="96 72 320 370">
 <path d="{SHIELD}" fill="{MINT}"/>
-<path d="M176 330l160-160" stroke="{INK}" stroke-width="30" stroke-linecap="round"/>
-</g>
-<text x="{int(h * 0.92)}" y="{int(h * 0.66)}" font-family="Inter, DejaVu Sans, sans-serif" font-weight="700"
- font-size="{font_px}" fill="{text_color}">{APP_LABEL}</text>
+<path d="{EYE}" fill="none" stroke="{INK}" stroke-width="20" stroke-linejoin="round"/>
+<circle cx="256" cy="250" r="22" fill="{INK}"/>
+<path d="M176 330l160-160" stroke="{MINT}" stroke-width="34" stroke-linecap="round"/>
+<path d="M176 330l160-160" stroke="{INK}" stroke-width="18" stroke-linecap="round"/>
 </svg>"""
 
 
-def text_only(w, h, color):
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">
-<text x="0" y="{int(h * 0.75)}" font-family="Inter, DejaVu Sans, sans-serif" font-weight="700"
- font-size="{int(h * 0.8)}" fill="{color}" textLength="{w - 4}" lengthAdjust="spacingAndGlyphs">{APP_LABEL}</text>
-</svg>"""
+def _svg_image(svg):
+    return Image.open(io.BytesIO(cairosvg.svg2png(bytestring=svg.encode()))).convert("RGBA")
+
+
+def wordmark_image(h, text_color):
+    """Shield + app label side by side, height h, width fitted to the label."""
+    mark_img = _svg_image(shield_only(h))
+    text = _text_image(h, text_color, scale=0.5)
+    gap = int(h * 0.18)
+    img = Image.new("RGBA", (h + gap + text.width, h), (0, 0, 0, 0))
+    img.alpha_composite(mark_img, (0, 0))
+    img.alpha_composite(text, (h + gap, 0))
+    return img
+
+
+def save_img(img, path, fmt="WEBP"):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    if fmt == "PNG":
+        img.save(path, "PNG")
+    else:
+        img.save(path, "WEBP", lossless=True)
 
 
 def save(svg, path, fmt="WEBP"):
@@ -104,14 +148,16 @@ def main():
         save(mark(px, circle=True), f"{REL}/mipmap-{dpi}/ic_launcher_round.webp")
 
     # Wordmarks shown inside the app (sizes match the Firefox files they replace).
-    sizes = {"mdpi": (277, 80), "hdpi": (414, 120), "xhdpi": (552, 160), "xxhdpi": (828, 239), "xxxhdpi": (1103, 319)}
-    for dpi, (w, h) in sizes.items():
-        save(wordmark(w, h, dark_text=True), f"{REL}/drawable-{dpi}/ic_logo_wordmark_normal.webp")
-        save(wordmark(w, h, dark_text=False), f"{REL}/drawable-{dpi}/ic_logo_wordmark_private.webp")
-    save(mark(160), f"{REL}/drawable-nodpi/ic_wordmark_logo.webp")
-    save(text_only(419, 93, INK), f"{REL}/drawable-nodpi/ic_wordmark_text_normal.webp")
-    save(text_only(419, 93, "#F4F6FF"), f"{REL}/drawable-nodpi/ic_wordmark_text_private.webp")
-    save(wordmark(1014, 180, dark_text=True), f"{REL}/drawable-hdpi/fenix_search_widget.webp")
+    # Height matches the Firefox file each one replaces; width follows the label so it never clips.
+    heights = {"mdpi": 80, "hdpi": 120, "xhdpi": 160, "xxhdpi": 239, "xxxhdpi": 319}
+    for dpi, h in heights.items():
+        save_img(wordmark_image(h, INK), f"{REL}/drawable-{dpi}/ic_logo_wordmark_normal.webp")
+        save_img(wordmark_image(h, "#F4F6FF"), f"{REL}/drawable-{dpi}/ic_logo_wordmark_private.webp")
+    save(shield_only(160), f"{REL}/drawable-nodpi/ic_wordmark_logo.webp")
+    # Homepage text next to the logo (tinted by the app theme at runtime).
+    save_img(_text_image(93, INK), f"{REL}/drawable-nodpi/ic_wordmark_text_normal.webp")
+    save_img(_text_image(93, "#F4F6FF"), f"{REL}/drawable-nodpi/ic_wordmark_text_private.webp")
+    save_img(wordmark_image(180, INK), f"{REL}/drawable-hdpi/fenix_search_widget.webp")
 
     # Adaptive icon: foreground vector + mint background colour.
     fg = adaptive_foreground_xml()
