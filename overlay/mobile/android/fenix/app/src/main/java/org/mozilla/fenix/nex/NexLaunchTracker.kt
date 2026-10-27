@@ -25,6 +25,10 @@ object NexLaunchTracker : Application.ActivityLifecycleCallbacks {
         countedThisProcess = true
         val prefs = NexPrefs(activity)
         prefs.launchCount = prefs.launchCount + 1
+        if (!prefs.onboardingDone) {
+            activity.startActivity(Intent(activity, NexOnboardingActivity::class.java))
+            return
+        }
         if (prefs.launchCount >= PAYWALL_LAUNCH && !prefs.paywallShown && !prefs.isPremium) {
             prefs.paywallShown = true
             activity.startActivity(Intent(activity, PremiumActivity::class.java))

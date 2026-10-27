@@ -61,6 +61,26 @@ class NexPrefs(context: Context) {
         get() = prefs.getBoolean(KEY_PAYWALL_SHOWN, false)
         set(value) = prefs.edit { putBoolean(KEY_PAYWALL_SHOWN, value) }
 
+    /** First-launch welcome screens were shown. */
+    var onboardingDone: Boolean
+        get() = prefs.getBoolean(KEY_ONBOARDING_DONE, false)
+        set(value) = prefs.edit { putBoolean(KEY_ONBOARDING_DONE, value) }
+
+    /** Premium Browser VPN switch (only routes traffic while Premium is active). */
+    var vpnEnabled: Boolean
+        get() = prefs.getBoolean(KEY_VPN_ENABLED, false)
+        set(value) = prefs.edit { putBoolean(KEY_VPN_ENABLED, value) }
+
+    /** Id of the chosen VPN location from the server list. */
+    var vpnLocation: String
+        get() = prefs.getString(KEY_VPN_LOCATION, "") ?: ""
+        set(value) = prefs.edit { putString(KEY_VPN_LOCATION, value) }
+
+    /** Last downloaded VPN server list (JSON), so the VPN works offline-at-start. */
+    var vpnServersJson: String
+        get() = prefs.getString(KEY_VPN_SERVERS, "") ?: ""
+        set(value) = prefs.edit { putString(KEY_VPN_SERVERS, value) }
+
     companion object {
         /** v1 / testing: Premium unlocked for everyone. Set to false when Play products go live. */
         const val PREMIUM_FREE = false
@@ -73,5 +93,9 @@ class NexPrefs(context: Context) {
         private const val KEY_SEARCH_DEFAULT = "search_default_applied"
         private const val KEY_CREDIT_UNTIL = "credit_premium_until"
         private const val KEY_CREDIT_USED = "credit_codes_used"
+        private const val KEY_ONBOARDING_DONE = "onboarding_done"
+        private const val KEY_VPN_ENABLED = "vpn_enabled"
+        private const val KEY_VPN_LOCATION = "vpn_location"
+        private const val KEY_VPN_SERVERS = "vpn_servers_json"
     }
 }

@@ -4,15 +4,17 @@
 
 package org.mozilla.fenix.nex
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,11 +22,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Switch
@@ -39,21 +42,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.mozilla.fenix.ext.components
+import java.text.NumberFormat
 
-private val Ink = Color(0xFF0A0D1C)
-private val Surface = Color(0xFF141832)
-private val Line = Color(0xFF232A52)
-private val Mint = Color(0xFF3DF5B0)
-private val Violet = Color(0xFF7C5CFF)
-private val TextMain = Color(0xFFF4F6FF)
-private val TextMuted = Color(0xFFA3A9C7)
-
-/** Premium paywall with 3-day free trial (yearly/monthly) and lifetime, plus the user's blocked count. */
+/** Premium paywall: 3-day trial (yearly/monthly) or lifetime, Browser VPN, Always incognito, Shield Credits. */
 class PremiumActivity : ComponentActivity() {
     private lateinit var premium: PremiumManager
     private var version by mutableIntStateOf(0)
@@ -61,40 +59,52 @@ class PremiumActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         premium = PremiumManager(this)
-        premium.onChanged = { runOnUiThread { version++ } }
+        premium.onChanged = {
+            runOnUiThread {
+                version++
+                NexVpn.push()
+            }
+        }
         premium.connect()
+        NexVpn.refreshServers(this) { version++ }
         val prefs = NexPrefs(this)
-        val blocked = prefs.blockedTotal
         setContent {
             @Suppress("UNUSED_EXPRESSION")
-            version // recompose when Play data arrives
+            version // recompose when Play data or VPN servers arrive
             Paywall(
-                blocked = blocked,
+                prefs = prefs,
                 premium = premium,
                 onBuy = { plan ->
-                    if (plan == Plan.LIFETIME) {
-                        premium.buyLifetime(this)
-                    } else {
-                        premium.buySubscription(this, plan.planId)
-                    }
+                    if (plan == Plan.LIFETIME) premium.buyLifetime(this) else premium.buySubscription(this, plan.planId)
                 },
                 onRestore = { premium.restore() },
-                creditDays = ShieldCredits.daysLeft(prefs),
                 onRedeem = { code ->
                     val result = ShieldCredits.redeem(prefs, code)
                     version++
+                    NexVpn.push()
                     when (result) {
-                        is ShieldCredits.Result.Added -> "Added ${result.days} days of Premium."
-                        is ShieldCredits.Result.Error -> result.message
+                        is ShieldCredits.Result.Added -> true to NexStrings.get(this, "credit_added", result.days)
+                        is ShieldCredits.Result.Error -> false to when {
+                            result.message.contains("expired") -> NexStrings.get(this, "credit_expired")
+                            result.message.contains("already") -> NexStrings.get(this, "credit_used")
+                            else -> NexStrings.get(this, "credit_bad")
+                        }
                     }
                 },
                 onOpen = { url -> startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).setPackage(packageName)) },
                 onClose = { finish() },
-                alwaysIncognito = prefs.alwaysIncognito,
                 onAlwaysIncognito = { on ->
                     prefs.alwaysIncognito = on
                     // Links opened from other apps also go to private tabs while this is on.
                     components.settings.openLinksInAPrivateTab = on
+                    version++
+                },
+                onVpn = { on ->
+                    NexVpn.setEnabled(this, on)
+                    version++
+                },
+                onVpnLocation = { id ->
+                    NexVpn.setLocation(this, id)
                     version++
                 },
             )
@@ -107,174 +117,279 @@ class PremiumActivity : ComponentActivity() {
     }
 }
 
-enum class Plan(val planId: String, val title: String) {
-    YEARLY(PremiumManager.PLAN_YEARLY, "Yearly"),
-    MONTHLY(PremiumManager.PLAN_MONTHLY, "Monthly"),
-    LIFETIME(PremiumManager.LIFETIME_ID, "Lifetime"),
+enum class Plan(val planId: String, val key: String) {
+    YEARLY(PremiumManager.PLAN_YEARLY, "yearly"),
+    MONTHLY(PremiumManager.PLAN_MONTHLY, "monthly"),
+    LIFETIME(PremiumManager.LIFETIME_ID, "lifetime"),
 }
 
 @Composable
+private fun t(key: String, vararg args: Any): String = NexStrings.get(LocalContext.current, key, *args)
+
+@Composable
 private fun Paywall(
-    blocked: Long,
+    prefs: NexPrefs,
     premium: PremiumManager,
     onBuy: (Plan) -> Unit,
     onRestore: () -> Unit,
-    creditDays: Int,
-    onRedeem: (String) -> String,
+    onRedeem: (String) -> Pair<Boolean, String>,
     onOpen: (String) -> Unit,
     onClose: () -> Unit,
-    alwaysIncognito: Boolean,
     onAlwaysIncognito: (Boolean) -> Unit,
+    onVpn: (Boolean) -> Unit,
+    onVpnLocation: (String) -> Unit,
 ) {
+    val context = LocalContext.current
     var selected by remember { mutableStateOf(Plan.YEARLY) }
+    val isPremium = premium.isPremium
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Ink)
+            .background(NexColors.screen)
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 20.dp, vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+            .padding(horizontal = 20.dp, vertical = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-            TextButton(onClick = onClose) { Text("Not now", color = TextMuted) }
+            TextButton(onClick = onClose) { Text(t("not_now"), color = NexColors.Muted) }
         }
-        Text("Premium", color = TextMain, fontSize = 30.sp, fontWeight = FontWeight.Bold)
-        if (premium.isPremium) {
-            Text("You're Premium. Thank you!", color = Mint, fontSize = 16.sp)
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Surface, RoundedCornerShape(18.dp))
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Column(Modifier.weight(1f)) {
-                    Text("Always incognito", color = TextMain, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
-                    Text("Open every session and link in private mode", color = TextMuted, fontSize = 13.sp)
+
+        // Hero
+        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            ShieldMark(96.dp, glyph = ShieldGlyph.Crown)
+            Spacer(Modifier.height(12.dp))
+            Text(t("premium"), color = NexColors.Text, fontSize = 34.sp, fontWeight = FontWeight.ExtraBold)
+            Spacer(Modifier.height(4.dp))
+            Text(
+                if (isPremium) t("is_premium") else t("tagline"),
+                color = if (isPremium) NexColors.Mint else NexColors.Muted,
+                fontSize = 15.sp,
+                textAlign = TextAlign.Center,
+            )
+            val blocked = prefs.blockedTotal
+            if (blocked > 0) {
+                Spacer(Modifier.height(12.dp))
+                Box(
+                    Modifier
+                        .clip(RoundedCornerShape(50))
+                        .background(NexColors.Mint.copy(alpha = 0.14f))
+                        .padding(horizontal = 14.dp, vertical = 7.dp),
+                ) {
+                    Text(
+                        t("blocked", NumberFormat.getIntegerInstance().format(blocked)),
+                        color = NexColors.Mint,
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.SemiBold,
+                    )
                 }
-                Switch(
-                    checked = alwaysIncognito,
-                    onCheckedChange = onAlwaysIncognito,
-                    colors = SwitchDefaults.colors(checkedTrackColor = Mint, checkedThumbColor = Ink),
-                )
             }
         }
-        if (blocked > 0) {
-            Text(
-                "%,d trackers blocked on this phone so far".format(blocked),
-                color = Mint,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.SemiBold,
-            )
-        }
-        Text("Total protection. Still zero data collected.", color = TextMuted, fontSize = 15.sp)
-        listOf(
-            "Always incognito: every session private",
-            "Stronger fingerprint protection (coming soon)",
-            "Custom filters and per-site rules (coming soon)",
-            "Support an independent, no-tracking browser",
-        ).forEach { Text("✓  $it", color = TextMain, fontSize = 15.sp) }
 
-        Spacer(Modifier.height(4.dp))
-        Plan.entries.forEach { plan ->
-            val price = when (plan) {
-                Plan.LIFETIME -> premium.lifetimePrice()?.let { "One payment of $it" }
-                else -> premium.planPrice(plan.planId)?.let { p ->
-                    val per = if (plan == Plan.YEARLY) "year" else "month"
-                    if (premium.hasTrial(plan.planId)) "3 days free, then $p/$per" else "$p/$per"
+        if (isPremium) {
+            VpnCard(context, prefs, onVpn, onVpnLocation)
+            ToggleCard(t("incog"), t("incog_sub"), prefs.alwaysIncognito, onAlwaysIncognito)
+        } else {
+            Column(Modifier.fillMaxWidth().nexCard().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Feature(ShieldGlyph.Globe, t("f_vpn"))
+                Feature(ShieldGlyph.Lock, t("f_incog"))
+                Feature(ShieldGlyph.Check, t("f_fp"))
+                Feature(ShieldGlyph.Slash, t("f_filters"))
+            }
+
+            Plan.entries.forEach { plan ->
+                val price = when (plan) {
+                    Plan.LIFETIME -> premium.lifetimePrice()?.let { t("one_payment", it) }
+                    else -> premium.planPrice(plan.planId)?.let { p ->
+                        val per = if (plan == Plan.YEARLY) t("per_year", p) else t("per_month", p)
+                        if (premium.hasTrial(plan.planId)) t("trial_then", per) else per
+                    }
+                } ?: t("loading")
+                PlanCard(t(plan.key), price, plan == selected, badge = if (plan == Plan.YEARLY) t("best_value") else null) {
+                    selected = plan
                 }
-            } ?: "Loading price…"
-            PlanRow(plan.title, price, plan == selected) { selected = plan }
-        }
+            }
 
-        val cta = when {
-            selected == Plan.LIFETIME -> "Buy lifetime"
-            premium.hasTrial(selected.planId) -> "Start 3-day free trial"
-            else -> "Subscribe"
-        }
-        Button(
-            onClick = { onBuy(selected) },
-            enabled = !premium.isPremium,
-            colors = ButtonDefaults.buttonColors(containerColor = Violet, contentColor = Color.White),
-            shape = RoundedCornerShape(16.dp),
-            modifier = Modifier.fillMaxWidth().height(56.dp),
-        ) { Text(cta, fontSize = 17.sp, fontWeight = FontWeight.SemiBold) }
-        Text(
-            if (selected == Plan.LIFETIME) {
-                "One-time purchase via Google Play."
-            } else {
-                "Renews automatically until cancelled. Cancel anytime in Google Play; " +
-                    "cancel before the trial ends and you won't be charged."
-            },
-            color = TextMuted,
-            fontSize = 12.sp,
-            modifier = Modifier.fillMaxWidth(),
-        )
-        TextButton(onClick = onRestore, modifier = Modifier.align(Alignment.CenterHorizontally)) {
-            Text("Restore purchase", color = TextMuted)
-        }
-
-        // Shield Credits: only issued by us as a refund alternative (see the refund policy).
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Surface, RoundedCornerShape(18.dp))
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text("Shield Credits", color = TextMain, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+            val cta = when {
+                selected == Plan.LIFETIME -> t("cta_life")
+                premium.hasTrial(selected.planId) -> t("cta_trial")
+                else -> t("cta_sub")
+            }
+            NexButton(cta, enabled = !isPremium) { onBuy(selected) }
             Text(
-                if (creditDays > 0) "$creditDays days of Premium left" else "No credits",
-                color = if (creditDays > 0) Mint else TextMuted,
-                fontSize = 13.sp,
-            )
-            var code by remember { mutableStateOf("") }
-            var message by remember { mutableStateOf("") }
-            OutlinedTextField(
-                value = code,
-                onValueChange = { code = it },
-                singleLine = true,
-                placeholder = { Text("Credit code from support", color = TextMuted) },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = TextMain,
-                    unfocusedTextColor = TextMain,
-                    focusedBorderColor = Violet,
-                    unfocusedBorderColor = Line,
-                ),
+                if (selected == Plan.LIFETIME) t("life_note") else t("renew_note"),
+                color = NexColors.Muted,
+                fontSize = 12.sp,
+                textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
             )
-            TextButton(onClick = { message = onRedeem(code); if (message.startsWith("Added")) code = "" }) {
-                Text("Redeem code", color = Mint)
+            TextButton(onClick = onRestore, modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                Text(t("restore"), color = NexColors.Muted)
             }
-            if (message.isNotEmpty()) Text(message, color = TextMuted, fontSize = 13.sp)
         }
 
+        CreditsCard(prefs, onRedeem)
+
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            TextButton(onClick = { onOpen(TERMS_URL) }) { Text("Terms", color = TextMuted, fontSize = 12.sp) }
-            TextButton(onClick = { onOpen(REFUNDS_URL) }) { Text("Refunds", color = TextMuted, fontSize = 12.sp) }
-            TextButton(onClick = { onOpen(PRIVACY_URL) }) { Text("Privacy", color = TextMuted, fontSize = 12.sp) }
+            TextButton(onClick = { onOpen(TERMS_URL) }) { Text(t("terms"), color = NexColors.Muted, fontSize = 12.sp) }
+            TextButton(onClick = { onOpen(REFUNDS_URL) }) { Text(t("refunds"), color = NexColors.Muted, fontSize = 12.sp) }
+            TextButton(onClick = { onOpen(PRIVACY_URL) }) { Text(t("privacy"), color = NexColors.Muted, fontSize = 12.sp) }
         }
+    }
+}
+
+@Composable
+private fun Feature(glyph: ShieldGlyph, text: String) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        ShieldMark(30.dp, glyph = glyph)
+        Spacer(Modifier.width(12.dp))
+        Text(text, color = NexColors.Text, fontSize = 15.sp)
+    }
+}
+
+@Composable
+private fun PlanCard(title: String, subtitle: String, isSelected: Boolean, badge: String?, onClick: () -> Unit) {
+    Box(Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = if (badge != null) 10.dp else 0.dp)
+                .nexCard(selected = isSelected)
+                .clickable(onClick = onClick)
+                .padding(18.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Box(
+                Modifier
+                    .size(22.dp)
+                    .clip(CircleShape)
+                    .background(if (isSelected) NexColors.Mint else NexColors.Line),
+            )
+            Spacer(Modifier.width(14.dp))
+            Column(Modifier.weight(1f)) {
+                Text(title, color = NexColors.Text, fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                Text(subtitle, color = NexColors.Muted, fontSize = 13.sp)
+            }
+        }
+        if (badge != null) {
+            Box(
+                Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(end = 16.dp)
+                    .clip(RoundedCornerShape(50))
+                    .background(NexColors.Gold)
+                    .padding(horizontal = 10.dp, vertical = 3.dp),
+            ) {
+                Text(badge, color = NexColors.Ink, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+            }
+        }
+    }
+}
+
+@Composable
+private fun ToggleCard(title: String, subtitle: String, checked: Boolean, onChange: (Boolean) -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth().nexCard().padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text(title, color = NexColors.Text, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+            Text(subtitle, color = NexColors.Muted, fontSize = 13.sp)
+        }
+        Switch(
+            checked = checked,
+            onCheckedChange = onChange,
+            colors = SwitchDefaults.colors(checkedTrackColor = NexColors.Mint, checkedThumbColor = NexColors.Ink),
+        )
+    }
+}
+
+@Composable
+private fun VpnCard(context: Context, prefs: NexPrefs, onVpn: (Boolean) -> Unit, onVpnLocation: (String) -> Unit) {
+    val servers = NexVpn.servers(context)
+    val current = NexVpn.selected(context)
+    Column(Modifier.fillMaxWidth().nexCard().padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            ShieldMark(34.dp, glyph = ShieldGlyph.Globe)
+            Spacer(Modifier.width(12.dp))
+            Column(Modifier.weight(1f)) {
+                Text(t("vpn"), color = NexColors.Text, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                Text(
+                    when {
+                        servers.isEmpty() -> t("vpn_soon")
+                        prefs.vpnEnabled && current != null -> t("vpn_on", "${current.flag} ${current.name}".trim())
+                        else -> t("vpn_off")
+                    },
+                    color = if (prefs.vpnEnabled && current != null) NexColors.Mint else NexColors.Muted,
+                    fontSize = 13.sp,
+                )
+            }
+            Switch(
+                checked = prefs.vpnEnabled && servers.isNotEmpty(),
+                enabled = servers.isNotEmpty(),
+                onCheckedChange = onVpn,
+                colors = SwitchDefaults.colors(checkedTrackColor = NexColors.Mint, checkedThumbColor = NexColors.Ink),
+            )
+        }
+        if (servers.size > 1) {
+            Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                servers.forEach { s ->
+                    val on = s.id == current?.id
+                    Box(
+                        Modifier
+                            .clip(RoundedCornerShape(50))
+                            .background(if (on) NexColors.Mint else NexColors.CardHi)
+                            .clickable { onVpnLocation(s.id) }
+                            .padding(horizontal = 12.dp, vertical = 7.dp),
+                    ) {
+                        Text("${s.flag} ${s.name}".trim(), color = if (on) NexColors.Ink else NexColors.Text, fontSize = 13.sp)
+                    }
+                }
+            }
+        }
+        Text(t("vpn_note"), color = NexColors.Muted, fontSize = 12.sp)
+    }
+}
+
+@Composable
+private fun CreditsCard(prefs: NexPrefs, onRedeem: (String) -> Pair<Boolean, String>) {
+    val days = ShieldCredits.daysLeft(prefs)
+    Column(
+        modifier = Modifier.fillMaxWidth().nexCard().padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Text(t("credits"), color = NexColors.Text, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+        Text(
+            if (days > 0) t("credits_left", days) else t("no_credits"),
+            color = if (days > 0) NexColors.Mint else NexColors.Muted,
+            fontSize = 13.sp,
+        )
+        var code by remember { mutableStateOf("") }
+        var message by remember { mutableStateOf("") }
+        OutlinedTextField(
+            value = code,
+            onValueChange = { code = it },
+            singleLine = true,
+            placeholder = { Text(t("credit_hint"), color = NexColors.Muted) },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = NexColors.Text,
+                unfocusedTextColor = NexColors.Text,
+                focusedBorderColor = NexColors.Mint,
+                unfocusedBorderColor = NexColors.Line,
+                cursorColor = NexColors.Mint,
+            ),
+            modifier = Modifier.fillMaxWidth(),
+        )
+        TextButton(onClick = {
+            val (ok, text) = onRedeem(code)
+            message = text
+            if (ok) code = ""
+        }) {
+            Text(t("redeem"), color = NexColors.Mint)
+        }
+        if (message.isNotEmpty()) Text(message, color = NexColors.Muted, fontSize = 13.sp)
     }
 }
 
 private const val TERMS_URL = "https://nexcraftgames.com/browser/terms"
 private const val REFUNDS_URL = "https://nexcraftgames.com/browser/refunds"
 private const val PRIVACY_URL = "https://nexcraftgames.com/browser/privacy"
-
-@Composable
-private fun PlanRow(title: String, subtitle: String, isSelected: Boolean, onClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Surface, RoundedCornerShape(18.dp))
-            .border(2.dp, if (isSelected) Violet else Line, RoundedCornerShape(18.dp))
-            .clickable(onClick = onClick)
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column(Modifier.weight(1f)) {
-            Text(title, color = TextMain, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
-            Text(subtitle, color = TextMuted, fontSize = 13.sp)
-        }
-    }
-}
