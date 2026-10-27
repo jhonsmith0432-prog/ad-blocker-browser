@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+  "name": "Browser VPN",
+  "version": "1.0.0",
+  "description": "Routes this browser's traffic through the Nexcraft Browser VPN when Premium users switch it on.",
+  "browser_specific_settings": {
+    "gecko": { "id": "nexvpn@nexcraftgames.com" }
+  },
+  "incognito": "spanning",
+  "background": { "scripts": ["background.js"] },
+  "permissions": ["proxy", "<all_urls>", "nativeMessaging", "geckoViewAddons", "storage"]
+}

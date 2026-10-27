@@ -19,6 +19,9 @@ for p in "$ROOT"/patches/*.patch; do
   git -C "$SRC" apply "$p"
 done
 
+# 1b. Source fix-ups (Play policy, arm64-only, 14 languages, Nexcraft theme, VPN, onboarding).
+python3 "$ROOT/scripts/nex_fixups.py" "$SRC" "$APP_NAME"
+
 # 2. App name.
 sed -i "s/@APP_NAME@/${APP_NAME}/" "$FENIX/src/release/res/values/static_strings.xml"
 
@@ -41,6 +44,10 @@ find "$FENIX/src/main/res" -name strings.xml -path '*values*' \
 
 # 4. Bundled uBlock Origin (installed at startup by patch 0004).
 mkdir -p "$FENIX/src/main/assets/extensions"
+# Built-in Browser VPN extension (Premium).
+mkdir -p "$FENIX/src/main/assets/extensions/nexvpn"
+cp "$ROOT/scripts/nexvpn-manifest.json" "$FENIX/src/main/assets/extensions/nexvpn/manifest.json"
+cp "$ROOT/scripts/nexvpn-background.js" "$FENIX/src/main/assets/extensions/nexvpn/background.js"
 XPI="$FENIX/src/main/assets/extensions/ublock_origin.xpi"
 curl -fL --retry 3 -o "$XPI" \
   "https://github.com/gorhill/uBlock/releases/download/${UBO_VERSION}/uBlock0_${UBO_VERSION}.firefox.signed.xpi"
