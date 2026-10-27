@@ -71,7 +71,12 @@ open_url "https://github.com/google/bundletool/releases/download/1.17.2/bundleto
 sleep 12
 dismiss_first_run
 dump_ui 01a
-tap_text '^Download$' || tap_text 'Download'
+for i in $(seq 1 12); do
+  dismiss_anr
+  if tap_text '^(Download|DOWNLOAD|Download file)$'; then echo "tapped download"; break; fi
+  sleep 4
+done
+dump_ui 01a2
 sleep 10
 dismiss_anr
 dump_ui 01b
