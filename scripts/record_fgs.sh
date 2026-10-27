@@ -47,7 +47,7 @@ dismiss_anr() { for i in 1 2 3; do tap_text '^(Wait|Close app)$' || break; sleep
 dismiss_first_run() {  # clear onboarding / dialogs if any show up
   dismiss_anr
   for i in 1 2 3 4 5; do
-    tap_text '^(Not now|Skip|Maybe later|Close|Got it|Continue|Start browsing|No thanks|Allow|Cancel)$' || break
+    tap_text '^(Not now|Skip|Maybe later|Close|Got it|Continue|Start browsing|No thanks|Allow)$' || break
     sleep 2
   done
 }
@@ -58,6 +58,8 @@ open_url() { adb shell am start -a android.intent.action.VIEW -d "$1" -p $PKG >/
 adb shell monkey -p $PKG -c android.intent.category.LAUNCHER 1
 sleep 45
 dismiss_first_run
+tap_text '^Cancel$' || true
+sleep 3
 sleep 5
 dismiss_first_run
 dump_ui 00
@@ -69,12 +71,13 @@ REC=$!
 sleep 2
 open_url "https://github.com/google/bundletool/releases/download/1.17.2/bundletool-all-1.17.2.jar"
 sleep 12
-dismiss_first_run
+dismiss_anr
 dump_ui 01a
-for i in $(seq 1 12); do
-  dismiss_anr
-  if tap_text '^(Download|DOWNLOAD|Download file)$'; then echo "tapped download"; break; fi
-  sleep 4
+for i in $(seq 1 10); do
+  if tap_text '^Download$'; then echo "tapped download (text)"; break; fi
+  # dialog seen in recordings: Download button at ~ (778,1588) on 1080x2400
+  if [ "$i" -ge 3 ]; then adb shell input tap 778 1588; echo "tapped download (xy)"; break; fi
+  sleep 3
 done
 dump_ui 01a2
 sleep 10
