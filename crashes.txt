@@ -1,0 +1,80 @@
+10-27 15:20:42.226  3473  3473 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 15:20:42.231  1641  1641 I AiAiEcho: AppFetcherImpl onPackageChanged com.google.android.bluetooth.
+10-27 15:20:42.241  1641  2121 I AiAiEcho: AppIndexer Package:[com.google.android.bluetooth] UserProfile:[0] Enabled:[true].
+10-27 15:20:42.241  1641  2121 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.google.android.bluetooth], userId:[0], reason:[package is updated.].
+10-27 15:20:42.254  1895  3018 D EGL_emulation: app_time_stats: avg=1937.65ms min=72.03ms max=4687.00ms count=3
+10-27 15:20:42.255  3473  3473 I AndroidRuntime: Using default boot image
+10-27 15:20:42.258  3473  3473 I AndroidRuntime: Leaving lock profiling enabled
+10-27 15:20:42.266   520   539 W Looper  : Slow dispatch took 134ms android.fg h=android.os.Handler c=<recycled PooledLambda@61f4775> m=0
+10-27 15:20:42.275  1024  1034 I bt_stack: [INFO:le_scanning_manager.cc(155)] RegisterScanner in shim layer
+10-27 15:20:42.279  1895  2497 W A       : Fetch failed. Renderable stream failure reason: USER_SIGNED_OUT
+10-27 15:20:42.279  1895  2497 W A       : DiscoverPrecheckException(precheckFailureReason=com.google.android.apps.search.googleapp.discover.w.a.c@3256333)
+10-27 15:20:42.279  1895  2497 W A       : 	at com.google.android.apps.search.googleapp.discover.w.bb.d(PG:16)
+10-27 15:20:42.279  1895  2497 W A       : 	at com.google.android.apps.search.googleapp.discover.w.ax.invokeSuspend(PG:5)
+--
+10-27 15:20:42.788  3473  3473 D AndroidRuntime: Calling main entry com.android.commands.monkey.Monkey
+10-27 15:20:42.789  3473  3473 W Monkey  : args: [-p, com.nexcraft.browser, -c, android.intent.category.LAUNCHER, 1]
+10-27 15:20:42.789  3473  3473 W Monkey  :  arg: "-p"
+10-27 15:20:42.789  3473  3473 W Monkey  :  arg: "com.nexcraft.browser"
+10-27 15:20:42.789  3473  3473 W Monkey  :  arg: "-c"
+10-27 15:20:42.789  3473  3473 W Monkey  :  arg: "android.intent.category.LAUNCHER"
+10-27 15:20:42.789  3473  3473 W Monkey  :  arg: "1"
+--
+10-27 15:20:42.864  3473  3473 I AndroidRuntime: VM exiting with result code -4.
+10-27 15:20:42.873   335  3501 I resolv  : res_nsend: used send_dg 57 terrno: 0
+10-27 15:20:42.873   335  3501 I resolv  : doQuery: rcode=0, ancount=1, return value=57
+10-27 15:20:42.878   335  3502 I resolv  : res_nsend: used send_dg 45 terrno: 0
+10-27 15:20:42.878   335  3502 I resolv  : doQuery: rcode=0, ancount=1, return value=45
+10-27 15:20:42.879  1850  2062 D TrafficStats: tagSocket(70) with statsTag=0xffffffff, statsUid=-1
+10-27 15:20:42.885  1850  2062 W .android.as.oss: Accessing hidden method Lcom/android/org/conscrypt/ConscryptEngineSocket;->setUseSessionTickets(Z)V (max-target-q,core-platform-api, reflection, denied)
+--
+10-27 15:21:43.086  5578  5578 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 15:21:43.104  5578  5578 I AndroidRuntime: Using default boot image
+10-27 15:21:43.104  5578  5578 I AndroidRuntime: Leaving lock profiling enabled
+10-27 15:21:43.106  5578  5578 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 15:21:43.106  5578  5578 I app_process: Using CollectorTypeCC GC.
+10-27 15:21:43.231  5578  5578 D nativeloader: InitDefaultPublicLibraries for_preload=1: libandroid.so:libaaudio.so:libamidi.so:libbinder_ndk.so:libc.so:libcamera2ndk.so:libdl.so:libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libicu.so:libicui18n.so:libicuuc.so:libjnigraphics.so:liblog.so:libmediandk.so:libm.so:libnativehelper.so:libnativewindow.so:libOpenMAXAL.so:libOpenSLES.so:libRS.so:libstdc++.so:libsync.so:libvulkan.so:libwebviewchromium_plat_support.so:libz.so
+10-27 15:21:43.263  5578  5578 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-27 15:21:43.264  5578  5578 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt72l.dat
+10-27 15:21:43.275  5578  5578 W app_process: Unexpected CPU variant for x86: x86_64.
+--
+10-27 15:21:43.303  5578  5578 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 15:21:43.305  5578  5578 D UiAutomationConnection: Created on user UserHandle{0}
+10-27 15:21:43.305  5578  5578 I UiAutomation: Initialized for user 0 on display 0
+10-27 15:21:43.305  5578  5578 W UiAutomation: Created with deprecatead constructor, assumes DEFAULT_DISPLAY
+10-27 15:21:43.311   520   950 D AccessibilityManagerService: changeCurrentUserForTestAutomationIfNeededLocked(0): ignoring because device doesn't support visible background users
+10-27 15:21:43.311   520   950 I UiAutomationManager: Registering UiTestAutomationService (id=com.android.server.accessibility/UiAutomation) when called by user 0
+10-27 15:21:43.316  5103  5159 E bwfc    : Phenotype API error. Event # edax@cfb63dd7, EventCode: 5 [CONTEXT service_id=51 ]
+--
+10-27 15:21:44.419  5578  5578 D AndroidRuntime: Shutting down VM
+10-27 15:21:44.465  5103  5613 I NamespaceManager: Package com.android.refreshratecontrol name not found! Using module version.
+10-27 15:21:44.465  5103  5613 I NamespaceManager: Package com.google.oslo name not found! Using module version.
+10-27 15:21:44.466  5103  5613 I NamespaceManager: Package com.android.media name not found! Using module version.
+10-27 15:21:44.466  5103  5613 I NamespaceManager: Package com.android.media.swcodec name not found! Using module version.
+10-27 15:21:44.466  5103  5613 I NamespaceManager: Package com.android.neuralnetworks name not found! Using module version.
+10-27 15:21:44.466  5103  5613 I NamespaceManager: Package com.android.media name not found! Using module version.
+--
+10-27 15:21:46.703  5646  5646 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+10-27 15:21:46.704  1895  2920 W TimedProcessReaper: Scheduling killing of process to refresh configuration
+10-27 15:21:46.706  1895  1895 I A       : Refusing EXCLUSIVE task 21, it is already pending. Try again in 359 seconds.
+10-27 15:21:46.710  1895  2372 I A       : Refusing EXCLUSIVE task 24, it is already pending. Try again in 303 seconds.
+10-27 15:21:46.721  1895  2315 I FedAssExpListener: Fed-ass not supported for signed out users.
+10-27 15:21:46.721  1895  2315 I FedAssExpListener: Successfully processed experiments changed.
+10-27 15:21:46.722  1895  2399 I A       : NGA enabled in interactor.
+10-27 15:21:46.723  5646  5646 I AndroidRuntime: Using default boot image
+10-27 15:21:46.723  5646  5646 I AndroidRuntime: Leaving lock profiling enabled
+10-27 15:21:46.724  5646  5646 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 15:21:46.724  1895  2372 I OpaEligibilityChecker: send OpaEligibilityChange broadcast to CommonBroadcastReceiver
+10-27 15:21:46.725  1895  1895 I A       : Refusing EXCLUSIVE task 21, it is already pending. Try again in 359 seconds.
+10-27 15:21:46.728  5646  5646 I app_process: Using CollectorTypeCC GC.
+10-27 15:21:46.730  1895  2372 W CorpusConfigHelper: Invalid input from icing corpus JSON flag.
+10-27 15:21:46.730  1895  2372 W CorpusConfigHelper: android.util.MalformedJsonException: Use JsonReader.setLenient(true) to accept malformed JSON at line 123 column 2
+--
+10-27 15:21:46.983  5646  5646 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 15:21:46.983  5196  5422 I LocationHistory: [IntentOperation] Handling action com.google.android.gms.phenotype.COMMITTED [CONTEXT service_id=314 ]
+10-27 15:21:46.983  5103  5543 I NamespaceManager: Package android.companion name not found! Using module version.
+10-27 15:21:46.986  5646  5646 D UiAutomationConnection: Created on user UserHandle{0}
+10-27 15:21:46.987  5646  5646 I UiAutomation: Initialized for user 0 on display 0
+10-27 15:21:46.987  5646  5646 W UiAutomation: Created with deprecatead constructor, assumes DEFAULT_DISPLAY
+10-27 15:21:46.989  5196  5599 W PeoplePU: getComponentEnabledSetting failed.
+--
