@@ -65,8 +65,7 @@ edit(settings, r"(var isExperimentationEnabled by\s+booleanPreference\(\s+appCon
 prefs_xml = MAIN / "res/xml/preferences.xml"
 edit(prefs_xml, 'android:key="@string/pref_key_sign_in"',
      'android:key="@string/pref_key_sign_in"\n        app:isPreferenceVisible="false"')
-edit(prefs_xml, 'android:key="@string/pref_key_account_category"',
-     'android:key="@string/pref_key_account_category"\n        app:isPreferenceVisible="false"')
+# pref_key_account_category is already isPreferenceVisible=false upstream.
 # Settings code toggles these at runtime; force them hidden after it runs.
 sf = MAIN / "java/org/mozilla/fenix/settings/SettingsFragment.kt"
 s = sf.read_text(encoding="utf-8")
