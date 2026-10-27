@@ -88,6 +88,11 @@ class NexPrefs(context: Context) {
 
     val appLockActive: Boolean get() = isPremium && appLock
 
+    /** Premium accent colour (index into NexAccent; 0 = Mint). */
+    var accent: Int
+        get() = prefs.getInt(KEY_ACCENT, 0)
+        set(value) = prefs.edit { putInt(KEY_ACCENT, value) }
+
     companion object {
         /**
          * Closed testing: every tester gets all of Premium (App lock, Always incognito, Browser VPN).
@@ -108,5 +113,6 @@ class NexPrefs(context: Context) {
         private const val KEY_VPN_LOCATION = "vpn_location"
         private const val KEY_VPN_SERVERS = "vpn_servers_json"
         private const val KEY_APP_LOCK = "app_lock"
+        private const val KEY_ACCENT = "accent"
     }
 }

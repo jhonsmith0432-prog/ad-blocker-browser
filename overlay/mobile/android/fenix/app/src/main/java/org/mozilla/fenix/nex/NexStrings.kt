@@ -44,6 +44,7 @@ object NexStrings {
         "vpn_note" to "Covers pages you open in this browser. Other apps are not affected.",
         "terms" to "Terms", "refunds" to "Refunds", "privacy" to "Privacy",
         "f_applock" to "App lock: your fingerprint or PIN to open the browser", "applock" to "App lock", "applock_sub" to "Ask for your fingerprint or PIN every time you open the browser", "applock_need" to "Set a screen lock on your phone first.", "unlock" to "Unlock", "unlock_title" to "Unlock to continue",
+        "personalize" to "Personalize", "icons" to "App icon", "icons_sub" to "Pick from 23 icon designs for your home screen", "accent" to "Accent colour", "accent_sub" to "Recolour buttons, switches and highlights", "f_style" to "Custom app icons and accent colours", "incog_warn_title" to "Turn on Always incognito?", "incog_warn" to "Every session and link will open in private tabs. Private tabs don't keep history, cookies or site logins, so you'll need to sign in to sites again. Bookmarks and downloads are kept.", "incog_ok" to "Turn on", "cancel" to "Cancel",
     )
 
     private val ES = mapOf(
@@ -79,6 +80,7 @@ object NexStrings {
         "vpn_note" to "Cubre las páginas que abres en este navegador. No afecta a otras apps.",
         "terms" to "Términos", "refunds" to "Reembolsos", "privacy" to "Privacidad",
         "f_applock" to "Bloqueo de app: tu huella o PIN para abrir el navegador", "applock" to "Bloqueo de app", "applock_sub" to "Pide tu huella o PIN cada vez que abras el navegador", "applock_need" to "Primero configura un bloqueo de pantalla en tu teléfono.", "unlock" to "Desbloquear", "unlock_title" to "Desbloquea para continuar",
+        "personalize" to "Personalizar", "icons" to "Ícono de la app", "icons_sub" to "Elige entre 23 diseños de ícono para tu pantalla de inicio", "accent" to "Color de acento", "accent_sub" to "Cambia el color de botones, interruptores y resaltados", "f_style" to "Íconos de app y colores de acento personalizados", "incog_warn_title" to "¿Activar Siempre incógnito?", "incog_warn" to "Cada sesión y enlace se abrirá en pestañas privadas. Las pestañas privadas no guardan historial, cookies ni inicios de sesión, así que tendrás que volver a iniciar sesión en los sitios. Tus marcadores y descargas se conservan.", "incog_ok" to "Activar", "cancel" to "Cancelar",
     )
 
     private val PT = mapOf(
@@ -114,6 +116,7 @@ object NexStrings {
         "vpn_note" to "Vale para as páginas abertas neste navegador. Outros apps não são afetados.",
         "terms" to "Termos", "refunds" to "Reembolsos", "privacy" to "Privacidade",
         "f_applock" to "Bloqueio do app: sua digital ou PIN para abrir o navegador", "applock" to "Bloqueio do app", "applock_sub" to "Peça sua digital ou PIN sempre que abrir o navegador", "applock_need" to "Primeiro configure um bloqueio de tela no seu celular.", "unlock" to "Desbloquear", "unlock_title" to "Desbloqueie para continuar",
+        "personalize" to "Personalizar", "icons" to "Ícone do app", "icons_sub" to "Escolha entre 23 designs de ícone para a sua tela inicial", "accent" to "Cor de destaque", "accent_sub" to "Mude a cor de botões, chaves e destaques", "f_style" to "Ícones do app e cores de destaque personalizados", "incog_warn_title" to "Ativar Sempre anônimo?", "incog_warn" to "Toda sessão e link abrirá em abas privadas. Abas privadas não guardam histórico, cookies nem logins, então você precisará entrar nos sites de novo. Favoritos e downloads são mantidos.", "incog_ok" to "Ativar", "cancel" to "Cancelar",
     )
 
     private val FR = mapOf(
@@ -149,6 +152,7 @@ object NexStrings {
         "vpn_note" to "Concerne les pages ouvertes dans ce navigateur. Les autres applis ne sont pas concernées.",
         "terms" to "Conditions", "refunds" to "Remboursements", "privacy" to "Confidentialité",
         "f_applock" to "Verrou de l'appli : empreinte ou code pour ouvrir le navigateur", "applock" to "Verrou de l'appli", "applock_sub" to "Demander votre empreinte ou votre code à chaque ouverture du navigateur", "applock_need" to "Configurez d'abord un verrouillage d'écran sur votre téléphone.", "unlock" to "Déverrouiller", "unlock_title" to "Déverrouillez pour continuer",
+        "personalize" to "Personnaliser", "icons" to "Icône de l'app", "icons_sub" to "Choisissez parmi 23 icônes pour votre écran d'accueil", "accent" to "Couleur d'accent", "accent_sub" to "Change la couleur des boutons, interrupteurs et surlignages", "f_style" to "Icônes d'app et couleurs d'accent personnalisées", "incog_warn_title" to "Activer Toujours privé ?", "incog_warn" to "Chaque session et chaque lien s'ouvriront dans des onglets privés. Les onglets privés ne gardent ni historique, ni cookies, ni connexions : vous devrez vous reconnecter aux sites. Vos favoris et téléchargements sont conservés.", "incog_ok" to "Activer", "cancel" to "Annuler",
     )
 
     private val DE = mapOf(
@@ -184,6 +188,7 @@ object NexStrings {
         "vpn_note" to "Gilt für Seiten in diesem Browser. Andere Apps sind nicht betroffen.",
         "terms" to "Bedingungen", "refunds" to "Erstattungen", "privacy" to "Datenschutz",
         "f_applock" to "App-Sperre: Fingerabdruck oder PIN zum Öffnen des Browsers", "applock" to "App-Sperre", "applock_sub" to "Bei jedem Öffnen des Browsers nach Fingerabdruck oder PIN fragen", "applock_need" to "Richte zuerst eine Displaysperre auf deinem Handy ein.", "unlock" to "Entsperren", "unlock_title" to "Zum Fortfahren entsperren",
+        "personalize" to "Anpassen", "icons" to "App-Symbol", "icons_sub" to "Wähle aus 23 Symbol-Designs für deinen Startbildschirm", "accent" to "Akzentfarbe", "accent_sub" to "Färbt Schaltflächen, Schalter und Hervorhebungen neu", "f_style" to "Eigene App-Symbole und Akzentfarben", "incog_warn_title" to "Immer inkognito aktivieren?", "incog_warn" to "Jede Sitzung und jeder Link öffnet sich in privaten Tabs. Private Tabs speichern keinen Verlauf, keine Cookies und keine Anmeldungen – du musst dich bei Websites erneut anmelden. Lesezeichen und Downloads bleiben erhalten.", "incog_ok" to "Aktivieren", "cancel" to "Abbrechen",
     )
 
     private val IT = mapOf(
@@ -219,6 +224,7 @@ object NexStrings {
         "vpn_note" to "Vale per le pagine aperte in questo browser. Le altre app non sono interessate.",
         "terms" to "Termini", "refunds" to "Rimborsi", "privacy" to "Privacy",
         "f_applock" to "Blocco app: impronta o PIN per aprire il browser", "applock" to "Blocco app", "applock_sub" to "Chiedi impronta o PIN ogni volta che apri il browser", "applock_need" to "Imposta prima un blocco schermo sul telefono.", "unlock" to "Sblocca", "unlock_title" to "Sblocca per continuare",
+        "personalize" to "Personalizza", "icons" to "Icona dell'app", "icons_sub" to "Scegli tra 23 design di icone per la schermata Home", "accent" to "Colore di accento", "accent_sub" to "Cambia il colore di pulsanti, interruttori ed evidenziazioni", "f_style" to "Icone dell'app e colori di accento personalizzati", "incog_warn_title" to "Attivare Sempre in incognito?", "incog_warn" to "Ogni sessione e link si aprirà in schede private. Le schede private non salvano cronologia, cookie o accessi, quindi dovrai accedere di nuovo ai siti. Segnalibri e download vengono mantenuti.", "incog_ok" to "Attiva", "cancel" to "Annulla",
     )
 
     private val RU = mapOf(
@@ -254,6 +260,7 @@ object NexStrings {
         "vpn_note" to "Работает для страниц в этом браузере. На другие приложения не влияет.",
         "terms" to "Условия", "refunds" to "Возвраты", "privacy" to "Конфиденциальность",
         "f_applock" to "Блокировка приложения: отпечаток или PIN для входа", "applock" to "Блокировка приложения", "applock_sub" to "Запрашивать отпечаток или PIN при каждом открытии браузера", "applock_need" to "Сначала включите блокировку экрана на телефоне.", "unlock" to "Разблокировать", "unlock_title" to "Разблокируйте, чтобы продолжить",
+        "personalize" to "Оформление", "icons" to "Значок приложения", "icons_sub" to "Выберите один из 23 значков для главного экрана", "accent" to "Цвет акцента", "accent_sub" to "Меняет цвет кнопок, переключателей и выделений", "f_style" to "Свои значки приложения и цвета акцента", "incog_warn_title" to "Включить «Всегда инкогнито»?", "incog_warn" to "Все сеансы и ссылки будут открываться в приватных вкладках. Они не сохраняют историю, cookie и входы на сайты, поэтому входить придётся заново. Закладки и загрузки сохраняются.", "incog_ok" to "Включить", "cancel" to "Отмена",
     )
 
     private val TR = mapOf(
@@ -289,6 +296,7 @@ object NexStrings {
         "vpn_note" to "Bu tarayıcıda açtığınız sayfalar için geçerlidir. Diğer uygulamalar etkilenmez.",
         "terms" to "Koşullar", "refunds" to "İadeler", "privacy" to "Gizlilik",
         "f_applock" to "Uygulama kilidi: tarayıcıyı açmak için parmak izi veya PIN", "applock" to "Uygulama kilidi", "applock_sub" to "Tarayıcıyı her açışınızda parmak izi veya PIN iste", "applock_need" to "Önce telefonunuzda bir ekran kilidi ayarlayın.", "unlock" to "Kilidi aç", "unlock_title" to "Devam etmek için kilidi açın",
+        "personalize" to "Kişiselleştir", "icons" to "Uygulama simgesi", "icons_sub" to "Ana ekranın için 23 simge tasarımından birini seç", "accent" to "Vurgu rengi", "accent_sub" to "Düğmelerin, anahtarların ve vurguların rengini değiştirir", "f_style" to "Özel uygulama simgeleri ve vurgu renkleri", "incog_warn_title" to "Her zaman gizli açılsın mı?", "incog_warn" to "Her oturum ve bağlantı gizli sekmelerde açılır. Gizli sekmeler geçmiş, çerez ve oturum açma bilgisi saklamaz; sitelere yeniden giriş yapman gerekir. Yer imleri ve indirmeler korunur.", "incog_ok" to "Aç", "cancel" to "İptal",
     )
 
     private val AR = mapOf(
@@ -324,6 +332,7 @@ object NexStrings {
         "vpn_note" to "يشمل الصفحات التي تفتحها في هذا المتصفح فقط، ولا يؤثر على التطبيقات الأخرى.",
         "terms" to "الشروط", "refunds" to "الاسترداد", "privacy" to "الخصوصية",
         "f_applock" to "قفل التطبيق: بصمتك أو رمز PIN لفتح المتصفح", "applock" to "قفل التطبيق", "applock_sub" to "اطلب البصمة أو رمز PIN في كل مرة تفتح فيها المتصفح", "applock_need" to "اضبط قفل الشاشة على هاتفك أولًا.", "unlock" to "فتح القفل", "unlock_title" to "افتح القفل للمتابعة",
+        "personalize" to "التخصيص", "icons" to "أيقونة التطبيق", "icons_sub" to "اختر من بين 23 تصميمًا للأيقونة على شاشتك الرئيسية", "accent" to "لون التمييز", "accent_sub" to "يغيّر لون الأزرار والمفاتيح والتحديدات", "f_style" to "أيقونات تطبيق وألوان تمييز مخصّصة", "incog_warn_title" to "تشغيل التصفح الخفي دائمًا؟", "incog_warn" to "ستُفتح كل جلسة وكل رابط في علامات تبويب خاصة. لا تحفظ علامات التبويب الخاصة السجل أو ملفات تعريف الارتباط أو تسجيلات الدخول، لذا ستحتاج إلى تسجيل الدخول إلى المواقع مجددًا. تبقى الإشارات المرجعية والتنزيلات محفوظة.", "incog_ok" to "تشغيل", "cancel" to "إلغاء",
     )
 
     private val HI = mapOf(
@@ -359,6 +368,7 @@ object NexStrings {
         "vpn_note" to "यह इस ब्राउज़र में खोले गए पेजों पर लागू होता है। दूसरे ऐप पर असर नहीं पड़ता।",
         "terms" to "शर्तें", "refunds" to "रिफ़ंड", "privacy" to "निजता",
         "f_applock" to "ऐप लॉक: ब्राउज़र खोलने के लिए फ़िंगरप्रिंट या PIN", "applock" to "ऐप लॉक", "applock_sub" to "हर बार ब्राउज़र खोलने पर फ़िंगरप्रिंट या PIN माँगें", "applock_need" to "पहले अपने फ़ोन पर स्क्रीन लॉक सेट करें।", "unlock" to "अनलॉक करें", "unlock_title" to "जारी रखने के लिए अनलॉक करें",
+        "personalize" to "पर्सनलाइज़ करें", "icons" to "ऐप आइकन", "icons_sub" to "होम स्क्रीन के लिए 23 आइकन डिज़ाइन में से चुनें", "accent" to "एक्सेंट रंग", "accent_sub" to "बटन, स्विच और हाइलाइट का रंग बदलें", "f_style" to "कस्टम ऐप आइकन और एक्सेंट रंग", "incog_warn_title" to "हमेशा इनकॉग्निटो चालू करें?", "incog_warn" to "हर सेशन और लिंक प्राइवेट टैब में खुलेगा। प्राइवेट टैब हिस्ट्री, कुकी या साइट लॉगिन सेव नहीं करते, इसलिए साइटों में फिर से साइन इन करना होगा। बुकमार्क और डाउनलोड सुरक्षित रहते हैं।", "incog_ok" to "चालू करें", "cancel" to "रद्द करें",
     )
 
     private val ID = mapOf(
@@ -394,6 +404,7 @@ object NexStrings {
         "vpn_note" to "Berlaku untuk halaman yang dibuka di browser ini. Aplikasi lain tidak terpengaruh.",
         "terms" to "Ketentuan", "refunds" to "Pengembalian dana", "privacy" to "Privasi",
         "f_applock" to "Kunci aplikasi: sidik jari atau PIN untuk membuka browser", "applock" to "Kunci aplikasi", "applock_sub" to "Minta sidik jari atau PIN setiap kali membuka browser", "applock_need" to "Atur kunci layar di ponsel Anda terlebih dahulu.", "unlock" to "Buka kunci", "unlock_title" to "Buka kunci untuk melanjutkan",
+        "personalize" to "Personalisasi", "icons" to "Ikon aplikasi", "icons_sub" to "Pilih dari 23 desain ikon untuk layar utama", "accent" to "Warna aksen", "accent_sub" to "Ubah warna tombol, sakelar, dan sorotan", "f_style" to "Ikon aplikasi dan warna aksen kustom", "incog_warn_title" to "Aktifkan Selalu penyamaran?", "incog_warn" to "Setiap sesi dan tautan akan terbuka di tab pribadi. Tab pribadi tidak menyimpan riwayat, cookie, atau login situs, jadi Anda perlu masuk lagi ke situs. Bookmark dan unduhan tetap tersimpan.", "incog_ok" to "Aktifkan", "cancel" to "Batal",
     )
 
     private val JA = mapOf(
@@ -429,6 +440,7 @@ object NexStrings {
         "vpn_note" to "このブラウザで開いたページが対象です。ほかのアプリには影響しません。",
         "terms" to "利用規約", "refunds" to "返金", "privacy" to "プライバシー",
         "f_applock" to "アプリロック：指紋または PIN でブラウザを開く", "applock" to "アプリロック", "applock_sub" to "ブラウザを開くたびに指紋または PIN を要求", "applock_need" to "先にスマートフォンで画面ロックを設定してください。", "unlock" to "ロック解除", "unlock_title" to "続けるにはロックを解除してください",
+        "personalize" to "カスタマイズ", "icons" to "アプリアイコン", "icons_sub" to "ホーム画面用の 23 種類のアイコンから選べます", "accent" to "アクセントカラー", "accent_sub" to "ボタン、スイッチ、ハイライトの色を変更", "f_style" to "アプリアイコンとアクセントカラーをカスタマイズ", "incog_warn_title" to "常にシークレットをオンにしますか？", "incog_warn" to "すべてのセッションとリンクがプライベートタブで開きます。プライベートタブは履歴、Cookie、ログイン情報を保存しないため、サイトに再度ログインが必要です。ブックマークとダウンロードは残ります。", "incog_ok" to "オンにする", "cancel" to "キャンセル",
     )
 
     private val KO = mapOf(
@@ -464,6 +476,7 @@ object NexStrings {
         "vpn_note" to "이 브라우저에서 연 페이지에 적용됩니다. 다른 앱에는 영향이 없습니다.",
         "terms" to "약관", "refunds" to "환불", "privacy" to "개인정보",
         "f_applock" to "앱 잠금: 지문 또는 PIN으로 브라우저 열기", "applock" to "앱 잠금", "applock_sub" to "브라우저를 열 때마다 지문 또는 PIN 요청", "applock_need" to "먼저 휴대폰에 화면 잠금을 설정하세요.", "unlock" to "잠금 해제", "unlock_title" to "계속하려면 잠금을 해제하세요",
+        "personalize" to "개인 설정", "icons" to "앱 아이콘", "icons_sub" to "홈 화면용 아이콘 디자인 23가지 중에서 선택하세요", "accent" to "강조 색상", "accent_sub" to "버튼, 스위치, 강조 표시 색상 변경", "f_style" to "맞춤 앱 아이콘과 강조 색상", "incog_warn_title" to "항상 시크릿 모드를 켤까요?", "incog_warn" to "모든 세션과 링크가 비공개 탭에서 열립니다. 비공개 탭은 방문 기록, 쿠키, 로그인 정보를 저장하지 않으므로 사이트에 다시 로그인해야 합니다. 북마크와 다운로드는 유지됩니다.", "incog_ok" to "켜기", "cancel" to "취소",
     )
 
     private val ZH = mapOf(
@@ -499,6 +512,7 @@ object NexStrings {
         "vpn_note" to "仅适用于在此浏览器中打开的网页，不影响其他应用。",
         "terms" to "条款", "refunds" to "退款", "privacy" to "隐私",
         "f_applock" to "应用锁：用指纹或 PIN 打开浏览器", "applock" to "应用锁", "applock_sub" to "每次打开浏览器时要求验证指纹或 PIN", "applock_need" to "请先在手机上设置屏幕锁。", "unlock" to "解锁", "unlock_title" to "解锁以继续",
+        "personalize" to "个性化", "icons" to "应用图标", "icons_sub" to "为主屏幕从 23 款图标设计中任选", "accent" to "强调色", "accent_sub" to "更改按钮、开关和高亮的颜色", "f_style" to "自定义应用图标和强调色", "incog_warn_title" to "开启始终无痕？", "incog_warn" to "所有会话和链接都会在隐私标签页中打开。隐私标签页不保存历史记录、Cookie 或网站登录，因此你需要重新登录网站。书签和下载内容会保留。", "incog_ok" to "开启", "cancel" to "取消",
     )
 
     private val BY_LANG = mapOf(

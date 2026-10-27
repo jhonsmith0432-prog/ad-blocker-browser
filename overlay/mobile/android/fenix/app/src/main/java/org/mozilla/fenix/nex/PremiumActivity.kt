@@ -11,7 +11,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +31,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Switch
@@ -45,11 +48,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import mozilla.components.compose.base.theme.NexAccent
+import org.mozilla.fenix.BuildConfig
+import org.mozilla.fenix.HomeActivity
 import org.mozilla.fenix.ext.components
+import org.mozilla.fenix.iconpicker.AppIcon
+import org.mozilla.fenix.iconpicker.DefaultAppIconRepository
+import org.mozilla.fenix.iconpicker.DefaultPackageManagerWrapper
+import org.mozilla.fenix.iconpicker.IconBackground
 import java.text.NumberFormat
 
 /** Premium paywall: 3-day trial (yearly/monthly) or lifetime, App lock, Always incognito, Browser VPN, Shield Credits. */
@@ -117,6 +129,18 @@ class PremiumActivity : ComponentActivity() {
                     NexVpn.setLocation(this, id)
                     version++
                 },
+                onIcons = {
+                    // Fenix's own icon picker (Settings > Customize > App icon).
+                    startActivity(
+                        Intent(Intent.ACTION_VIEW, Uri.parse("${BuildConfig.DEEP_LINK_SCHEME}://settings_app_icon"))
+                            .setClass(this, HomeActivity::class.java),
+                    )
+                    finish()
+                },
+                onAccent = { i ->
+                    prefs.accent = i
+                    NexAccent.index = i
+                },
             )
         }
     }
@@ -149,8 +173,28 @@ private fun Paywall(
     onAppLock: (Boolean) -> Unit,
     onVpn: (Boolean) -> Unit,
     onVpnLocation: (String) -> Unit,
+    onIcons: () -> Unit,
+    onAccent: (Int) -> Unit,
 ) {
     val context = LocalContext.current
+    var confirmIncognito by remember { mutableStateOf(false) }
+    if (confirmIncognito) {
+        AlertDialog(
+            onDismissRequest = { confirmIncognito = false },
+            containerColor = NexColors.Card,
+            title = { Text(t("incog_warn_title"), color = NexColors.Text, fontWeight = FontWeight.Bold) },
+            text = { Text(t("incog_warn"), color = NexColors.Muted, fontSize = 14.sp) },
+            confirmButton = {
+                TextButton(onClick = {
+                    confirmIncognito = false
+                    onAlwaysIncognito(true)
+                }) { Text(t("incog_ok"), color = NexColors.Mint, fontWeight = FontWeight.Bold) }
+            },
+            dismissButton = {
+                TextButton(onClick = { confirmIncognito = false }) { Text(t("cancel"), color = NexColors.Muted) }
+            },
+        )
+    }
     var selected by remember { mutableStateOf(Plan.YEARLY) }
     val isPremium = premium.isPremium
     Column(
@@ -201,12 +245,17 @@ private fun Paywall(
         if (isPremium) {
             if (vpnLive) VpnCard(context, prefs, onVpn, onVpnLocation)
             ToggleCard(t("applock"), t("applock_sub"), prefs.appLock, onAppLock)
-            ToggleCard(t("incog"), t("incog_sub"), prefs.alwaysIncognito, onAlwaysIncognito)
+            // Turning it on is confirmed first: private tabs don't keep history, cookies or logins.
+            ToggleCard(t("incog"), t("incog_sub"), prefs.alwaysIncognito) { on ->
+                if (on) confirmIncognito = true else onAlwaysIncognito(false)
+            }
+            PersonalizeCard(onIcons, onAccent)
         } else {
             Column(Modifier.fillMaxWidth().nexCard().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 if (vpnLive) Feature(ShieldGlyph.Globe, t("f_vpn"))
                 Feature(ShieldGlyph.Lock, t("f_applock"))
                 Feature(ShieldGlyph.Crown, t("f_incog"))
+                Feature(ShieldGlyph.Check, t("f_style"))
             }
 
             Plan.entries.forEach { plan ->
@@ -313,6 +362,58 @@ private fun ToggleCard(title: String, subtitle: String, checked: Boolean, onChan
             onCheckedChange = onChange,
             colors = SwitchDefaults.colors(checkedTrackColor = NexColors.Mint, checkedThumbColor = NexColors.Ink),
         )
+    }
+}
+
+@Composable
+private fun PersonalizeCard(onIcons: () -> Unit, onAccent: (Int) -> Unit) {
+    val context = LocalContext.current
+    val icon = DefaultAppIconRepository(
+        packageManager = DefaultPackageManagerWrapper(context.packageManager),
+        packageName = context.packageName,
+    ).selectedAppIcon
+    Column(Modifier.fillMaxWidth().nexCard().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Text(t("personalize"), color = NexColors.Text, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+        Row(
+            Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).clickable(onClick = onIcons).padding(vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconPreview(icon)
+            Spacer(Modifier.width(12.dp))
+            Column(Modifier.weight(1f)) {
+                Text(t("icons"), color = NexColors.Text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                Text(t("icons_sub"), color = NexColors.Muted, fontSize = 13.sp)
+            }
+            Text("›", color = NexColors.Muted, fontSize = 26.sp)
+        }
+        Column {
+            Text(t("accent"), color = NexColors.Text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+            Text(t("accent_sub"), color = NexColors.Muted, fontSize = 13.sp)
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            for (i in 0 until NexAccent.count) {
+                val on = i == NexAccent.index
+                Box(
+                    Modifier
+                        .size(36.dp)
+                        .clip(CircleShape)
+                        .background(NexAccent.swatch(i))
+                        .border(if (on) 3.dp else 0.dp, if (on) NexColors.Text else NexAccent.swatch(i), CircleShape)
+                        .clickable { onAccent(i) },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun IconPreview(icon: AppIcon) {
+    Box(Modifier.size(48.dp).clip(RoundedCornerShape(14.dp))) {
+        when (val bg = icon.iconBackground) {
+            is IconBackground.Color -> Box(Modifier.fillMaxSize().background(colorResource(bg.colorResId)))
+            is IconBackground.Drawable -> Image(painterResource(bg.drawableResId), null, Modifier.fillMaxSize())
+        }
+        Image(painterResource(icon.iconForegroundId), null, Modifier.fillMaxSize())
     }
 }
 

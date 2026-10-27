@@ -8,6 +8,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
+import mozilla.components.compose.base.theme.NexAccent
 import org.mozilla.fenix.HomeActivity
 
 /**
@@ -20,7 +21,12 @@ object NexLaunchTracker : Application.ActivityLifecycleCallbacks {
     private var countedThisProcess = false
     private var startedActivities = 0
 
-    fun register(app: Application) = app.registerActivityLifecycleCallbacks(this)
+    fun register(app: Application) {
+        // Premium accent colour; falls back to Mint when Premium is not active.
+        val prefs = NexPrefs(app)
+        NexAccent.index = if (prefs.isPremium) prefs.accent else 0
+        app.registerActivityLifecycleCallbacks(this)
+    }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         if (activity !is HomeActivity || countedThisProcess || savedInstanceState != null) return

@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import mozilla.components.compose.base.theme.NexAccent
 
 /** Nexcraft browser palette (matches the launcher icon and the store listing). */
 object NexColors {
@@ -37,16 +38,17 @@ object NexColors {
     val Card = Color(0xFF151B36)
     val CardHi = Color(0xFF1C2447)
     val Line = Color(0xFF283260)
-    val Mint = Color(0xFF3DF5B0)
-    val Teal = Color(0xFF19C6A0)
+    // Mint and Teal follow the Premium accent colour (Compose state, so screens recolour live).
+    val Mint: Color get() = NexAccent.darkPrimary
+    val Teal: Color get() = NexAccent.deep
     val Violet = Color(0xFF7C5CFF)
     val Gold = Color(0xFFFFC85A)
     val Text = Color(0xFFF4F6FF)
     val Muted = Color(0xFFA3A9C7)
 
     val screen: Brush = Brush.verticalGradient(listOf(Color(0xFF111A3A), Ink, Ink))
-    val cta: Brush = Brush.horizontalGradient(listOf(Mint, Teal))
-    val premium: Brush = Brush.linearGradient(listOf(Violet, Color(0xFF3A7BFF), Teal))
+    val cta: Brush get() = Brush.horizontalGradient(listOf(Mint, Teal))
+    val premium: Brush get() = Brush.linearGradient(listOf(Violet, Color(0xFF3A7BFF), Teal))
 }
 
 /** The app's shield mark, drawn in code so it stays crisp at any size. */
