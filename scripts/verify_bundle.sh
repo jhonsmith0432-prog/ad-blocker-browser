@@ -4,7 +4,8 @@ set -u
 mkdir -p out
 R=out/bundle.txt
 exec > >(tee -a "$R") 2>&1
-AAB=$(find art -name '*.aab' | head -1)
+AAB=$(find art -name 'fenix-release.aab' | head -1)
+[ -z "$AAB" ] && { echo 'fenix-release.aab not found'; find art -name '*.aab'; exit 1; }
 echo "AAB: $AAB"
 ls -la art art/* 2>/dev/null | head -40
 echo "== AAB size (bytes) =="; stat -c %s "$AAB"
