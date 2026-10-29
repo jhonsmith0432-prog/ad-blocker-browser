@@ -32,6 +32,7 @@ object NexLaunchTracker : Application.ActivityLifecycleCallbacks {
         if (activity !is HomeActivity || countedThisProcess || savedInstanceState != null) return
         countedThisProcess = true
         val prefs = NexPrefs(activity)
+        PremiumManager(activity.applicationContext).checkOnce()
         prefs.launchCount = prefs.launchCount + 1
         if (!prefs.onboardingDone) {
             activity.startActivity(Intent(activity, NexOnboardingActivity::class.java))

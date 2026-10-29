@@ -60,6 +60,26 @@ class PremiumManager(context: Context) : PurchasesUpdatedListener {
 
     fun end() = client.endConnection()
 
+    /**
+     * Quiet check at app start: re-reads purchases once, so a refunded or expired
+     * subscription stops Premium without the user opening the paywall.
+     */
+    fun checkOnce() {
+        client.startConnection(
+            object : BillingClientStateListener {
+                override fun onBillingSetupFinished(result: BillingResult) {
+                    if (result.responseCode == BillingClient.BillingResponseCode.OK) {
+                        restore { client.endConnection() }
+                    } else {
+                        client.endConnection()
+                    }
+                }
+
+                override fun onBillingServiceDisconnected() = Unit
+            },
+        )
+    }
+
     private fun refresh() {
         loadProducts()
         restore()
@@ -85,22 +105,32 @@ class PremiumManager(context: Context) : PurchasesUpdatedListener {
     }
 
     /** Re-reads owned purchases from Play (also used by the "Restore purchase" button). */
-    fun restore() {
+    fun restore(done: () -> Unit = {}) {
         var subOwned = false
         client.queryPurchasesAsync(
             QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS).build(),
-        ) { _, subs ->
+        ) { subResult, subs ->
+            // A failed query (offline, Play busy) must never take Premium away.
+            if (subResult.responseCode != BillingClient.BillingResponseCode.OK) {
+                done()
+                return@queryPurchasesAsync
+            }
             subOwned = subs.any { it.purchaseState == Purchase.PurchaseState.PURCHASED }
             subs.forEach(::acknowledge)
             client.queryPurchasesAsync(
                 QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.INAPP).build(),
-            ) { _, inapp ->
+            ) { inappResult, inapp ->
+                if (inappResult.responseCode != BillingClient.BillingResponseCode.OK) {
+                    done()
+                    return@queryPurchasesAsync
+                }
                 val lifeOwned = inapp.any {
                     it.purchaseState == Purchase.PurchaseState.PURCHASED && LIFETIME_ID in it.products
                 }
                 inapp.forEach(::acknowledge)
                 prefs.isPremium = subOwned || lifeOwned
                 onChanged()
+                done()
             }
         }
     }
