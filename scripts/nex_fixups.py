@@ -124,7 +124,8 @@ edit(gradle, "    androidResources {\n",
      "[" + ", ".join(f'"{l}"' for l in LOCALE_FILTERS) + "]\n")
 
 # --- 64-bit ARM only ---------------------------------------------------------------------
-edit(gradle, "    defaultConfig {\n", "    defaultConfig {\n        ndk { abiFilters \"arm64-v8a\" }\n")
+# AAB only: debug APKs use ABI splits, and Gradle refuses ndk.abiFilters alongside splits.
+edit(gradle, "    defaultConfig {\n", "    defaultConfig {\n        if (isAppBundle) { ndk { abiFilters \"arm64-v8a\" } }\n")
 edit(gradle, 'include "armeabi-v7a", "arm64-v8a", "x86_64"', 'include "arm64-v8a"')
 
 # --- Our activities ----------------------------------------------------------------------
