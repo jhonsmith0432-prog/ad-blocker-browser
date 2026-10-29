@@ -44,6 +44,7 @@ object NexLaunchTracker : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityStarted(activity: Activity) {
+        if (startedActivities == 0) NexWipe.onReturn(activity)
         startedActivities++
         if (activity is NexLockActivity || NexLock.unlocked) return
         if (NexPrefs(activity).appLockActive) {
@@ -57,6 +58,7 @@ object NexLaunchTracker : Application.ActivityLifecycleCallbacks {
         startedActivities = (startedActivities - 1).coerceAtLeast(0)
         if (startedActivities == 0 && !activity.isChangingConfigurations) {
             NexLock.unlocked = false
+            NexWipe.onLeave(activity)
         }
     }
 

@@ -93,6 +93,51 @@ class NexPrefs(context: Context) {
         get() = prefs.getInt(KEY_ACCENT, 0)
         set(value) = prefs.edit { putInt(KEY_ACCENT, value) }
 
+    /** Premium Dark mode for every site (bundled Dark Reader). */
+    var darkMode: Boolean
+        get() = prefs.getBoolean(KEY_DARK, false)
+        set(value) = prefs.edit { putBoolean(KEY_DARK, value) }
+
+    /** Premium Data saver: skip images, web fonts and video/audio downloads. */
+    var dataSaver: Boolean
+        get() = prefs.getBoolean(KEY_LITE, false)
+        set(value) = prefs.edit { putBoolean(KEY_LITE, value) }
+
+    /** Data saver estimate reported by the extension, in KB. */
+    var liteSavedKb: Long
+        get() = prefs.getLong(KEY_LITE_KB, 0L)
+        set(value) = prefs.edit { putLong(KEY_LITE_KB, value) }
+
+    /** Premium Hide anything you tap. */
+    var hideItems: Boolean
+        get() = prefs.getBoolean(KEY_HIDE, true)
+        set(value) = prefs.edit { putBoolean(KEY_HIDE, value) }
+
+    /** Number of saved "hide this" rules, as last reported by the extension. */
+    var hiddenRules: Int
+        get() = prefs.getInt(KEY_HIDE_COUNT, 0)
+        set(value) = prefs.edit { putInt(KEY_HIDE_COUNT, value) }
+
+    /** Premium strong anti-fingerprinting. */
+    var strongFingerprint: Boolean
+        get() = prefs.getBoolean(KEY_FP, false)
+        set(value) = prefs.edit { putBoolean(KEY_FP, value) }
+
+    /** Premium auto-wipe: 0 off, otherwise minutes away before wiping (WIPE_NOW = as soon as you leave). */
+    var wipeAfter: Int
+        get() = prefs.getInt(KEY_WIPE, 0)
+        set(value) = prefs.edit { putInt(KEY_WIPE, value) }
+
+    /** When the whole app last went to the background (epoch ms), for auto-wipe. */
+    var leftAt: Long
+        get() = prefs.getLong(KEY_LEFT_AT, 0L)
+        set(value) = prefs.edit { putLong(KEY_LEFT_AT, value) }
+
+    /** Premium Vault: move finished downloads into the locked vault. */
+    var vaultAutoMove: Boolean
+        get() = prefs.getBoolean(KEY_VAULT_AUTO, false)
+        set(value) = prefs.edit { putBoolean(KEY_VAULT_AUTO, value) }
+
     companion object {
         /**
          * Closed testing: every tester gets all of Premium (App lock, Always incognito, Browser VPN).
@@ -114,5 +159,15 @@ class NexPrefs(context: Context) {
         private const val KEY_VPN_SERVERS = "vpn_servers_json"
         private const val KEY_APP_LOCK = "app_lock"
         private const val KEY_ACCENT = "accent"
+        private const val KEY_DARK = "dark_mode"
+        private const val KEY_LITE = "data_saver"
+        private const val KEY_LITE_KB = "data_saver_kb"
+        private const val KEY_HIDE = "hide_items"
+        private const val KEY_HIDE_COUNT = "hide_rules"
+        private const val KEY_FP = "strong_fingerprint"
+        private const val KEY_WIPE = "wipe_after"
+        private const val KEY_LEFT_AT = "left_at"
+        private const val KEY_VAULT_AUTO = "vault_auto_move"
+        const val WIPE_NOW = 1
     }
 }
