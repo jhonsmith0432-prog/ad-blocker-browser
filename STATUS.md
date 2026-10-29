@@ -1,3 +1,20 @@
+# Status
+
+## 29 Oct 2026: UI rework (needs a CI build)
+
+- **Premium has its own button now.** Home screen header: a "Get Premium" pill (opens the paywall) and a
+  shield button (opens Privacy Shield). Settings keeps one entry, "Privacy Shield & Premium".
+- **Privacy Shield** (`NexHubActivity`): blocked count, then every control in sections (Protection: VPN,
+  Always incognito, App lock; Look and feel; Premium and account; support code folded away). Premium
+  controls show a gold "Premium" chip and open the paywall instead of failing silently.
+- **Paywall** (`PremiumActivity`) is only a paywall now: close (X), 4 benefits, plans, and the buy button
+  pinned to the bottom so it is always visible. Premium users see "Premium is active", Manage subscription
+  (Google Play) and Open Privacy Shield.
+- Screens respect the status and navigation bars (Android 15 edge-to-edge).
+- Shared pieces live in `NexCards.kt`; home buttons in `NexHomeEntry.kt` (inserted by `nex_fixups.py`).
+- 25 new strings in all 14 languages (`NexStrings.kt`).
+- `.gitignore`: `src/` changed to `/src/` so new overlay files are not ignored.
+
 # Status — overnight work (27 Oct 2026)
 
 ## Done tonight

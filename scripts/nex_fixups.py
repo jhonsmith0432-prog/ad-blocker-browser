@@ -137,6 +137,10 @@ edit(manifest, "    </application>",
      "            android:exported=\"false\"\n"
      "            android:theme=\"@android:style/Theme.Material.NoActionBar\" />\n"
      "        <activity\n"
+     "            android:name=\".nex.NexHubActivity\"\n"
+     "            android:exported=\"false\"\n"
+     "            android:theme=\"@android:style/Theme.Material.NoActionBar\" />\n"
+     "        <activity\n"
      "            android:name=\".nex.NexLockActivity\"\n"
      "            android:exported=\"false\"\n"
      "            android:launchMode=\"singleTop\"\n"
@@ -231,5 +235,15 @@ edit(MAIN / "java/org/mozilla/fenix/iconpicker/ui/AppIconPreference.kt",
      "                    return@SelectAppIcon\n"
      "                }\n"
      "                CustomizationSettings.appIconSelectionTapped.record()\n")
+
+# --- Home screen: Premium pill + Privacy Shield button in the header ----------------------
+home_ui = MAIN / "java/org/mozilla/fenix/home/ui"
+edit(home_ui / "HomepageHeader.kt",
+     "            if (showStoriesButton) {\n                StoriesButton(onClick = onStoriesTapped)\n            }\n",
+     "            org.mozilla.fenix.nex.NexHomeEntries()\n\n"
+     "            if (showStoriesButton) {\n                StoriesButton(onClick = onStoriesTapped)\n            }\n")
+edit(home_ui / "ExperimentalHomepageHeader.kt",
+     "            PrivateModeButton(onPrivateModeTapped)\n",
+     "            PrivateModeButton(onPrivateModeTapped)\n\n            org.mozilla.fenix.nex.NexHomeEntries()\n")
 
 print("nex_fixups: done")
