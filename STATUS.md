@@ -1,3 +1,34 @@
+# Status
+
+## 29 Oct 2026 (later): v2 polish from the "Nex Browser UI" design canvas (row "v2 polish")
+
+- **Tabs**: Tabs / Private segmented switch replaces the icon row (Tabs first). Synced tabs page removed.
+  Each grid tab shows "N blocked" (trackers blocked in that tab).
+- **Menu**: Privacy Shield (with this page's blocked count) and Premium at the top; Mozilla account row
+  only shows if an account exists (it never does, sign-in is hidden).
+- **Home**: blocked-count card under the header, opens Privacy Shield.
+- **Tab groups** (like Brave): on by default. Several tabs stack into one card under "Groups", a strip at
+  the bottom switches between tabs of the current group, drag a tab onto another to group them, and the
+  main menu has "Add to tab group". Firefox ships this code; Mozilla only enables it by remote experiment.
+- **Premium**: violet plan selection and buy button, as in the design.
+- **Check the real build**: run the new "Screenshot the UI" workflow with the Build run id; it saves
+  home, tabs, tab options, private tabs, menu, Privacy Shield and Premium screenshots as `ui-screens`.
+
+## 29 Oct 2026: UI rework (needs a CI build)
+
+- **Premium has its own button now.** Home screen header: a "Get Premium" pill (opens the paywall) and a
+  shield button (opens Privacy Shield). Settings keeps one entry, "Privacy Shield & Premium".
+- **Privacy Shield** (`NexHubActivity`): blocked count, then every control in sections (Protection: VPN,
+  Always incognito, App lock; Look and feel; Premium and account; support code folded away). Premium
+  controls show a gold "Premium" chip and open the paywall instead of failing silently.
+- **Paywall** (`PremiumActivity`) is only a paywall now: close (X), 4 benefits, plans, and the buy button
+  pinned to the bottom so it is always visible. Premium users see "Premium is active", Manage subscription
+  (Google Play) and Open Privacy Shield.
+- Screens respect the status and navigation bars (Android 15 edge-to-edge).
+- Shared pieces live in `NexCards.kt`; home buttons in `NexHomeEntry.kt` (inserted by `nex_fixups.py`).
+- 25 new strings in all 14 languages (`NexStrings.kt`).
+- `.gitignore`: `src/` changed to `/src/` so new overlay files are not ignored.
+
 # Status — overnight work (27 Oct 2026)
 
 ## Done tonight
@@ -46,3 +77,14 @@
    30 minutes earlier. If you edited the Premium screen in the canvas around then, check it's still there.
 10. I tried to download a Kotlin linter to sanity-check the new code; that download was blocked here, so the
     first CI build is the check.
+
+## Round: Premium features (29 Oct)
+Added behind the paywall (PREMIUM_FREE still true for testers):
+- Dark mode for every site: bundled Dark Reader 4.9.134 (MIT, downloaded in prebuild, help/uninstall tabs patched out).
+- Data saver: built-in `nexplus` extension blocks images, web fonts and media; KB saved shown in Privacy Shield.
+- Hide anything you tap: menu item "Hide something on this page" opens a picker; rules saved per site, clearable.
+- Private Vault: app-private folder behind fingerprint/PIN; optional auto-move of finished downloads; add/share/delete.
+- Strong anti-fingerprinting: Gecko fingerprinting protection with +AllTargets.
+- Auto-wipe: Off / when I leave / after 5 / after 30 minutes (tabs, history, cookies, cache).
+- More VPN locations: code already lists servers from vpn.json; needs a Europe server rented by Jhon.
+Strings in all 14 languages. kotlinc syntax check and ffsrc dry-run of patches + nex_fixups pass.
