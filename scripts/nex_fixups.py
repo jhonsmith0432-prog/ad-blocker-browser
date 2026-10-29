@@ -137,6 +137,14 @@ edit(manifest, "    </application>",
      "            android:exported=\"false\"\n"
      "            android:theme=\"@android:style/Theme.Material.NoActionBar\" />\n"
      "        <activity\n"
+     "            android:name=\".nex.NexVaultActivity\"\n"
+     "            android:exported=\"false\"\n"
+     "            android:theme=\"@style/Theme.AppCompat.NoActionBar\" />\n"
+     "        <activity\n"
+     "            android:name=\".nex.NexHubActivity\"\n"
+     "            android:exported=\"false\"\n"
+     "            android:theme=\"@android:style/Theme.Material.NoActionBar\" />\n"
+     "        <activity\n"
      "            android:name=\".nex.NexLockActivity\"\n"
      "            android:exported=\"false\"\n"
      "            android:launchMode=\"singleTop\"\n"
@@ -173,7 +181,8 @@ for colors_xml, start, end in [("values/colors.xml", "#FFE9F7F1", "#FFF5F8FC"),
 app = MAIN / "java/org/mozilla/fenix/FenixApplication.kt"
 edit(app, "            installBundledContentBlocker()\n",
      "            installBundledContentBlocker()\n"
-     "            org.mozilla.fenix.nex.NexVpn.install(this, components.core.engine)\n")
+     "            org.mozilla.fenix.nex.NexVpn.install(this, components.core.engine)\n"
+     "            org.mozilla.fenix.nex.NexPlus.install(this, components.core.engine)\n")
 
 # --- Nexcraft look: mint + navy instead of Firefox violet (all Compose UI) ----------------
 colors = SRC / "mobile/android/android-components/components/compose/base/src/main/java/mozilla/components/compose/base/theme/AcornColors.kt"
@@ -231,5 +240,89 @@ edit(MAIN / "java/org/mozilla/fenix/iconpicker/ui/AppIconPreference.kt",
      "                    return@SelectAppIcon\n"
      "                }\n"
      "                CustomizationSettings.appIconSelectionTapped.record()\n")
+
+# --- Home screen: Premium pill + Privacy Shield button in the header ----------------------
+home_ui = MAIN / "java/org/mozilla/fenix/home/ui"
+edit(home_ui / "HomepageHeader.kt",
+     "            if (showStoriesButton) {\n                StoriesButton(onClick = onStoriesTapped)\n            }\n",
+     "            org.mozilla.fenix.nex.NexHomeEntries()\n\n"
+     "            if (showStoriesButton) {\n                StoriesButton(onClick = onStoriesTapped)\n            }\n")
+edit(home_ui / "ExperimentalHomepageHeader.kt",
+     "            PrivateModeButton(onPrivateModeTapped)\n",
+     "            PrivateModeButton(onPrivateModeTapped)\n\n            org.mozilla.fenix.nex.NexHomeEntries()\n")
+
+# --- Tab manager: Tabs first, Private second, no Synced tabs page ----------------------------
+tabstray = MAIN / "java/org/mozilla/fenix/tabstray"
+page_kt = tabstray / "redux/state/Page.kt"
+edit(page_kt,
+     "            listOfNotNull(\n                PrivateTabs,\n                NormalTabs,\n                TabGroups.takeIf { shouldShowTabGroupsPage },\n                SyncedTabs,\n            )",
+     "            listOfNotNull(\n                NormalTabs,\n                PrivateTabs,\n                TabGroups.takeIf { shouldShowTabGroupsPage },\n            )")
+edit(page_kt,
+     "                position == 0 -> PrivateTabs\n                position == 1 -> NormalTabs\n                shouldShowTabGroupsPage && position == 2 -> TabGroups\n                else -> SyncedTabs",
+     "                position == 1 -> PrivateTabs\n                shouldShowTabGroupsPage && position == 2 -> TabGroups\n                else -> NormalTabs")
+edit(page_kt,
+     "                PrivateTabs -> 0\n                NormalTabs -> 1\n                TabGroups -> if (shouldShowTabGroupsPage) 2 else 1\n                SyncedTabs -> visiblePages(shouldShowTabGroupsPage).lastIndex",
+     "                NormalTabs -> 0\n                PrivateTabs -> 1\n                TabGroups -> if (shouldShowTabGroupsPage) 2 else 0\n                SyncedTabs -> 0")
+
+# Segmented Tabs / Private switch instead of the icon tab row.
+edit(tabstray / "ui/banner/TabsTrayBanner.kt",
+     r'@Suppress\("LongParameterList"\)\n(@Composable\nprivate fun TabPageBanner\(.*?\n\) \{\n).*?(\n\}\n\n@Suppress\("LongParameterList"\)\n@Composable\nprivate fun TabPageBannerTabs\()',
+     r'@Suppress("LongParameterList", "UNUSED_PARAMETER")\n\1    org.mozilla.fenix.nex.NexTabSwitch(\n'
+     r'        selectedPage = selectedPage,\n        normalTabCount = normalTabCount,\n'
+     r'        privateTabCount = privateTabCount,\n        showGroups = shouldShowTabGroupsPage,\n'
+     r'        tabGroupCount = tabGroupCount,\n        hasTabDataLoaded = hasTabDataLoaded,\n'
+     r'        onPick = onTabPageIndicatorClicked,\n    )\2',
+     regex=True)
+
+# Per-tab "N blocked" badge on grid thumbnails (trackers blocked in that tab).
+tabs_item = tabstray / "data/TabsTrayItem.kt"
+edit(tabs_item, "        override val isFocused: Boolean,\n    ) : TabsTrayItem {",
+     "        override val isFocused: Boolean,\n        val blocked: Int = 0,\n    ) : TabsTrayItem {")
+edit(tabs_item, "            lastAccess = tab.lastAccess,\n            isFocused = isFocused,\n        )",
+     "            lastAccess = tab.lastAccess,\n            isFocused = isFocused,\n"
+     "            blocked = tab.trackingProtection.blockedTrackers.size,\n        )")
+edit(tabstray / "ui/tabitems/TabGridTabItem.kt",
+     "                        MediaPlaybackIndicator(isMediaActive = tab.isMediaActive)\n",
+     "                        MediaPlaybackIndicator(isMediaActive = tab.isMediaActive)\n\n"
+     "                        org.mozilla.fenix.nex.NexBlockedBadge(tab.blocked, Modifier.align(Alignment.BottomEnd))\n")
+
+# --- Home: blocked-count card under the header -------------------------------------------------
+edit(home_ui / "Homepage.kt",
+     "            if (state.firstFrameDrawn) {\n",
+     "            if (state is HomepageState.Normal) {\n                org.mozilla.fenix.nex.NexHomeStatsCard()\n            }\n\n"
+     "            if (state.firstFrameDrawn) {\n")
+
+# --- Main menu: Privacy Shield + Premium on top; no Mozilla account row -----------------------
+main_menu = MAIN / "java/org/mozilla/fenix/components/menu/compose/MainMenu.kt"
+edit(main_menu,
+     "    ) {\n        if (isReaderViewActive && accessPoint != MenuAccessPoint.Home) {\n",
+     "    ) {\n        org.mozilla.fenix.nex.NexMenuEntries()\n\n"
+     "        if (isReaderViewActive && accessPoint != MenuAccessPoint.Home) {\n")
+edit(main_menu,
+     "            MozillaAccountMenuItem(\n                account = account,\n                accountState = accountState,\n                onClick = onMozillaAccountButtonClick,\n            )\n\n",
+     "            if (account != null) {\n                MozillaAccountMenuItem(\n                    account = account,\n"
+     "                    accountState = accountState,\n                    onClick = onMozillaAccountButtonClick,\n                )\n            }\n\n")
+
+# --- Tab groups (several tabs stacked in one card + strip at the bottom), like Brave -----------
+helper = tabstray / "TabManagementFeatureHelper.kt"
+for old in [
+    "Config.channel.isDebug || FxNimbus.features.tabGroups.value().enabled",
+    "Config.channel.isDebug || FxNimbus.features.tabGroupsDragAndDrop.value().enabled",
+    "FxNimbus.features.tabGroupsLiveReorder.value().enabled",
+    "Config.channel.isDebug || FxNimbus.features.tabGroupsUngroup.value().enabled",
+    "Config.channel.isDebug || FxNimbus.features.tabGroupsOnboarding.value().enabled",
+    "FxNimbus.features.tabGroupsStrip.value().enabled",
+]:
+    edit(helper, "get() = " + old + "\n", "get() = true\n")
+edit(helper, "    override val showTabGroupsInMenu: Boolean\n        get() = false\n",
+     "    override val showTabGroupsInMenu: Boolean\n        get() = true\n")
+
+# --- Premium Vault: downloads can move into private storage; FileProvider must reach it -----
+edit(MAIN / "res/xml/file_paths.xml", '    <cache-path name="cache" path="." />\n',
+     '    <cache-path name="cache" path="." />\n    <files-path name="vault" path="nexvault/" />\n')
+edit(MAIN / "java/org/mozilla/fenix/components/Core.kt",
+     "                org.mozilla.fenix.nex.BlockedCounterMiddleware(context),\n",
+     "                org.mozilla.fenix.nex.BlockedCounterMiddleware(context),\n"
+     "                org.mozilla.fenix.nex.NexVaultMiddleware(context),\n")
 
 print("nex_fixups: done")

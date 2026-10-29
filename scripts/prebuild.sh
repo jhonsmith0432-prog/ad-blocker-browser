@@ -63,6 +63,27 @@ mkdir -p "$FENIX/src/main/assets/extensions"
 mkdir -p "$FENIX/src/main/assets/extensions/nexvpn"
 cp "$ROOT/scripts/nexvpn-manifest.json" "$FENIX/src/main/assets/extensions/nexvpn/manifest.json"
 cp "$ROOT/scripts/nexvpn-background.js" "$FENIX/src/main/assets/extensions/nexvpn/background.js"
+# Premium tools (Data saver + Hide anything you tap).
+mkdir -p "$FENIX/src/main/assets/extensions/nexplus"
+cp "$ROOT"/scripts/nexplus/* "$FENIX/src/main/assets/extensions/nexplus/"
+# Dark mode for every site: Dark Reader (MIT), unpacked; its "open the help page on install" tab is removed.
+DR="$FENIX/src/main/assets/extensions/darkreader"
+rm -rf "$DR" && mkdir -p "$DR"
+curl -fL --retry 3 -o "$ROOT/darkreader.xpi" \
+  "https://github.com/darkreader/darkreader/releases/download/v${DARKREADER_VERSION}/darkreader-firefox.xpi"
+unzip -q "$ROOT/darkreader.xpi" -d "$DR"
+rm -f "$ROOT/darkreader.xpi"
+cp "$ROOT/scripts/darkreader-LICENSE.txt" "$DR/LICENSE"
+python3 - "$DR/background/index.js" <<'PY'
+import sys
+p = sys.argv[1]
+s = open(p, encoding="utf-8").read()
+for old, new in [("chrome.tabs.create({url: getHelpURL()});", "void 0;"),
+                 ("chrome.runtime.setUninstallURL(UNINSTALL_URL);", "void 0;")]:
+    assert old in s, "Dark Reader changed: " + old
+    s = s.replace(old, new)
+open(p, "w", encoding="utf-8").write(s)
+PY
 XPI="$FENIX/src/main/assets/extensions/ublock_origin.xpi"
 curl -fL --retry 3 -o "$XPI" \
   "https://github.com/gorhill/uBlock/releases/download/${UBO_VERSION}/uBlock0_${UBO_VERSION}.firefox.signed.xpi"
