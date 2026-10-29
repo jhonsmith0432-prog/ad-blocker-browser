@@ -7,6 +7,9 @@
 - **Menu**: Privacy Shield (with this page's blocked count) and Premium at the top; Mozilla account row
   only shows if an account exists (it never does, sign-in is hidden).
 - **Home**: blocked-count card under the header, opens Privacy Shield.
+- **Tab groups** (like Brave): on by default. Several tabs stack into one card under "Groups", a strip at
+  the bottom switches between tabs of the current group, drag a tab onto another to group them, and the
+  main menu has "Add to tab group". Firefox ships this code; Mozilla only enables it by remote experiment.
 - **Premium**: violet plan selection and buy button, as in the design.
 - **Check the real build**: run the new "Screenshot the UI" workflow with the Build run id; it saves
   home, tabs, tab options, private tabs, menu, Privacy Shield and Premium screenshots as `ui-screens`.

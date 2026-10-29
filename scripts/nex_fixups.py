@@ -298,4 +298,18 @@ edit(main_menu,
      "            if (account != null) {\n                MozillaAccountMenuItem(\n                    account = account,\n"
      "                    accountState = accountState,\n                    onClick = onMozillaAccountButtonClick,\n                )\n            }\n\n")
 
+# --- Tab groups (several tabs stacked in one card + strip at the bottom), like Brave -----------
+helper = tabstray / "TabManagementFeatureHelper.kt"
+for old in [
+    "Config.channel.isDebug || FxNimbus.features.tabGroups.value().enabled",
+    "Config.channel.isDebug || FxNimbus.features.tabGroupsDragAndDrop.value().enabled",
+    "FxNimbus.features.tabGroupsLiveReorder.value().enabled",
+    "Config.channel.isDebug || FxNimbus.features.tabGroupsUngroup.value().enabled",
+    "Config.channel.isDebug || FxNimbus.features.tabGroupsOnboarding.value().enabled",
+    "FxNimbus.features.tabGroupsStrip.value().enabled",
+]:
+    edit(helper, "get() = " + old + "\n", "get() = true\n")
+edit(helper, "    override val showTabGroupsInMenu: Boolean\n        get() = false\n",
+     "    override val showTabGroupsInMenu: Boolean\n        get() = true\n")
+
 print("nex_fixups: done")
