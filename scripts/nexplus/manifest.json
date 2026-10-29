@@ -1,1 +1,18 @@
-{"manifest_version":2,"name":"Premium tools","version":"1.0.0","description":"Data saver and Hide anything you tap, switched on from the app's Privacy Shield.","browser_specific_settings":{"gecko":{"id":"nexplus@nexcraftgames.com"}},"incognito":"spanning","background":{"scripts":["background.js"]},"content_scripts":[{"matches":["<all_urls>"],"js":["content.js"],"run_at":"document_start","all_frames":false}],"permissions":["webRequest","webRequestBlocking","<all_urls>","nativeMessaging","geckoViewAddons","storage","tabs"]}
+{
+  "manifest_version": 2,
+  "name": "Premium tools",
+  "version": "1.0.0",
+  "description": "Data saver and Hide anything you tap, switched on from the app's Privacy Shield.",
+  "browser_specific_settings": {
+    "gecko": { "id": "nexplus@nexcraftgames.com" }
+  },
+  "incognito": "spanning",
+  "background": { "scripts": ["background.js"] },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["content.js"],
+    "run_at": "document_start",
+    "all_frames": false
+  }],
+  "permissions": ["webRequest", "webRequestBlocking", "<all_urls>", "nativeMessaging", "geckoViewAddons", "storage", "tabs"]
+}
