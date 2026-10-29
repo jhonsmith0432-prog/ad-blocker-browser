@@ -32,12 +32,12 @@ index 78e2c51e..4c92face 100644
  
 +    <androidx.preference.Preference
 +        android:key="nex_premium"
-+        android:title="Premium &amp; privacy stats"
-+        android:summary="Trackers blocked on this phone, Always incognito, plans"
++        android:title="Privacy Shield &amp; Premium"
++        android:summary="Blocked count, VPN, app lock, incognito, plans"
 +        app:iconSpaceReserved="false">
 +        <intent
 +            android:targetPackage="com.nexcraft.browser"
-+            android:targetClass="org.mozilla.fenix.nex.PremiumActivity" />
++            android:targetClass="org.mozilla.fenix.nex.NexHubActivity" />
 +    </androidx.preference.Preference>
 +
      <androidx.preference.PreferenceCategory
