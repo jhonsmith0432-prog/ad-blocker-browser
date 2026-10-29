@@ -10,6 +10,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,6 +40,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -139,7 +141,7 @@ private fun Paywall(
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                ShieldMark(88.dp, glyph = ShieldGlyph.Crown)
+                ShieldMark(88.dp, glyph = ShieldGlyph.Crown, tint = NexColors.premium)
                 Spacer(Modifier.height(10.dp))
                 Text(nt("premium"), color = NexColors.Text, fontSize = 32.sp, fontWeight = FontWeight.ExtraBold)
                 Spacer(Modifier.height(4.dp))
@@ -227,7 +229,7 @@ private fun Paywall(
                     premium.hasTrial(selected.planId) -> nt("cta_trial")
                     else -> nt("cta_sub")
                 }
-                NexButton(cta) { onBuy(selected) }
+                NexButton(cta, brush = NexColors.violetCta, textColor = Color.White) { onBuy(selected) }
                 Text(
                     if (selected == Plan.LIFETIME) nt("life_note") else nt("renew_note"),
                     color = NexColors.Muted,
@@ -260,19 +262,21 @@ private fun PlanCard(title: String, subtitle: String, isSelected: Boolean, badge
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = if (badge != null) 10.dp else 0.dp)
-                .nexCard(selected = isSelected)
+                .clip(RoundedCornerShape(18.dp))
+                .background(if (isSelected) NexColors.VioletSoft else NexColors.Card)
+                .border(2.dp, if (isSelected) NexColors.Violet else NexColors.Line, RoundedCornerShape(18.dp))
                 .clickable(onClick = onClick)
-                .padding(18.dp),
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
                 Modifier
                     .size(22.dp)
                     .clip(CircleShape)
-                    .background(if (isSelected) NexColors.Mint else NexColors.Line),
+                    .border(2.dp, if (isSelected) NexColors.Violet else NexColors.Line, CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
-                if (isSelected) Box(Modifier.size(8.dp).clip(CircleShape).background(NexColors.Ink))
+                if (isSelected) Box(Modifier.size(10.dp).clip(CircleShape).background(NexColors.Lilac))
             }
             Spacer(Modifier.width(14.dp))
             Column(Modifier.weight(1f)) {

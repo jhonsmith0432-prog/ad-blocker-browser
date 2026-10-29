@@ -70,6 +70,11 @@ object NexStrings {
         "sec_look" to "Look and feel",
         "sec_account" to "Premium and account",
         "upsell_sub" to "Unlock the VPN, app lock and always incognito",
+        "tabs_label" to "Tabs",
+        "private_label" to "Private",
+        "groups_label" to "Groups",
+        "blocked_short" to "%1\$d blocked",
+        "menu_shield_page" to "%1\$d blocked on this page",
     )
 
     private val ES = mapOf(
@@ -131,6 +136,11 @@ object NexStrings {
         "sec_look" to "Apariencia",
         "sec_account" to "Premium y cuenta",
         "upsell_sub" to "Desbloquea la VPN, el bloqueo de app y el modo siempre incógnito",
+        "tabs_label" to "Pestañas",
+        "private_label" to "Privadas",
+        "groups_label" to "Grupos",
+        "blocked_short" to "%1\$d bloqueados",
+        "menu_shield_page" to "%1\$d bloqueados en esta página",
     )
 
     private val PT = mapOf(
@@ -192,6 +202,11 @@ object NexStrings {
         "sec_look" to "Aparência",
         "sec_account" to "Premium e conta",
         "upsell_sub" to "Desbloqueie a VPN, o bloqueio do app e o modo sempre anônimo",
+        "tabs_label" to "Abas",
+        "private_label" to "Privadas",
+        "groups_label" to "Grupos",
+        "blocked_short" to "%1\$d bloqueados",
+        "menu_shield_page" to "%1\$d bloqueados nesta página",
     )
 
     private val FR = mapOf(
@@ -253,6 +268,11 @@ object NexStrings {
         "sec_look" to "Apparence",
         "sec_account" to "Premium et compte",
         "upsell_sub" to "Débloquez le VPN, le verrouillage et le mode toujours privé",
+        "tabs_label" to "Onglets",
+        "private_label" to "Privés",
+        "groups_label" to "Groupes",
+        "blocked_short" to "%1\$d bloqués",
+        "menu_shield_page" to "%1\$d bloqués sur cette page",
     )
 
     private val DE = mapOf(
@@ -314,6 +334,11 @@ object NexStrings {
         "sec_look" to "Aussehen",
         "sec_account" to "Premium und Konto",
         "upsell_sub" to "Schalte VPN, App-Sperre und Immer inkognito frei",
+        "tabs_label" to "Tabs",
+        "private_label" to "Privat",
+        "groups_label" to "Gruppen",
+        "blocked_short" to "%1\$d blockiert",
+        "menu_shield_page" to "%1\$d auf dieser Seite blockiert",
     )
 
     private val IT = mapOf(
@@ -375,6 +400,11 @@ object NexStrings {
         "sec_look" to "Aspetto",
         "sec_account" to "Premium e account",
         "upsell_sub" to "Sblocca VPN, blocco app e sempre in incognito",
+        "tabs_label" to "Schede",
+        "private_label" to "Private",
+        "groups_label" to "Gruppi",
+        "blocked_short" to "%1\$d bloccati",
+        "menu_shield_page" to "%1\$d bloccati in questa pagina",
     )
 
     private val RU = mapOf(
@@ -436,6 +466,11 @@ object NexStrings {
         "sec_look" to "Оформление",
         "sec_account" to "Premium и аккаунт",
         "upsell_sub" to "Откройте VPN, блокировку и режим «всегда инкогнито»",
+        "tabs_label" to "Вкладки",
+        "private_label" to "Приватные",
+        "groups_label" to "Группы",
+        "blocked_short" to "Заблокировано: %1\$d",
+        "menu_shield_page" to "На этой странице заблокировано: %1\$d",
     )
 
     private val TR = mapOf(
@@ -497,6 +532,11 @@ object NexStrings {
         "sec_look" to "Görünüm",
         "sec_account" to "Premium ve hesap",
         "upsell_sub" to "VPN, uygulama kilidi ve her zaman gizliyi aç",
+        "tabs_label" to "Sekmeler",
+        "private_label" to "Gizli",
+        "groups_label" to "Gruplar",
+        "blocked_short" to "%1\$d engellendi",
+        "menu_shield_page" to "Bu sayfada %1\$d engellendi",
     )
 
     private val AR = mapOf(
@@ -558,6 +598,11 @@ object NexStrings {
         "sec_look" to "المظهر",
         "sec_account" to "Premium والحساب",
         "upsell_sub" to "افتح VPN وقفل التطبيق والتصفح الخفي الدائم",
+        "tabs_label" to "علامات التبويب",
+        "private_label" to "خاصة",
+        "groups_label" to "مجموعات",
+        "blocked_short" to "تم حظر %1\$d",
+        "menu_shield_page" to "تم حظر %1\$d في هذه الصفحة",
     )
 
     private val HI = mapOf(
@@ -619,6 +664,11 @@ object NexStrings {
         "sec_look" to "रूप-रंग",
         "sec_account" to "Premium और खाता",
         "upsell_sub" to "VPN, ऐप लॉक और हमेशा इनकॉग्निटो अनलॉक करें",
+        "tabs_label" to "टैब",
+        "private_label" to "प्राइवेट",
+        "groups_label" to "समूह",
+        "blocked_short" to "%1\$d ब्लॉक",
+        "menu_shield_page" to "इस पेज पर %1\$d ब्लॉक",
     )
 
     private val ID = mapOf(
@@ -680,6 +730,11 @@ object NexStrings {
         "sec_look" to "Tampilan",
         "sec_account" to "Premium dan akun",
         "upsell_sub" to "Buka VPN, kunci aplikasi, dan selalu incognito",
+        "tabs_label" to "Tab",
+        "private_label" to "Pribadi",
+        "groups_label" to "Grup",
+        "blocked_short" to "%1\$d diblokir",
+        "menu_shield_page" to "%1\$d diblokir di halaman ini",
     )
 
     private val JA = mapOf(
@@ -741,6 +796,11 @@ object NexStrings {
         "sec_look" to "見た目",
         "sec_account" to "Premium とアカウント",
         "upsell_sub" to "VPN、アプリロック、常にシークレットを解放",
+        "tabs_label" to "タブ",
+        "private_label" to "プライベート",
+        "groups_label" to "グループ",
+        "blocked_short" to "%1\$d 件ブロック",
+        "menu_shield_page" to "このページで %1\$d 件ブロック",
     )
 
     private val KO = mapOf(
@@ -802,6 +862,11 @@ object NexStrings {
         "sec_look" to "모양",
         "sec_account" to "Premium 및 계정",
         "upsell_sub" to "VPN, 앱 잠금, 항상 시크릿 잠금 해제",
+        "tabs_label" to "탭",
+        "private_label" to "사생활 보호",
+        "groups_label" to "그룹",
+        "blocked_short" to "%1\$d개 차단",
+        "menu_shield_page" to "이 페이지에서 %1\$d개 차단",
     )
 
     private val ZH = mapOf(
@@ -863,6 +928,11 @@ object NexStrings {
         "sec_look" to "外观",
         "sec_account" to "Premium 和账户",
         "upsell_sub" to "解锁 VPN、应用锁和始终无痕",
+        "tabs_label" to "标签页",
+        "private_label" to "隐私",
+        "groups_label" to "分组",
+        "blocked_short" to "已拦截 %1\$d",
+        "menu_shield_page" to "本页已拦截 %1\$d",
     )
 
     private val BY_LANG = mapOf(

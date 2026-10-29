@@ -1,5 +1,16 @@
 # Status
 
+## 29 Oct 2026 (later): v2 polish from the "Nex Browser UI" design canvas (row "v2 polish")
+
+- **Tabs**: Tabs / Private segmented switch replaces the icon row (Tabs first). Synced tabs page removed.
+  Each grid tab shows "N blocked" (trackers blocked in that tab).
+- **Menu**: Privacy Shield (with this page's blocked count) and Premium at the top; Mozilla account row
+  only shows if an account exists (it never does, sign-in is hidden).
+- **Home**: blocked-count card under the header, opens Privacy Shield.
+- **Premium**: violet plan selection and buy button, as in the design.
+- **Check the real build**: run the new "Screenshot the UI" workflow with the Build run id; it saves
+  home, tabs, tab options, private tabs, menu, Privacy Shield and Premium screenshots as `ui-screens`.
+
 ## 29 Oct 2026: UI rework (needs a CI build)
 
 - **Premium has its own button now.** Home screen header: a "Get Premium" pill (opens the paywall) and a

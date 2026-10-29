@@ -246,4 +246,56 @@ edit(home_ui / "ExperimentalHomepageHeader.kt",
      "            PrivateModeButton(onPrivateModeTapped)\n",
      "            PrivateModeButton(onPrivateModeTapped)\n\n            org.mozilla.fenix.nex.NexHomeEntries()\n")
 
+# --- Tab manager: Tabs first, Private second, no Synced tabs page ----------------------------
+tabstray = MAIN / "java/org/mozilla/fenix/tabstray"
+page_kt = tabstray / "redux/state/Page.kt"
+edit(page_kt,
+     "            listOfNotNull(\n                PrivateTabs,\n                NormalTabs,\n                TabGroups.takeIf { shouldShowTabGroupsPage },\n                SyncedTabs,\n            )",
+     "            listOfNotNull(\n                NormalTabs,\n                PrivateTabs,\n                TabGroups.takeIf { shouldShowTabGroupsPage },\n            )")
+edit(page_kt,
+     "                position == 0 -> PrivateTabs\n                position == 1 -> NormalTabs\n                shouldShowTabGroupsPage && position == 2 -> TabGroups\n                else -> SyncedTabs",
+     "                position == 1 -> PrivateTabs\n                shouldShowTabGroupsPage && position == 2 -> TabGroups\n                else -> NormalTabs")
+edit(page_kt,
+     "                PrivateTabs -> 0\n                NormalTabs -> 1\n                TabGroups -> if (shouldShowTabGroupsPage) 2 else 1\n                SyncedTabs -> visiblePages(shouldShowTabGroupsPage).lastIndex",
+     "                NormalTabs -> 0\n                PrivateTabs -> 1\n                TabGroups -> if (shouldShowTabGroupsPage) 2 else 0\n                SyncedTabs -> 0")
+
+# Segmented Tabs / Private switch instead of the icon tab row.
+edit(tabstray / "ui/banner/TabsTrayBanner.kt",
+     r'@Suppress\("LongParameterList"\)\n(@Composable\nprivate fun TabPageBanner\(.*?\n\) \{\n).*?(\n\}\n\n@Suppress\("LongParameterList"\)\n@Composable\nprivate fun TabPageBannerTabs\()',
+     r'@Suppress("LongParameterList", "UNUSED_PARAMETER")\n\1    org.mozilla.fenix.nex.NexTabSwitch(\n'
+     r'        selectedPage = selectedPage,\n        normalTabCount = normalTabCount,\n'
+     r'        privateTabCount = privateTabCount,\n        showGroups = shouldShowTabGroupsPage,\n'
+     r'        tabGroupCount = tabGroupCount,\n        hasTabDataLoaded = hasTabDataLoaded,\n'
+     r'        onPick = onTabPageIndicatorClicked,\n    )\2',
+     regex=True)
+
+# Per-tab "N blocked" badge on grid thumbnails (trackers blocked in that tab).
+tabs_item = tabstray / "data/TabsTrayItem.kt"
+edit(tabs_item, "        override val isFocused: Boolean,\n    ) : TabsTrayItem {",
+     "        override val isFocused: Boolean,\n        val blocked: Int = 0,\n    ) : TabsTrayItem {")
+edit(tabs_item, "            lastAccess = tab.lastAccess,\n            isFocused = isFocused,\n        )",
+     "            lastAccess = tab.lastAccess,\n            isFocused = isFocused,\n"
+     "            blocked = tab.trackingProtection.blockedTrackers.size,\n        )")
+edit(tabstray / "ui/tabitems/TabGridTabItem.kt",
+     "                        MediaPlaybackIndicator(isMediaActive = tab.isMediaActive)\n",
+     "                        MediaPlaybackIndicator(isMediaActive = tab.isMediaActive)\n\n"
+     "                        org.mozilla.fenix.nex.NexBlockedBadge(tab.blocked, Modifier.align(Alignment.BottomEnd))\n")
+
+# --- Home: blocked-count card under the header -------------------------------------------------
+edit(home_ui / "Homepage.kt",
+     "            if (state.firstFrameDrawn) {\n",
+     "            if (state is HomepageState.Normal) {\n                org.mozilla.fenix.nex.NexHomeStatsCard()\n            }\n\n"
+     "            if (state.firstFrameDrawn) {\n")
+
+# --- Main menu: Privacy Shield + Premium on top; no Mozilla account row -----------------------
+main_menu = MAIN / "java/org/mozilla/fenix/components/menu/compose/MainMenu.kt"
+edit(main_menu,
+     "    ) {\n        if (isReaderViewActive && accessPoint != MenuAccessPoint.Home) {\n",
+     "    ) {\n        org.mozilla.fenix.nex.NexMenuEntries()\n\n"
+     "        if (isReaderViewActive && accessPoint != MenuAccessPoint.Home) {\n")
+edit(main_menu,
+     "            MozillaAccountMenuItem(\n                account = account,\n                accountState = accountState,\n                onClick = onMozillaAccountButtonClick,\n            )\n\n",
+     "            if (account != null) {\n                MozillaAccountMenuItem(\n                    account = account,\n"
+     "                    accountState = accountState,\n                    onClick = onMozillaAccountButtonClick,\n                )\n            }\n\n")
+
 print("nex_fixups: done")

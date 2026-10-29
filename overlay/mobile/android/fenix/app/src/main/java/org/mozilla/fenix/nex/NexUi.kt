@@ -49,11 +49,14 @@ object NexColors {
     val screen: Brush = Brush.verticalGradient(listOf(Color(0xFF111A3A), Ink, Ink))
     val cta: Brush get() = Brush.horizontalGradient(listOf(Mint, Teal))
     val premium: Brush get() = Brush.linearGradient(listOf(Violet, Color(0xFF3A7BFF), Teal))
+    val violetCta: Brush = Brush.horizontalGradient(listOf(Violet, Color(0xFF5B3DF5)))
+    val VioletSoft = Color(0xFF1E1844)
+    val Lilac = Color(0xFFC3B4FF)
 }
 
 /** The app's shield mark, drawn in code so it stays crisp at any size. */
 @Composable
-fun ShieldMark(size: Dp, modifier: Modifier = Modifier, glyph: ShieldGlyph = ShieldGlyph.Check) {
+fun ShieldMark(size: Dp, modifier: Modifier = Modifier, glyph: ShieldGlyph = ShieldGlyph.Check, tint: Brush? = null) {
     Canvas(modifier.size(size)) {
         val w = this.size.width
         val h = this.size.height
@@ -75,7 +78,7 @@ fun ShieldMark(size: Dp, modifier: Modifier = Modifier, glyph: ShieldGlyph = Shi
             radius = w * 0.75f,
             center = Offset(w / 2, h / 2),
         )
-        drawPath(shield, Brush.verticalGradient(listOf(NexColors.Mint, NexColors.Teal), 0f, h))
+        drawPath(shield, tint ?: Brush.verticalGradient(listOf(NexColors.Mint, NexColors.Teal), 0f, h))
         val stroke = Stroke(width = w * 0.085f, cap = StrokeCap.Round, join = StrokeJoin.Round)
         val ink = NexColors.Ink
         when (glyph) {
@@ -136,7 +139,13 @@ enum class ShieldGlyph { Check, Slash, Lock, Crown, Globe }
 
 /** Full-width gradient call-to-action button. */
 @Composable
-fun NexButton(text: String, enabled: Boolean = true, brush: Brush = NexColors.cta, onClick: () -> Unit) {
+fun NexButton(
+    text: String,
+    enabled: Boolean = true,
+    brush: Brush = NexColors.cta,
+    textColor: Color = NexColors.Ink,
+    onClick: () -> Unit,
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -146,7 +155,7 @@ fun NexButton(text: String, enabled: Boolean = true, brush: Brush = NexColors.ct
             .clickable(enabled = enabled, onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
-        Text(text, color = if (enabled) NexColors.Ink else NexColors.Muted, fontSize = 17.sp, fontWeight = FontWeight.Bold)
+        Text(text, color = if (enabled) textColor else NexColors.Muted, fontSize = 17.sp, fontWeight = FontWeight.Bold)
     }
 }
 
