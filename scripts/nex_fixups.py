@@ -252,6 +252,35 @@ edit(home_ui / "ExperimentalHomepageHeader.kt",
      "            PrivateModeButton(onPrivateModeTapped)\n",
      "            PrivateModeButton(onPrivateModeTapped)\n\n            org.mozilla.fenix.nex.NexHomeEntries()\n")
 
+# --- Home wordmark: real text instead of a bitmap, so the full app name always fits ------------
+edit(home_ui / "WordmarkAndLogo.kt", "import androidx.compose.ui.unit.dp\n",
+     "import androidx.compose.ui.unit.dp\nimport androidx.compose.ui.unit.sp\n")
+edit(home_ui / "WordmarkAndLogo.kt",
+     "    Image(\n"
+     "        modifier =\n"
+     "            Modifier.semantics {\n"
+     "                    testTagsAsResourceId = true\n"
+     "                    testTag = HOMEPAGE_WORDMARK_TEXT\n"
+     "                }\n"
+     "                .height(dimensionResource(R.dimen.wordmark_text_height)),\n"
+     "        painter = painterResource(getAttr(R.attr.fenixWordmarkText)),\n"
+     "        colorFilter = color?.let { ColorFilter.tint(it) },\n"
+     "        contentDescription = stringResource(R.string.app_name),\n"
+     "    )\n",
+     "    androidx.compose.material3.Text(\n"
+     "        text = stringResource(R.string.app_name),\n"
+     "        modifier =\n"
+     "            Modifier.semantics {\n"
+     "                testTagsAsResourceId = true\n"
+     "                testTag = HOMEPAGE_WORDMARK_TEXT\n"
+     "            },\n"
+     "        color = color ?: org.mozilla.fenix.nex.NexColors.Text,\n"
+     "        fontSize = 22.sp,\n"
+     "        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,\n"
+     "        maxLines = 1,\n"
+     "        softWrap = false,\n"
+     "    )\n")
+
 # --- Tab manager: Tabs first, Private second, no Synced tabs page ----------------------------
 tabstray = MAIN / "java/org/mozilla/fenix/tabstray"
 page_kt = tabstray / "redux/state/Page.kt"
