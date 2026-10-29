@@ -197,6 +197,19 @@ fun NexMenuEntries() {
             onClick = { open(context, Intent(context, NexHubActivity::class.java)) },
         )
         MenuItem(
+            label = nt("hide_menu"),
+            beforeIconPainter = painterResource(R.drawable.nex_ic_shield_24),
+            description = if (isPremium) null else nt("locked"),
+            onClick = {
+                if (isPremium) {
+                    dismissMenus(context)
+                    NexPlus.pickOnPage()
+                } else {
+                    open(context, Intent(context, PremiumActivity::class.java))
+                }
+            },
+        )
+        MenuItem(
             label = if (isPremium) nt("premium_active") else nt("get_premium"),
             beforeIconPainter = painterResource(R.drawable.nex_ic_crown_24),
             description = if (isPremium) null else nt("upsell_sub"),
@@ -205,10 +218,14 @@ fun NexMenuEntries() {
     }
 }
 
-private fun open(context: Context, intent: Intent) {
+private fun dismissMenus(context: Context) {
     (context as? FragmentActivity)?.supportFragmentManager?.fragments?.forEach { host ->
         host.childFragmentManager.fragments.filterIsInstance<DialogFragment>().forEach { it.dismissAllowingStateLoss() }
     }
+}
+
+private fun open(context: Context, intent: Intent) {
+    dismissMenus(context)
     context.startActivity(intent)
 }
 

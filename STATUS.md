@@ -77,3 +77,14 @@
    30 minutes earlier. If you edited the Premium screen in the canvas around then, check it's still there.
 10. I tried to download a Kotlin linter to sanity-check the new code; that download was blocked here, so the
     first CI build is the check.
+
+## Round: Premium features (29 Oct)
+Added behind the paywall (PREMIUM_FREE still true for testers):
+- Dark mode for every site: bundled Dark Reader 4.9.134 (MIT, downloaded in prebuild, help/uninstall tabs patched out).
+- Data saver: built-in `nexplus` extension blocks images, web fonts and media; KB saved shown in Privacy Shield.
+- Hide anything you tap: menu item "Hide something on this page" opens a picker; rules saved per site, clearable.
+- Private Vault: app-private folder behind fingerprint/PIN; optional auto-move of finished downloads; add/share/delete.
+- Strong anti-fingerprinting: Gecko fingerprinting protection with +AllTargets.
+- Auto-wipe: Off / when I leave / after 5 / after 30 minutes (tabs, history, cookies, cache).
+- More VPN locations: code already lists servers from vpn.json; needs a Europe server rented by Jhon.
+Strings in all 14 languages. kotlinc syntax check and ffsrc dry-run of patches + nex_fixups pass.

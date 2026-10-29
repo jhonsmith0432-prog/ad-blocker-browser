@@ -137,6 +137,10 @@ edit(manifest, "    </application>",
      "            android:exported=\"false\"\n"
      "            android:theme=\"@android:style/Theme.Material.NoActionBar\" />\n"
      "        <activity\n"
+     "            android:name=\".nex.NexVaultActivity\"\n"
+     "            android:exported=\"false\"\n"
+     "            android:theme=\"@style/Theme.AppCompat.NoActionBar\" />\n"
+     "        <activity\n"
      "            android:name=\".nex.NexHubActivity\"\n"
      "            android:exported=\"false\"\n"
      "            android:theme=\"@android:style/Theme.Material.NoActionBar\" />\n"
@@ -177,7 +181,8 @@ for colors_xml, start, end in [("values/colors.xml", "#FFE9F7F1", "#FFF5F8FC"),
 app = MAIN / "java/org/mozilla/fenix/FenixApplication.kt"
 edit(app, "            installBundledContentBlocker()\n",
      "            installBundledContentBlocker()\n"
-     "            org.mozilla.fenix.nex.NexVpn.install(this, components.core.engine)\n")
+     "            org.mozilla.fenix.nex.NexVpn.install(this, components.core.engine)\n"
+     "            org.mozilla.fenix.nex.NexPlus.install(this, components.core.engine)\n")
 
 # --- Nexcraft look: mint + navy instead of Firefox violet (all Compose UI) ----------------
 colors = SRC / "mobile/android/android-components/components/compose/base/src/main/java/mozilla/components/compose/base/theme/AcornColors.kt"
@@ -311,5 +316,13 @@ for old in [
     edit(helper, "get() = " + old + "\n", "get() = true\n")
 edit(helper, "    override val showTabGroupsInMenu: Boolean\n        get() = false\n",
      "    override val showTabGroupsInMenu: Boolean\n        get() = true\n")
+
+# --- Premium Vault: downloads can move into private storage; FileProvider must reach it -----
+edit(MAIN / "res/xml/file_paths.xml", '    <cache-path name="cache" path="." />\n',
+     '    <cache-path name="cache" path="." />\n    <files-path name="vault" path="nexvault/" />\n')
+edit(MAIN / "java/org/mozilla/fenix/components/Core.kt",
+     "                org.mozilla.fenix.nex.BlockedCounterMiddleware(context),\n",
+     "                org.mozilla.fenix.nex.BlockedCounterMiddleware(context),\n"
+     "                org.mozilla.fenix.nex.NexVaultMiddleware(context),\n")
 
 print("nex_fixups: done")

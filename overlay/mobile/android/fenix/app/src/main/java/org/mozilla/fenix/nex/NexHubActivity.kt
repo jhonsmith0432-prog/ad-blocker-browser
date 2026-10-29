@@ -114,6 +114,7 @@ class NexHubActivity : ComponentActivity() {
                     NexAccent.index = i
                     version++
                 },
+                onChanged = { version++ },
             )
         }
     }
@@ -138,6 +139,7 @@ private fun Hub(
     onVpnLocation: (String) -> Unit,
     onIcons: () -> Unit,
     onAccent: (Int) -> Unit,
+    onChanged: () -> Unit,
 ) {
     val context = LocalContext.current
     val isPremium = prefs.isPremium
@@ -204,6 +206,10 @@ private fun Hub(
                 if (on) confirmIncognito = true else onAlwaysIncognito(false)
             }
             ToggleCard(ShieldGlyph.Lock, nt("applock"), nt("applock_sub"), prefs.appLock, locked, onPremium, onAppLock)
+            PrivacyPlusCards(prefs, locked, onPremium, onChanged)
+
+            SectionLabel(nt("sec_pages"))
+            PagePlusCards(prefs, locked, onPremium, onChanged)
 
             SectionLabel(nt("sec_look"))
             PersonalizeCard(locked, onPremium, onIcons, onAccent)

@@ -174,6 +174,12 @@ private fun Paywall(
                 if (NexVpn.servers(LocalContext.current).isNotEmpty()) {
                     Benefit(ShieldGlyph.Globe, nt("b_vpn_t"), nt("b_vpn_s"))
                 }
+                Benefit(ShieldGlyph.Crown, nt("dark"), nt("b_dark_s"))
+                Benefit(ShieldGlyph.Globe, nt("lite"), nt("b_lite_s"))
+                Benefit(ShieldGlyph.Check, nt("hide"), nt("b_hide_s"))
+                Benefit(ShieldGlyph.Lock, nt("vault"), nt("b_vault_s"))
+                Benefit(ShieldGlyph.Slash, nt("fp"), nt("b_fp_s"))
+                Benefit(ShieldGlyph.Check, nt("wipe"), nt("b_wipe_s"))
                 Benefit(ShieldGlyph.Lock, nt("b_lock_t"), nt("b_lock_s"))
                 Benefit(ShieldGlyph.Slash, nt("b_incog_t"), nt("b_incog_s"))
                 Benefit(ShieldGlyph.Crown, nt("b_style_t"), nt("b_style_s"))
