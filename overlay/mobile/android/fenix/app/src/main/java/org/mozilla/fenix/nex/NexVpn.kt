@@ -7,6 +7,7 @@ package org.mozilla.fenix.nex
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import androidx.compose.runtime.mutableStateOf
 import mozilla.components.concept.engine.Engine
 import mozilla.components.concept.engine.EngineSession
 import mozilla.components.concept.engine.webextension.MessageHandler
@@ -25,6 +26,14 @@ import java.net.URL
  * downloaded from [SERVERS_URL] so locations can be added without an app update.
  */
 object NexVpn {
+    /** What the VPN is doing right now. Compose screens read these, so a tap updates every screen at once. */
+    enum class State { OFF, CONNECTING, ON, FAILED }
+    val state = mutableStateOf(State.OFF)
+    val wanted = mutableStateOf(false)
+    val ip = mutableStateOf("")
+    private const val CHECK_TIMEOUT_MS = 15_000L
+    private val giveUp = Runnable { if (state.value == State.CONNECTING) state.value = State.FAILED }
+
     const val EXT_ID = "nexvpn@nexcraftgames.com"
     private const val EXT_URL = "resource://android/assets/extensions/nexvpn/"
     private const val SERVERS_URL = "https://nexcraftgames.com/browser/vpn.json"
@@ -46,12 +55,56 @@ object NexVpn {
             if (NexVpn.port === port) NexVpn.port = null
         }
 
-        // The extension also polls with sendNativeMessage, so a lapsed subscription turns it off.
-        override fun onMessage(message: Any, source: EngineSession?): Any? = config()
+        override fun onPortMessage(message: Any, port: Port) {
+            onStatus(message)
+        }
+
+        // The extension polls with sendNativeMessage (so a lapsed subscription turns it off) and
+        // reports the result of its connection check the same way.
+        override fun onMessage(message: Any, source: EngineSession?): Any? {
+            if (onStatus(message)) return null
+            return config()
+        }
+    }
+
+    /** The extension checked the connection through the server: {type:"status", state:"on"|"failed", ip}. */
+    private fun onStatus(message: Any): Boolean {
+        val o = (message as? JSONObject) ?: (message as? String)?.let { runCatching { JSONObject(it) }.getOrNull() } ?: return false
+        if (o.optString("type") != "status") return false
+        main.post {
+            main.removeCallbacks(giveUp)
+            if (!wanted.value) {
+                state.value = State.OFF
+            } else if (o.optString("state") == "on") {
+                state.value = State.ON
+                ip.value = o.optString("ip")
+            } else {
+                state.value = State.FAILED
+                ip.value = ""
+            }
+        }
+        return true
+    }
+
+    /** Re-reads prefs into the UI state and, if the VPN should be on, starts a fresh connection check. */
+    private fun sync(context: Context, check: Boolean) {
+        wanted.value = NexPrefs(context).vpnEnabled
+        main.removeCallbacks(giveUp)
+        if (isActive(context)) {
+            if (check || state.value == State.OFF) {
+                state.value = State.CONNECTING
+                ip.value = ""
+                main.postDelayed(giveUp, CHECK_TIMEOUT_MS)
+            }
+        } else {
+            state.value = State.OFF
+            ip.value = ""
+        }
     }
 
     fun install(context: Context, engine: Engine) {
         appContext = context.applicationContext
+        sync(context, check = true)
         engine.installBuiltInWebExtension(
             id = EXT_ID,
             url = EXT_URL,
@@ -109,20 +162,26 @@ object NexVpn {
     }
 
     /** Sends the current state to the extension (call after any change to Premium or VPN prefs). */
-    fun push() {
+    fun push(check: Boolean = false) {
         main.post {
-            port?.postMessage(JSONObject().put("type", "config").put("config", config()))
+            appContext?.let { if (check || isActive(it) != (state.value != State.OFF)) sync(it, check) }
+            port?.postMessage(JSONObject().put("type", "config").put("config", config()).put("check", check))
         }
     }
 
     fun setEnabled(context: Context, on: Boolean) {
         NexPrefs(context).vpnEnabled = on
-        push()
+        wanted.value = on
+        appContext = appContext ?: context.applicationContext
+        push(check = on)
     }
+
+    /** One-tap switch used by the home button and the main menu. */
+    fun toggle(context: Context) = setEnabled(context, !NexPrefs(context).vpnEnabled)
 
     fun setLocation(context: Context, id: String) {
         NexPrefs(context).vpnLocation = id
-        push()
+        push(check = true)
     }
 
     /** Downloads the server list (no personal data is sent) and caches it. */

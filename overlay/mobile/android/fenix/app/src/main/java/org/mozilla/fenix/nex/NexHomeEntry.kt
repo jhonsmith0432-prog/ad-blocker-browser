@@ -22,14 +22,15 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 
-/** Home screen buttons: the Premium pill (paywall) and the shield (Privacy Shield). */
+/** Home screen buttons: one-tap VPN, the Premium pill (only before buying) and the shield (Privacy Shield). */
 @Composable
 fun NexHomeEntries() {
     val context = LocalContext.current
     val isPremium = NexPrefs(context).isPremium
     val shieldLabel = nt("hub_title")
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-        PremiumPill(isPremium) { context.startActivity(Intent(context, PremiumActivity::class.java)) }
+        VpnPill(isPremium) { context.startActivity(Intent(context, PremiumActivity::class.java)) }
+        if (!isPremium) PremiumPill(isPremium, short = true) { context.startActivity(Intent(context, PremiumActivity::class.java)) }
         Box(
             Modifier
                 .size(40.dp)

@@ -190,6 +190,24 @@ fun NexMenuEntries() {
         ?.trackingProtection?.blockedTrackers?.size ?: 0
     val isPremium = NexPrefs(context).isPremium
     MenuGroup {
+        if (NexVpn.servers(context).isNotEmpty()) {
+            val st = if (isPremium && NexVpn.wanted.value) NexVpn.state.value else NexVpn.State.OFF
+            val where = NexVpn.selected(context)?.let { "${it.flag} ${it.name}".trim() } ?: ""
+            MenuItem(
+                label = nt("vpn"),
+                beforeIconPainter = painterResource(R.drawable.nex_ic_shield_24),
+                description = when {
+                    !isPremium -> nt("locked")
+                    st == NexVpn.State.ON -> nt("vpn_connected", where) + (NexVpn.ip.value.takeIf { it.isNotBlank() }?.let { " · " + it } ?: "")
+                    st == NexVpn.State.CONNECTING -> nt("vpn_connecting", where)
+                    st == NexVpn.State.FAILED -> nt("vpn_failed")
+                    else -> nt("vpn_btn_off")
+                },
+                onClick = {
+                    if (isPremium) NexVpn.toggle(context) else open(context, Intent(context, PremiumActivity::class.java))
+                },
+            )
+        }
         MenuItem(
             label = nt("hub_title"),
             beforeIconPainter = painterResource(R.drawable.nex_ic_shield_24),

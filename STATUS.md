@@ -1,5 +1,20 @@
 # Status
 
+## 30 Oct 2026: VPN one tap + live status
+
+- **VPN button on the home screen** (first button in the header): one tap turns the Browser VPN on or off,
+  the button shows Off / Connecting (spinner) / VPN on / VPN error. Non-Premium users get the paywall.
+- **VPN row at the top of the main menu**: same one-tap toggle while browsing, shows "Connected: New York · IP".
+- **Live state**: `NexVpn.state` / `wanted` / `ip` are Compose state, so the home button, menu row and the
+  Privacy Shield card all update the moment you tap (no need to leave and come back).
+- **Real connection check**: after every change the VPN extension fetches Cloudflare's /cdn-cgi/trace through
+  the proxy and compares the IP with the server's address (`dns` permission). Match = Connected (shows the IP
+  sites see), no answer in 15 s or wrong IP = "Couldn't connect" with Try again.
+- Premium pill on home is only shown before buying. "Not now" is gone (X close since the 29 Oct UI rework;
+  build 34 came from `main`, which did not have that rework yet).
+- 9 new strings in all 14 languages.
+
+
 ## 29 Oct 2026 (later): v2 polish from the "Nex Browser UI" design canvas (row "v2 polish")
 
 - **Tabs**: Tabs / Private segmented switch replaces the icon row (Tabs first). Synced tabs page removed.

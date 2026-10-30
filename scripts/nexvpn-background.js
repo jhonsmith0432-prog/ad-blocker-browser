@@ -4,17 +4,50 @@
 "use strict";
 
 let cfg = { enabled: false };
+let checking = 0;
 
-function apply(next) {
+function apply(next, check) {
+  const prev = cfg;
   cfg = next && typeof next === "object" ? next : { enabled: false };
   browser.storage.local.set({ cfg }).catch(() => {});
+  const changed = prev.enabled !== cfg.enabled || prev.host !== cfg.host || prev.port !== cfg.port;
+  if (cfg.enabled && cfg.host && (check || changed)) verify();
+}
+
+function report(state, ip) {
+  browser.runtime.sendNativeMessage("nexvpn", { type: "status", state, ip: ip || "" }).catch(() => {});
+}
+
+/* Connection check: fetch Cloudflare's trace page (it echoes the caller's IP) through the proxy and
+ * compare that IP with the server's address. Only the IP the site sees is reported to the app. */
+async function verify() {
+  const run = ++checking;
+  const host = cfg.host;
+  let addrs = [];
+  if (/^\d+\.\d+\.\d+\.\d+$/.test(host)) addrs = [host];
+  else {
+    try { addrs = ((await browser.dns.resolve(host)).addresses) || []; } catch (e) { addrs = []; }
+  }
+  let ip = "";
+  for (const url of ["https://www.cloudflare.com/cdn-cgi/trace", "https://1.1.1.1/cdn-cgi/trace"]) {
+    try {
+      const ctl = new AbortController();
+      const t = setTimeout(() => ctl.abort(), 10000);
+      const res = await fetch(url + "?nexvpn=" + Date.now(), { cache: "no-store", signal: ctl.signal });
+      clearTimeout(t);
+      const m = (await res.text()).match(/^ip=(.+)$/m);
+      if (m) { ip = m[1].trim(); break; }
+    } catch (e) { /* try the next one */ }
+  }
+  if (run !== checking || !cfg.enabled) return;
+  report(ip && (addrs.length === 0 || addrs.includes(ip)) ? "on" : "failed", ip);
 }
 
 browser.storage.local.get("cfg").then((r) => { if (r && r.cfg) cfg = r.cfg; }).catch(() => {});
 
 try {
   const port = browser.runtime.connectNative("nexvpn");
-  port.onMessage.addListener((m) => { if (m && m.type === "config") apply(m.config); });
+  port.onMessage.addListener((m) => { if (m && m.type === "config") apply(m.config, !!m.check); });
 } catch (e) { /* app side not ready yet; the poll below covers it */ }
 
 async function poll() {

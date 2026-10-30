@@ -45,6 +45,7 @@ object NexColors {
     val Gold = Color(0xFFFFC85A)
     val Text = Color(0xFFF4F6FF)
     val Muted = Color(0xFFA3A9C7)
+    val Danger = Color(0xFFFF6B7A)
 
     val screen: Brush = Brush.verticalGradient(listOf(Color(0xFF111A3A), Ink, Ink))
     val cta: Brush get() = Brush.horizontalGradient(listOf(Mint, Teal))

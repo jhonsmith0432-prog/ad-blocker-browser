@@ -4,6 +4,7 @@
 
 package org.mozilla.fenix.nex
 
+import androidx.compose.material3.CircularProgressIndicator
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -134,11 +135,13 @@ fun VpnCard(
 ) {
     val servers = NexVpn.servers(context)
     val current = NexVpn.selected(context)
-    val on = !locked && prefs.vpnEnabled && servers.isNotEmpty()
+    val wanted = NexVpn.wanted.value
+    val st = NexVpn.state.value
+    val on = !locked && wanted && servers.isNotEmpty()
     Column(
         Modifier
             .fillMaxWidth()
-            .nexCard(selected = on)
+            .nexCard(selected = on && st == NexVpn.State.ON)
             .clickable(enabled = locked) { onLocked() }
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -148,19 +151,21 @@ fun VpnCard(
             Spacer(Modifier.width(14.dp))
             Column(Modifier.weight(1f)) {
                 Text(nt("vpn"), color = NexColors.Text, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
-                Text(
-                    when {
-                        servers.isEmpty() -> nt("vpn_soon")
-                        on && current != null -> nt("vpn_on", "${current.flag} ${current.name}".trim())
-                        else -> nt("vpn_off")
-                    },
-                    color = if (on) NexColors.Mint else NexColors.Muted,
-                    fontSize = 13.sp,
-                )
+                if (servers.isEmpty()) {
+                    Text(nt("vpn_soon"), color = NexColors.Muted, fontSize = 13.sp)
+                } else if (!on) {
+                    Text(nt("vpn_off"), color = NexColors.Muted, fontSize = 13.sp)
+                } else {
+                    VpnStatusText(current, 13.sp)
+                }
             }
             Spacer(Modifier.width(10.dp))
             if (locked) {
                 LockChip()
+            } else if (on && st == NexVpn.State.CONNECTING) {
+                CircularProgressIndicator(Modifier.size(22.dp), color = NexColors.Mint, strokeWidth = 2.5.dp)
+                Spacer(Modifier.width(10.dp))
+                Switch(checked = true, onCheckedChange = onVpn, colors = SwitchDefaults.colors(checkedTrackColor = NexColors.Mint, checkedThumbColor = NexColors.Ink))
             } else {
                 Switch(
                     checked = on,
@@ -169,6 +174,15 @@ fun VpnCard(
                     colors = SwitchDefaults.colors(checkedTrackColor = NexColors.Mint, checkedThumbColor = NexColors.Ink),
                 )
             }
+        }
+        if (on && st == NexVpn.State.FAILED) {
+            Text(
+                nt("vpn_retry"),
+                color = NexColors.Mint,
+                fontSize = 13.sp,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.clip(RoundedCornerShape(50)).clickable { NexVpn.setEnabled(context, true) }.padding(vertical = 4.dp),
+            )
         }
         if (!locked && servers.size > 1) {
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -193,6 +207,69 @@ fun VpnCard(
         }
         if (!locked && servers.isNotEmpty()) {
             Text(nt("vpn_note"), color = NexColors.Muted, fontSize = 12.sp)
+        }
+    }
+}
+
+/** "Connecting to New York...", "Connected: New York, IP 1.2.3.4" or "Couldn't connect" in the matching colour. */
+@Composable
+fun VpnStatusText(server: NexVpn.Server?, size: androidx.compose.ui.unit.TextUnit) {
+    val where = server?.let { "${it.flag} ${it.name}".trim() } ?: ""
+    when (NexVpn.state.value) {
+        NexVpn.State.CONNECTING -> Text(nt("vpn_connecting", where), color = NexColors.Muted, fontSize = size)
+        NexVpn.State.ON -> Column {
+            Text(nt("vpn_connected", where), color = NexColors.Mint, fontSize = size, fontWeight = FontWeight.SemiBold)
+            val ip = NexVpn.ip.value
+            if (ip.isNotBlank()) Text(nt("vpn_ip", ip), color = NexColors.Muted, fontSize = size)
+        }
+        NexVpn.State.FAILED -> Text(nt("vpn_failed"), color = NexColors.Danger, fontSize = size, fontWeight = FontWeight.SemiBold)
+        NexVpn.State.OFF -> Text(nt("vpn_off"), color = NexColors.Muted, fontSize = size)
+    }
+}
+
+/** Home screen VPN button: one tap turns it on or off (non-Premium: opens the paywall). Shows the live state. */
+@Composable
+fun VpnPill(isPremium: Boolean, onLocked: () -> Unit) {
+    val context = LocalContext.current
+    val available = NexVpn.servers(context).isNotEmpty()
+    if (!available) return
+    val st = if (isPremium && NexVpn.wanted.value) NexVpn.state.value else NexVpn.State.OFF
+    val bg = when (st) {
+        NexVpn.State.ON -> NexColors.Mint
+        NexVpn.State.FAILED -> NexColors.Danger
+        else -> NexColors.Navy
+    }
+    val fg = if (st == NexVpn.State.ON) NexColors.Ink else NexColors.Text
+    Row(
+        Modifier
+            .clip(RoundedCornerShape(50))
+            .background(bg)
+            .border(1.dp, NexColors.Line, RoundedCornerShape(50))
+            .clickable { if (isPremium) NexVpn.toggle(context) else onLocked() }
+            .padding(start = 10.dp, end = 14.dp, top = 7.dp, bottom = 7.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (st == NexVpn.State.CONNECTING) {
+            CircularProgressIndicator(Modifier.size(16.dp), color = NexColors.Mint, strokeWidth = 2.dp)
+        } else {
+            Box(Modifier.size(9.dp).clip(CircleShape).background(if (st == NexVpn.State.ON) NexColors.Ink else if (st == NexVpn.State.FAILED) NexColors.Text else NexColors.Muted))
+        }
+        Spacer(Modifier.width(8.dp))
+        Text(
+            when (st) {
+                NexVpn.State.ON -> nt("vpn_btn_on")
+                NexVpn.State.CONNECTING -> nt("vpn_btn_connecting")
+                NexVpn.State.FAILED -> nt("vpn_btn_failed")
+                NexVpn.State.OFF -> nt("vpn_btn_off")
+            },
+            color = fg,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            maxLines = 1,
+        )
+        if (!isPremium) {
+            Spacer(Modifier.width(6.dp))
+            Text("👑", fontSize = 12.sp)
         }
     }
 }
